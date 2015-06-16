@@ -47,6 +47,9 @@
 		A573BAA21AD57F3D00213FCD /* NSString+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = A573BA991AD57F3D00213FCD /* NSString+Additions.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		A573BAA31AD57F3D00213FCD /* NSString+MD5Addition.m in Sources */ = {isa = PBXBuildFile; fileRef = A573BA9B1AD57F3D00213FCD /* NSString+MD5Addition.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		A573BAA41AD57F3D00213FCD /* UIImage+Scale.m in Sources */ = {isa = PBXBuildFile; fileRef = A573BA9D1AD57F3D00213FCD /* UIImage+Scale.m */; };
+		A57895F91B3016F800F7C6A8 /* TabBarConfig.plist in Resources */ = {isa = PBXBuildFile; fileRef = A57895F81B3016F800F7C6A8 /* TabBarConfig.plist */; };
+		A57895FC1B30172000F7C6A8 /* MainTabBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A57895FB1B30172000F7C6A8 /* MainTabBarViewController.m */; };
+		A57895FF1B3017A500F7C6A8 /* FirstpageVC.m in Sources */ = {isa = PBXBuildFile; fileRef = A57895FE1B3017A500F7C6A8 /* FirstpageVC.m */; };
 		A58448281AE08BD200665FEC /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = A58448271AE08BD200665FEC /* logo.png */; };
 		A58E4EB71AD65A7700DDF8D3 /* jsonTest.json in Resources */ = {isa = PBXBuildFile; fileRef = A58E4EB61AD65A7700DDF8D3 /* jsonTest.json */; };
 		A58E4EBB1AD65B7A00DDF8D3 /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = A58E4EBA1AD65B7A00DDF8D3 /* JSONKit.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -144,6 +147,11 @@
 		A573BA9E1AD57F3D00213FCD /* UIView_Imp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIView_Imp.h; sourceTree = "<group>"; };
 		A573BAA51AD57FA600213FCD /* LibraryDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LibraryDefine.h; sourceTree = "<group>"; };
 		A573BAA61AD57FA600213FCD /* MacroFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MacroFunctions.h; sourceTree = "<group>"; };
+		A57895F81B3016F800F7C6A8 /* TabBarConfig.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = TabBarConfig.plist; path = "Mood Diary/TabBarConfig.plist"; sourceTree = SOURCE_ROOT; };
+		A57895FA1B30172000F7C6A8 /* MainTabBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainTabBarViewController.h; sourceTree = "<group>"; };
+		A57895FB1B30172000F7C6A8 /* MainTabBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainTabBarViewController.m; sourceTree = "<group>"; };
+		A57895FD1B3017A500F7C6A8 /* FirstpageVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FirstpageVC.h; sourceTree = "<group>"; };
+		A57895FE1B3017A500F7C6A8 /* FirstpageVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FirstpageVC.m; sourceTree = "<group>"; };
 		A58448271AE08BD200665FEC /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
 		A58E4EB61AD65A7700DDF8D3 /* jsonTest.json */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.json; path = jsonTest.json; sourceTree = "<group>"; };
 		A58E4EB91AD65B7A00DDF8D3 /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSONKit.h; sourceTree = "<group>"; };
@@ -225,6 +233,8 @@
 				A573BA431AD5675B00213FCD /* class */,
 				A573B9F11AD564F500213FCD /* AppDelegate.h */,
 				A573B9F21AD564F500213FCD /* AppDelegate.m */,
+				A57895FA1B30172000F7C6A8 /* MainTabBarViewController.h */,
+				A57895FB1B30172000F7C6A8 /* MainTabBarViewController.m */,
 				A573BA771AD569EA00213FCD /* RootViewController.h */,
 				A573BA781AD569EA00213FCD /* RootViewController.m */,
 				A573B9F41AD564F500213FCD /* Images.xcassets */,
@@ -269,6 +279,8 @@
 				A573BA441AD5675B00213FCD /* Service */,
 				A573BA891AD56D1800213FCD /* LoginVC.h */,
 				A573BA8A1AD56D1800213FCD /* LoginVC.m */,
+				A57895FD1B3017A500F7C6A8 /* FirstpageVC.h */,
+				A57895FE1B3017A500F7C6A8 /* FirstpageVC.m */,
 				A531C66C1AD6355D00C12D9C /* WelcomeVC.h */,
 				A531C66D1AD6355D00C12D9C /* WelcomeVC.m */,
 				A531C6721AD6471000C12D9C /* SpecificVC.h */,
@@ -391,6 +403,7 @@
 		A58E4EB51AD65A7700DDF8D3 /* Configs */ = {
 			isa = PBXGroup;
 			children = (
+				A57895F81B3016F800F7C6A8 /* TabBarConfig.plist */,
 				A58E4EB61AD65A7700DDF8D3 /* jsonTest.json */,
 			);
 			path = Configs;
@@ -499,6 +512,7 @@
 				A58448281AE08BD200665FEC /* logo.png in Resources */,
 				A573BA8F1AD5771900213FCD /* account@2x.png in Resources */,
 				A573B9F51AD564F500213FCD /* Images.xcassets in Resources */,
+				A57895F91B3016F800F7C6A8 /* TabBarConfig.plist in Resources */,
 				A573BA901AD5771900213FCD /* password@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -528,8 +542,10 @@
 				A531C66E1AD6355D00C12D9C /* WelcomeVC.m in Sources */,
 				A573BA6C1AD5676000213FCD /* AFImageRequestOperation.m in Sources */,
 				A573B9F31AD564F500213FCD /* AppDelegate.m in Sources */,
+				A57895FF1B3017A500F7C6A8 /* FirstpageVC.m in Sources */,
 				A573BA701AD5676000213FCD /* AFPropertyListRequestOperation.m in Sources */,
 				A573BA741AD5676000213FCD /* UIView+Progress.m in Sources */,
+				A57895FC1B30172000F7C6A8 /* MainTabBarViewController.m in Sources */,
 				A573BA4B1AD5675B00213FCD /* AppWebService.m in Sources */,
 				A573BAA01AD57F3D00213FCD /* NSDictionaryAdditions.m in Sources */,
 				A573B9EF1AD564F500213FCD /* main.m in Sources */,
@@ -669,8 +685,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = NO;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: saisai Zhou (3S562NHR75)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: saisai Zhou (3S562NHR75)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Chen YongFu (8P2C2T228Q)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Chen YongFu (8P2C2T228Q)";
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = "Mood Diary/Mood Diary-Prefix.pch";
 				INFOPLIST_FILE = "Mood Diary/Mood Diary-Info.plist";
@@ -678,7 +694,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-all_load";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "8609bb41-5ad2-484f-b93b-8454a1426663";
+				PROVISIONING_PROFILE = "abd27f3b-b679-46f2-979d-2554f5d5a5d8";
 				SKIP_INSTALL = NO;
 				WRAPPER_EXTENSION = app;
 			};
@@ -690,8 +706,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = NO;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: saisai Zhou (3S562NHR75)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: saisai Zhou (3S562NHR75)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Chen YongFu (8P2C2T228Q)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Chen YongFu (8P2C2T228Q)";
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = "Mood Diary/Mood Diary-Prefix.pch";
 				INFOPLIST_FILE = "Mood Diary/Mood Diary-Info.plist";
@@ -699,7 +715,7 @@
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-all_load";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "8609bb41-5ad2-484f-b93b-8454a1426663";
+				PROVISIONING_PROFILE = "abd27f3b-b679-46f2-979d-2554f5d5a5d8";
 				SKIP_INSTALL = NO;
 				WRAPPER_EXTENSION = app;
 			};

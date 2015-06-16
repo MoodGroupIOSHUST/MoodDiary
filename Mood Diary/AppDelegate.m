@@ -42,10 +42,8 @@
 - (void)goToWhitchViewController{
     //先判断是否登陆
     if ([NSUserDefaults boolForKey:IS_LOGIN]){
-        self.window.rootViewController = nil;
-        WelcomeVC *Welcome = [[WelcomeVC alloc] init];
-        UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:Welcome];
-        self.window.rootViewController = nav;
+        self.tabBarController = [[MainTabBarViewController alloc]init];
+        self.window.rootViewController = self.tabBarController;
     }
     else{
         LoginVC *loginvc = [[LoginVC alloc]init];

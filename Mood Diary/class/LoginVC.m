@@ -33,7 +33,7 @@
     self.view.backgroundColor = [UIColor colorWithRed:235/255.0 green:240/255.0 blue:241/255.0 alpha:1.0];
     if(IS_IOS_7)
     {
-        [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor blackColor],UITextAttributeTextColor,nil]];
+        [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor],UITextAttributeTextColor,nil]];
     }
     
     [self initloginpart];
@@ -104,20 +104,20 @@
 
 -(void)userlogin
 {
-    if (useraccountTF.text.length == 0) {
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"用户名不能为空！" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-        [alert show];
-        return;
-    }
-    if (pwdTF.text.length == 0) {
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"密码不能为空！" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-        [alert show];
-        return;
-    }
+//    if (useraccountTF.text.length == 0) {
+//        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"用户名不能为空！" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+//        [alert show];
+//        return;
+//    }
+//    if (pwdTF.text.length == 0) {
+//        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"密码不能为空！" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+//        [alert show];
+//        return;
+//    }
     
     self.view.userInteractionEnabled = NO;
     [self.view showProgress:YES text:@"请等待..."];
-    [AppWebService userLoginWithAccount:useraccountTF.text loginpwd:pwdTF.text success:^(id result) {
+    [AppWebService userLoginWithAccount:@"student1" loginpwd:@"123456" success:^(id result) {
         NSLog(@"success");
         [self.view showProgress:NO];
         self.view.userInteractionEnabled = YES;

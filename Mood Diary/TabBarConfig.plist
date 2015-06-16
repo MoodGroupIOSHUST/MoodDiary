@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>name</key>
+		<string>首页</string>
+		<key>img_selected</key>
+		<string>w_icon_select</string>
+		<key>img_nomal</key>
+		<string>w_icon_no</string>
+		<key>controller</key>
+		<string>FirstpageVC</string>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>美文</string>
+		<key>img_selected</key>
+		<string>p_icon_select</string>
+		<key>img_nomal</key>
+		<string>p_icon_no</string>
+		<key>controller</key>
+		<string>PaperVC</string>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>心情墙</string>
+		<key>img_selected</key>
+		<string>e_icon_select</string>
+		<key>img_nomal</key>
+		<string>e_icon_no</string>
+		<key>controller</key>
+		<string>MoodwallVC</string>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>我的</string>
+		<key>img_selected</key>
+		<string>s_icon_select</string>
+		<key>img_nomal</key>
+		<string>s_icon_no</string>
+		<key>controller</key>
+		<string>MyVC</string>
+	</dict>
+</array>
+</plist>
