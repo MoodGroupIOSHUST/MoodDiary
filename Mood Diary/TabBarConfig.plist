@@ -6,9 +6,9 @@
 		<key>name</key>
 		<string>首页</string>
 		<key>img_selected</key>
-		<string>w_icon_select</string>
+		<string>home_selected</string>
 		<key>img_nomal</key>
-		<string>w_icon_no</string>
+		<string>home</string>
 		<key>controller</key>
 		<string>FirstpageVC</string>
 	</dict>
@@ -16,9 +16,9 @@
 		<key>name</key>
 		<string>美文</string>
 		<key>img_selected</key>
-		<string>p_icon_select</string>
+		<string>article_selected</string>
 		<key>img_nomal</key>
-		<string>p_icon_no</string>
+		<string>article</string>
 		<key>controller</key>
 		<string>PaperVC</string>
 	</dict>
@@ -26,19 +26,19 @@
 		<key>name</key>
 		<string>心情墙</string>
 		<key>img_selected</key>
-		<string>e_icon_select</string>
+		<string>diary_selected</string>
 		<key>img_nomal</key>
-		<string>e_icon_no</string>
+		<string>diary</string>
 		<key>controller</key>
-		<string>MoodwallVC</string>
+		<string>WallVC</string>
 	</dict>
 	<dict>
 		<key>name</key>
 		<string>我的</string>
 		<key>img_selected</key>
-		<string>s_icon_select</string>
+		<string>mine_selected</string>
 		<key>img_nomal</key>
-		<string>s_icon_no</string>
+		<string>mine</string>
 		<key>controller</key>
 		<string>MyVC</string>
 	</dict>

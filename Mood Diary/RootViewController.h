@@ -23,6 +23,8 @@
 -(void)showAlertViewTitle:(NSString*)title message:(NSString*)mseeage;
 -(float)getnavheight;
 -(float)getstateheight;
+- (void)showview:(UIView *)sender height:(CGFloat)height;
+- (void)hideview:(UIView *)sender height:(CGFloat)height;
 //自适应文字
 -(CGSize)maxlabeisize:(CGSize)labelsize fontsize:(NSInteger)fontsize text:(NSString *)content;
 

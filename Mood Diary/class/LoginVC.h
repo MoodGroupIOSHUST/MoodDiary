@@ -13,6 +13,7 @@
     UITextField *useraccountTF;
     UITextField *pwdTF;
     UIView *backview;
+    UIView *scrollView;
 }
 
 @end

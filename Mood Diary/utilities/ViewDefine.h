@@ -20,6 +20,10 @@
 #define GO_TO_SETTING  @"GO_TO_SETTING" //进入设置页面
 #define GO_TO_DOCUMENT_LIST  @"GO_TO_DOCUMENT_LIST" //进入下载管理
 
+//定义剪切头像大小
+#define ORIGINAL_MAX_WIDTH 640.0f
+#define UPLOAD_IMAGE_WIDTH 64.0f
+
 
 #define SEND_MAIL_USER_INFO @"SEND_MAIL_USER_INFO" //发送邮件
 

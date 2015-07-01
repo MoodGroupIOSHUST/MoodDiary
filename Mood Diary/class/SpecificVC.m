@@ -9,6 +9,7 @@
 #import "SpecificVC.h"
 #import "TestVC.h"
 #import "AboutusVC.h"
+#import "NewTestVC.h"
 
 @interface SpecificVC ()
 
@@ -74,18 +75,17 @@
 
 -(void)confirmbtclicked
 {
-    if (!done) {
-        TestVC *test = [[TestVC alloc]init];
-        test.delegate = self;
-        [self.navigationController pushViewController:test animated:YES];
+    UserInfo *userinfo = [NSUserDefaults objectUserForKey:USER_STOKRN_KEY];
+    if ([userinfo.accountType isEqualToString:@"3"]) {
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"您已完成SCL90测评" delegate:self cancelButtonTitle:@"好的" otherButtonTitles:nil, nil];
+        alert.tag = 0;
+        [alert show];
     }
     else
     {
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"您已完成测评" delegate:self cancelButtonTitle:@"好的" otherButtonTitles:@"关于我们",@"退出登录", nil];
-        alert.tag = 1;
-        [alert show];
+        NewTestVC *test = [[NewTestVC alloc]init];
+        [self.navigationController pushViewController:test animated:YES];
     }
-    
 }
 
 -(void)counttime
@@ -100,7 +100,7 @@
             dispatch_async(dispatch_get_main_queue(), ^{
                 //设置界面的按钮显示 根据自己需求设置
                 confirmBt.userInteractionEnabled = YES;
-                confirmBt.backgroundColor = [UIColor colorWithRed:60/255.0 green:173/255.0 blue:235/255.0 alpha:1.0];
+                confirmBt.backgroundColor = [UIColor colorWithRed:71/255.0 green:228/255.0 blue:160/255.0 alpha:1.0];
                 confirmBt.titleLabel.font = [UIFont systemFontOfSize:16];
                 [confirmBt setTitle:@"确认" forState:UIControlStateNormal];
             });

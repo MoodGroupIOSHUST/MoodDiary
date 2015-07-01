@@ -274,7 +274,8 @@ static NSString * AFPropertyListStringFromParameters(NSDictionary *parameters) {
     
 #if __IPHONE_OS_VERSION_MIN_REQUIRED
     // User-Agent Header; see http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.43
-    [self setDefaultHeader:@"User-Agent" value:[NSString stringWithFormat:@"%@/%@ (%@, %@ %@, %@, Scale/%f)", [[[NSBundle mainBundle] infoDictionary] objectForKey:(NSString *)kCFBundleIdentifierKey], [[[NSBundle mainBundle] infoDictionary] objectForKey:(NSString *)kCFBundleVersionKey], @"unknown", [[UIDevice currentDevice] systemName], [[UIDevice currentDevice] systemVersion], [[UIDevice currentDevice] model], ([[UIScreen mainScreen] respondsToSelector:@selector(scale)] ? [[UIScreen mainScreen] scale] : 1.0)]];
+     [self setDefaultHeader:@"User-Agent" value:@"iOS"];
+//    [self setDefaultHeader:@"User-Agent" value:[NSString stringWithFormat:@"%@/%@ (%@, %@ %@, %@, Scale/%f)", [[[NSBundle mainBundle] infoDictionary] objectForKey:(NSString *)kCFBundleIdentifierKey], [[[NSBundle mainBundle] infoDictionary] objectForKey:(NSString *)kCFBundleVersionKey], @"unknown", [[UIDevice currentDevice] systemName], [[UIDevice currentDevice] systemVersion], [[UIDevice currentDevice] model], ([[UIScreen mainScreen] respondsToSelector:@selector(scale)] ? [[UIScreen mainScreen] scale] : 1.0)]];
 #elif __MAC_OS_X_VERSION_MIN_REQUIRED
     [self setDefaultHeader:@"User-Agent" value:[NSString stringWithFormat:@"%@/%@ (%@)", [[[NSBundle mainBundle] infoDictionary] objectForKey:(NSString *)kCFBundleIdentifierKey], [[[NSBundle mainBundle] infoDictionary] objectForKey:(NSString *)kCFBundleVersionKey], @"unknown"]];
 #endif
@@ -453,6 +454,9 @@ static void AFNetworkReachabilityReleaseCallback(const void *info) {
 	NSMutableURLRequest *request = [[[NSMutableURLRequest alloc] initWithURL:url] autorelease];
     [request setHTTPMethod:method];
     [request setAllHTTPHeaderFields:self.defaultHeaders];
+    
+    request.HTTPShouldHandleCookies = YES;
+    
     [request setTimeoutInterval:15];
     
     if ([method isEqualToString:@"GET"] || [method isEqualToString:@"HEAD"]) {
@@ -618,10 +622,13 @@ static void AFNetworkReachabilityReleaseCallback(const void *info) {
         failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
 {
 	NSURLRequest *request = [self requestWithMethod:@"GET" path:path parameters:parameters];
+
     NSLog(@"url:%@", request);
+   
     AFHTTPRequestOperation *operation = [self HTTPRequestOperationWithRequest:request success:success failure:failure];
     [self enqueueHTTPRequestOperation:operation];
-}
+     NSLog(@"%@",[request valueForHTTPHeaderField:@"User-Agent"]);
+   }
 
 - (void)postPath:(NSString *)path 
       parameters:(NSDictionary *)parameters 
@@ -855,5 +862,6 @@ static inline NSString * AFMultipartFormFinalBoundary() {
         [self.outputStream write:&dataBuffer[0] maxLength:[data length]];
     }
 }
+
 
 @end

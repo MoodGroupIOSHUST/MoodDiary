@@ -155,8 +155,8 @@
         [tabButton setImage:itemBarImage forState:UIControlStateNormal];
         [tabButton setImage:itemBarImage_selected forState:UIControlStateSelected];
         //设置及button里面title和image的位置上左下右
-        [tabButton setImageEdgeInsets:UIEdgeInsetsMake(5,16,20,-9)];
-        [tabButton setTitleEdgeInsets:UIEdgeInsetsMake(50,-15,25,12)];
+        [tabButton setImageEdgeInsets:UIEdgeInsetsMake(5,30,20,30)];
+        [tabButton setTitleEdgeInsets:UIEdgeInsetsMake(45,-75,20,12)];
 
         [tabButton addTarget:self action:@selector(tabButtonAction:) forControlEvents:UIControlEventTouchUpInside];
         //设置查询、周报权限
@@ -164,7 +164,7 @@
         [self.tabBar addSubview:tabButton];
         [tabButtons addObject:tabButton];
         
-        tabButton.titleLabel.font = [UIFont systemFontOfSize:10];
+        tabButton.titleLabel.font = [UIFont systemFontOfSize:12];
         [tabButton setTitle:[NSString stringWithFormat:@"%@",itemBarName] forState:UIControlStateNormal];
         
         [tabButton setTitleColor:[UIColor colorWithRed:71/255.0 green:228/255.0 blue:160/255.0 alpha:1.0]forState:UIControlStateSelected];

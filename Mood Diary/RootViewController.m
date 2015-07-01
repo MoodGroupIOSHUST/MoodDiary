@@ -129,6 +129,28 @@
     return height;
 }
 
+- (void)showview:(UIView *)sender height:(CGFloat)height{
+    CGRect containerFrame = sender.frame;
+    containerFrame.origin.y = height;
+    [UIView animateWithDuration:0.25 animations:^{
+        [UIView setAnimationBeginsFromCurrentState:YES];
+        [UIView setAnimationDuration:0.25];
+        [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
+        sender.frame = containerFrame;
+    }];
+}
+
+- (void)hideview:(UIView *)sender height:(CGFloat)height{
+    CGRect containerFrame = sender.frame;
+    containerFrame.origin.y = height;
+    [UIView animateWithDuration:0.25 animations:^{
+        [UIView setAnimationBeginsFromCurrentState:YES];
+        [UIView setAnimationDuration:0.25];
+        [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
+        sender.frame = containerFrame;
+    }];
+}
+
 
 
 

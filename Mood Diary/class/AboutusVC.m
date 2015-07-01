@@ -18,7 +18,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    [self setTitle:@"关于我们"];
+    [self setTitle:@"心情日记"];
     self.view.backgroundColor = [UIColor whiteColor];
     
     [self initabout];
@@ -26,7 +26,7 @@
 
 -(void)initabout
 {
-    NSString *str1 = @"心迹是一款专为大学生打造的心情管理软件，iOS正式版将于近期发布，在这里你可以记录心情，分享心情，享受专业的心理咨询与测试，还有好玩的心情墙。记得关注哦~";
+    NSString *str1 = @"心迹是一款专为大学生打造的心情管理软件，在这里你可以记录心情，分享心情，享受专业的心理咨询与测试，还有好玩的心情墙。记得关注哦~";
     NSString *str2 = @"欢迎有志之士加盟我们工作室，共同打造高校心理第一互联服务平台。";
     
     CGSize size1 = [self maxlabeisize:CGSizeMake(SCREEN_WIDTH-40, 999) fontsize:16 text:str1];
