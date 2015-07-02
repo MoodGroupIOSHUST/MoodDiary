@@ -46,6 +46,15 @@ static const CGFloat MJDuration = 1.0;
     
     self.navigationItem.rightBarButtonItem = right;
     
+    typearr = [[NSMutableArray alloc]initWithObjects:@"梁山篇",@"皇帝篇",@"武侠篇",@"动漫篇",@"火影篇", nil];
+    nicknamedic = [[NSMutableDictionary alloc]init];
+    
+    NSString *name = @"nickname";
+    NSString *path = [[NSBundle mainBundle]pathForResource:name ofType:@"json"];
+    NSString *jsonString = [[NSString alloc]initWithContentsOfFile:path encoding:NSUTF8StringEncoding error:nil];
+    NSString *json = [jsonString stringByReplacingOccurrencesOfString:@";" withString:@","];
+    nicknamedic = [json objectFromJSONString];
+    
     [self initKeyboardNotification];
     
     [self initwall];
@@ -369,7 +378,7 @@ static const CGFloat MJDuration = 1.0;
         
         NSDictionary *commentdic = [temarr objectAtIndex:j];
         NSString *content = [commentdic objectForKey:@"content"];
-        CGSize contentsize = [self maxlabeisize:CGSizeMake(SCREEN_WIDTH-30-35, 999) fontsize:14 text:content];
+        CGSize contentsize = [self maxlabeisize:CGSizeMake(SCREEN_WIDTH-30, 999) fontsize:14 text:content];
 #pragma mark - 此处修改评论间距
         temhight = temhight + (contentsize.height + 20);
     }
@@ -396,7 +405,14 @@ static const CGFloat MJDuration = 1.0;
             
 //            NSDictionary *accountdic = [temdic objectForKey:@"account"];
             
-            NSString *content = [NSString stringWithFormat:@"%@",[temdic objectForKey:@"content"]];
+            int x = arc4random() % (typearr.count-1);
+            NSString *typestr = [typearr objectAtIndex:x];
+            
+            NSArray *nicknamearr = [nicknamedic objectForKey:typestr];
+            
+            int y = arc4random() % (nicknamearr.count-1);
+            
+            NSString *content = [NSString stringWithFormat:@"%@ : %@",[nicknamearr objectAtIndex:y],[temdic objectForKey:@"content"]];
             
             NSMutableDictionary *datadic = [[NSMutableDictionary alloc]init];
             

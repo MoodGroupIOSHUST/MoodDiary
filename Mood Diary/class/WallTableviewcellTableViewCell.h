@@ -30,6 +30,10 @@
     
     UIView *commentline;
     
+    NSMutableDictionary *cellnicknamedic;
+    
+    NSMutableArray *celltypearr;
+    
 }
 
 @property (nonatomic, retain)UIButton *commentbtn;

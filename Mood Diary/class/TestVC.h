@@ -8,13 +8,6 @@
 
 #import "RootViewController.h"
 
-
-@protocol isdone <NSObject>
-
--(void)setdone;
-
-@end
-
 @interface TestVC : RootViewController<UIAlertViewDelegate>
 {
     NSMutableArray *choicearr;
@@ -29,7 +22,6 @@
 
 }
 
-@property(nonatomic,assign) id<isdone>delegate;
 @property(nonatomic,assign) BOOL hasdone;
 
 @end

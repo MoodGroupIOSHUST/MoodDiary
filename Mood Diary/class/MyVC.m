@@ -77,40 +77,38 @@
     }
     
     UIImageView *imgview = [[UIImageView alloc]initWithFrame:CGRectMake(15, 6, _height-12, _height-12)];
-    imgview.layer.cornerRadius = imgview.bounds.size.height/2;
     imgview.layer.masksToBounds = YES;
     
     UILabel *title = [[UILabel alloc]initWithFrame:CGRectMake(imgview.frame.origin.x + imgview.frame.size.width +10, 2, 200, _height-4)];
     
     if (indexPath.row == 0) {
         imgview.backgroundColor = [UIColor clearColor];
-        imgview.frame = CGRectMake(11, 3,_height-2, _height-2);
         imgview.image = [UIImage imageNamed:@"set1"];
         title.text = @"账户设置";
     }
     else if (indexPath.row == 1){
-        imgview.backgroundColor = [UIColor yellowColor];
+        imgview.backgroundColor = [UIColor clearColor];
         imgview.image = [UIImage imageNamed:@"set2"];
         title.text = @"密码设置";
     }
     else if (indexPath.row ==2){
-        imgview.backgroundColor = [UIColor greenColor];
+        imgview.backgroundColor = [UIColor clearColor];
         imgview.image = [UIImage imageNamed:@"set3"];
         title.text = @"我的测评";
     }
     else if (indexPath.row == 3){
-        imgview.backgroundColor = [UIColor orangeColor];
+        imgview.backgroundColor = [UIColor clearColor];
         imgview.image = [UIImage imageNamed:@"set4"];
         title.text = @"咨询指引";
     }
     else if (indexPath.row == 4){
-        imgview.backgroundColor = [UIColor orangeColor];
-        imgview.image = [UIImage imageNamed:@"set1"];
+        imgview.backgroundColor = [UIColor clearColor];
+        imgview.image = [UIImage imageNamed:@"set5"];
         title.text = @"我的收藏";
     }
     else if (indexPath.row == 5){
-        imgview.backgroundColor = [UIColor orangeColor];
-        imgview.image = [UIImage imageNamed:@"set2"];
+        imgview.backgroundColor = [UIColor clearColor];
+        imgview.image = [UIImage imageNamed:@"set6"];
         title.text = @"关      于";
     }
     

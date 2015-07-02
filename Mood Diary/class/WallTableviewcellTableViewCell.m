@@ -54,6 +54,15 @@
         commentview  =[[UIView alloc]initWithFrame:CGRectMake(20, timelabel.frame.origin.y+timelabel.frame.size.height+10, SCREEN_WIDTH-30, 16)];
         
         
+        celltypearr = [[NSMutableArray alloc]initWithObjects:@"梁山篇",@"皇帝篇",@"武侠篇",@"动漫篇",@"火影篇", nil];
+        cellnicknamedic = [[NSMutableDictionary alloc]init];
+        
+        NSString *name = @"nickname";
+        NSString *path = [[NSBundle mainBundle]pathForResource:name ofType:@"json"];
+        NSString *jsonString = [[NSString alloc]initWithContentsOfFile:path encoding:NSUTF8StringEncoding error:nil];
+        NSString *json = [jsonString stringByReplacingOccurrencesOfString:@";" withString:@","];
+        cellnicknamedic = [json objectFromJSONString];
+        
         
         [self addSubview:timelabel];
         [self addSubview:_commentbtn];
@@ -71,18 +80,20 @@
     NSDictionary *accountdic = [NSDictionary dictionaryWithDictionary:[sender objectForKeyedSubscript:@"account"]];
     
     //昵称
-    if ([accountdic objectForKey:@"nickname"] == nil) {
-        namelabel.text = @"";
-    }
-    else
-    {
-        namelabel.text = [accountdic objectForKey:@"nickname"];
-    }
+    int x = arc4random() % (celltypearr.count-1);
+    NSString *typestr = [celltypearr objectAtIndex:x];
     
-    CGSize namesize = [self maxlabeisize:CGSizeMake(999, 25) fontsize:14 text:[accountdic objectForKey:@"nickname"]];
+    NSArray *nicknamearr = [cellnicknamedic objectForKey:typestr];
+    
+    int y = arc4random() % (nicknamearr.count-1);
+    
+    NSString *nickname = [nicknamearr objectAtIndex:y];
+    
+    CGSize namesize = [self maxlabeisize:CGSizeMake(999, 25) fontsize:14 text:nickname];
     namelabel.frame = CGRectMake(15, 10, namesize.width, 25);
     namelabel.font = [UIFont systemFontOfSize:14];
-    img.frame = CGRectMake(namelabel.frame.origin.x+10+namelabel.frame.size.width, 10, 30, 25);
+    namelabel.text = nickname;
+    img.frame = CGRectMake(namelabel.frame.origin.x+10+namelabel.frame.size.width, 12, 25, 20);
     
     //性别
     NSString *sex;
@@ -140,9 +151,9 @@
             NSString *content = [commentdic objectForKey:@"content"];
             NSString *date = [commentdic objectForKey:@"date"];
             
-            CGSize commentsize = [self maxlabeisize:CGSizeMake(SCREEN_WIDTH-45, 999) fontsize:14 text:content];
+            CGSize commentsize = [self maxlabeisize:CGSizeMake(SCREEN_WIDTH-30, 999) fontsize:14 text:content];
             
-            UILabel *contentlb = [[UILabel alloc]initWithFrame:CGRectMake(35, btnheight, SCREEN_WIDTH-30-35, commentsize.height+8)];
+            UILabel *contentlb = [[UILabel alloc]initWithFrame:CGRectMake(0, btnheight, SCREEN_WIDTH-30, commentsize.height+8)];
             contentlb.text = content;
             contentlb.font = [UIFont systemFontOfSize:14];
             contentlb.textAlignment = NSTextAlignmentLeft;
@@ -153,20 +164,13 @@
             contentlb.backgroundColor = [UIColor clearColor];
             [commentview addSubview:contentlb];
             
-            UILabel *datelabel = [[UILabel alloc]initWithFrame:CGRectMake(35, contentlb.frame.origin.y+contentlb.frame.size.height-2, SCREEN_WIDTH-30, 12)];
+            UILabel *datelabel = [[UILabel alloc]initWithFrame:CGRectMake(0, contentlb.frame.origin.y+contentlb.frame.size.height-2, SCREEN_WIDTH-30, 12)];
             datelabel.text = date;
             datelabel.font = [UIFont systemFontOfSize:12];
             datelabel.textAlignment = NSTextAlignmentLeft;
             datelabel.textColor = [UIColor darkGrayColor];
             datelabel.textAlignment = NSTextAlignmentLeft;
             [commentview addSubview:datelabel];
-            
-            UIImageView *imgpic = [[UIImageView alloc]initWithFrame:CGRectMake(0, btnheight+4, 30, 30)];
-            imgpic.backgroundColor = [UIColor greenColor];
-            imgpic.layer.masksToBounds = YES;
-            imgpic.layer.cornerRadius = imgpic.bounds.size.height/2;
-            [commentview addSubview:imgpic];
-
             
 #pragma mark - 此处修改评论间距
             UIButton *btn = [[UIButton alloc]initWithFrame:CGRectMake(0, btnheight, SCREEN_WIDTH-30, commentsize.height+20)];

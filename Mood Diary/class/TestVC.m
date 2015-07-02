@@ -15,7 +15,6 @@
 @end
 
 @implementation TestVC
-@synthesize delegate = _delegate;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -219,9 +218,6 @@
         [NSUserDefaults setUserObject:userinfo forKey:USER_STOKRN_KEY];
         
         //设置说明页面题目做完状态
-        if ([_delegate respondsToSelector:@selector(setdone)]) {
-            [_delegate setdone];
-        }
         
         //题目做完状态
         isover = YES;
@@ -331,7 +327,7 @@
     NSLog(@"%@",str);
     questionlable.text = str;
     
-    NSString *number = [NSString stringWithFormat:@"%u/90",choicearr.count+1];
+    NSString *number = [NSString stringWithFormat:@"%lu/90",choicearr.count+1];
     [self setTitle:number];
     
     if (choicearr.count>0) {

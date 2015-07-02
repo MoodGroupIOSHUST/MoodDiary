@@ -156,7 +156,7 @@
         [tabButton setImage:itemBarImage_selected forState:UIControlStateSelected];
         //设置及button里面title和image的位置上左下右
         [tabButton setImageEdgeInsets:UIEdgeInsetsMake(5,30,20,30)];
-        [tabButton setTitleEdgeInsets:UIEdgeInsetsMake(45,-75,20,12)];
+        [tabButton setTitleEdgeInsets:UIEdgeInsetsMake(45,-95,20,12)];
 
         [tabButton addTarget:self action:@selector(tabButtonAction:) forControlEvents:UIControlEventTouchUpInside];
         //设置查询、周报权限

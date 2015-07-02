@@ -43,7 +43,7 @@
     btn1.layer.cornerRadius = 5;
     [btn1 addTarget:self action:@selector(btnpress:) forControlEvents:UIControlEventTouchUpInside];
     
-    btn2 = [[UIButton alloc]initWithFrame:CGRectMake(10, btn1.frame.origin.y + btn1.frame.size.height+20, (SCREEN_WIDTH-20-8)/2, (SCREEN_WIDTH-20-8)*3/7)];
+    btn2 = [[UIButton alloc]initWithFrame:CGRectMake(10, btn1.frame.origin.y + btn1.frame.size.height+20, (SCREEN_WIDTH-20-8)/2, (SCREEN_WIDTH-20-8)/1.4)];
     btn2.tag = 2;
     btn2.backgroundColor = [UIColor clearColor];
     [btn2 setBackgroundImage:[UIImage imageNamed:@"upset"] forState:UIControlStateNormal];
@@ -52,7 +52,7 @@
     btn2.layer.cornerRadius = 5;
     [btn2 addTarget:self action:@selector(btnpress:) forControlEvents:UIControlEventTouchUpInside];
     
-    btn3 = [[UIButton alloc]initWithFrame:CGRectMake(SCREEN_WIDTH-(SCREEN_WIDTH-20-8)/2-10, btn1.frame.origin.y + btn1.frame.size.height+20, (SCREEN_WIDTH-20-8)/2, (SCREEN_WIDTH-20-8)*3/7)];
+    btn3 = [[UIButton alloc]initWithFrame:CGRectMake(SCREEN_WIDTH-(SCREEN_WIDTH-20-8)/2-10, btn1.frame.origin.y + btn1.frame.size.height+20, (SCREEN_WIDTH-20-8)/2, (SCREEN_WIDTH-20-8)/1.4)];
     btn3.tag = 3;
     btn3.backgroundColor = [UIColor clearColor];
     btn3.layer.masksToBounds = YES;
@@ -95,19 +95,9 @@
 
 - (void)pushtoscl{
     
-    UserInfo *info = [NSUserDefaults objectUserForKey:USER_STOKRN_KEY];
-    if ([info.accountType isEqualToString:@"2"]) {
-        SpecificVC *specific = [[SpecificVC alloc]init];
-        specific.hidesBottomBarWhenPushed = YES;
-        [self.navigationController pushViewController:specific animated:YES];
-    }
-    else if ([info.accountType isEqualToString:@"0"]){
-        [self.view showResult:ResultViewTypeFaild text:@"对不起，您没有权限做此测评"];
-    }
-    else if( [info.accountType isEqualToString:@"3"]){
-        [self.view showResult:ResultViewTypeOK text:@"您已完成测评"];
-    }
-   
+    SpecificVC *specific = [[SpecificVC alloc]init];
+    specific.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:specific animated:YES];
 
 }
 

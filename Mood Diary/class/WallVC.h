@@ -27,6 +27,9 @@
     UIBarButtonItem *right;
     UIBarButtonItem *clearbtn;
     
+    NSMutableArray *typearr;
+    NSMutableDictionary *nicknamedic;
+    
     BOOL morecomment;
 }
 

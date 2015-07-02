@@ -103,7 +103,7 @@
         data = UIImagePNGRepresentation(picImage);
     }
    
-    NSString *filewholename=[NSString stringWithFormat:@"%@.png",@"userPic"];
+//    NSString *filewholename=[NSString stringWithFormat:@"%@.png",@"userPic"];
     
     //test
         

@@ -10,7 +10,7 @@
 #import "TestVC.h"
 
 
-@interface SpecificVC : RootViewController<isdone,UIAlertViewDelegate>
+@interface SpecificVC : RootViewController<UIAlertViewDelegate>
 {
     UIButton *confirmBt;
     BOOL done;

@@ -170,6 +170,20 @@
 
 - (void)upload
 {
+    
+    UserInfo *info = [NSUserDefaults objectUserForKey:USER_STOKRN_KEY];
+    if ([info.accountType isEqualToString:@"2"]) {
+        
+    }
+    else if ([info.accountType isEqualToString:@"0"]){
+        [self.view showResult:ResultViewTypeFaild text:@"您没有权限做此测评,系统将不会上传结果"];
+        return;
+    }
+    else if( [info.accountType isEqualToString:@"3"]){
+        [self.view showResult:ResultViewTypeOK text:@"您已完成测评"];
+        return;
+    }
+    
     NSLog(@"%lu",(unsigned long)choicearr.count);
     [self.view showProgress:YES text:@"上传结果..."];
     self.view.userInteractionEnabled = NO;
