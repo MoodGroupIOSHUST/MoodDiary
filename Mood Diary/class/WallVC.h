@@ -31,6 +31,8 @@
     NSMutableDictionary *nicknamedic;
     
     BOOL morecomment;
+    
+    float heightwhenkeyboardshow;
 }
 
 @end

@@ -18,6 +18,9 @@
 //用户登录
 +(void)userLoginWithAccount:(NSString *)loginname loginpwd:(NSString *)loginpwd success:(SuccessBlock)success failed:(FailedBlock)failed;
 
+//文章列表
++(void)articleListWithStart:(NSString *)start limit:(NSString *)limit success:(SuccessBlock)success failed:(FailedBlock)failed;
+
 //上传测试结果
 +(void)uploadresult:(NSString *)result success:(SuccessBlock)success failed:(FailedBlock)failed;
 

@@ -8,6 +8,9 @@
 
 #import "RootViewController.h"
 
-@interface PaperVC : RootViewController
+@interface PaperVC : RootViewController<UITableViewDataSource,UITableViewDelegate>{
+    UITableView *articleTableView;
+}
+
 
 @end

@@ -7,8 +7,15 @@
 //
 
 #import "PaperVC.h"
-
-@interface PaperVC ()
+#import "ArticleDetailViewController.h"
+#import "AppWebService.h"
+#import "UIImageView+WebCache.h"
+#import "MJRefresh.h"
+@interface PaperVC (){
+    CGFloat height;
+    NSMutableArray *articleArray;
+    NSInteger numbersOfRow;
+}
 
 @end
 
@@ -16,8 +23,214 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    height = 100;
+    //numbersOfRow = 9;
+    [self initArticle];
+    [self initTableView];
 }
+
+
+- (void)initArticle{
+    [AppWebService articleListWithStart:@"0" limit:@"10" success:^(id result) {
+        NSLog(@"success");
+        NSLog(@"1");
+        NSDictionary *tempdata  = [result objectForKey:@"data"];
+        articleArray = [[NSMutableArray alloc]initWithArray:[tempdata objectForKey:@"acticles"]]; //这里接口有拼写错误
+        
+        for (int i = 0; i<articleArray.count; i++) {
+            NSMutableDictionary *contentdic = [[NSMutableDictionary alloc] initWithDictionary:[articleArray objectAtIndex:i]];
+            NSString *content = [contentdic objectForKey:@"content"];
+            
+            content = [self filterHTML:content];
+            
+            content = [self htmlEntityDecode:content];
+            
+            [contentdic setObject:content forKey:@"content"];
+            [articleArray replaceObjectAtIndex:i withObject:contentdic];
+        }
+        numbersOfRow = [[tempdata objectForKey:@"recordsTotal"] integerValue];
+        NSLog(@"%ld",(long)numbersOfRow);
+        
+        [articleTableView.header endRefreshing];
+        [articleTableView reloadData];
+        
+    } failed:^(NSError *error) {
+        NSLog(@"fail");
+        [self.view showProgress:NO];
+        self.view.userInteractionEnabled = YES;
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:[error.userInfo objectForKey:NSLocalizedDescriptionKey] delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];
+        [alert show];
+    }];
+    
+}
+
+- (void)getmoredata{
+    
+}
+
+-(NSString *)htmlEntityDecode:(NSString *)string
+{
+    string = [string stringByReplacingOccurrencesOfString:@"&quot;" withString:@"\""];
+    string = [string stringByReplacingOccurrencesOfString:@"&apos;" withString:@"'"];
+    string = [string stringByReplacingOccurrencesOfString:@"&amp;" withString:@"&"];
+    string = [string stringByReplacingOccurrencesOfString:@"&lt;" withString:@"<"];
+    string = [string stringByReplacingOccurrencesOfString:@"&gt;" withString:@">"];
+    
+    string = [string stringByReplacingOccurrencesOfString:@"&nbsp;" withString:@" "];
+    string = [string stringByReplacingOccurrencesOfString:@"&ldquo;" withString:@"“"];
+    string = [string stringByReplacingOccurrencesOfString:@"&rdquo;" withString:@"”"];
+    string = [string stringByReplacingOccurrencesOfString:@"&mdash;" withString:@"—"];
+    string = [string stringByReplacingOccurrencesOfString:@"&hellip;" withString:@"..."];
+    return string;
+}
+
+-(NSString *)filterHTML:(NSString *)html
+{
+    NSScanner * scanner = [NSScanner scannerWithString:html];
+    NSString * text = nil;
+    while([scanner isAtEnd]==NO)
+    {
+        //找到标签的起始位置
+        [scanner scanUpToString:@"<" intoString:nil];
+        //找到标签的结束位置
+        [scanner scanUpToString:@">" intoString:&text];
+        //替换字符
+        html = [html stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"%@>",text] withString:@""];
+    }
+    //    NSString * regEx = @"<([^>]*)>";
+    //    html = [html stringByReplacingOccurrencesOfString:regEx withString:@""];
+    return html;
+}
+
+- (void)initTableView{
+    NSLog(@"0");
+    articleTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-49)];
+    articleTableView.delegate = self;
+    articleTableView.dataSource = self;
+    articleTableView.tableFooterView = [[UIView alloc]init];
+    articleTableView.backgroundColor = [UIColor colorWithRed:219.0/255.0 green:222.0/255.0 blue:221.0/255.0 alpha:1.0];
+    
+    //添加上拉加载和下拉刷新
+    [articleTableView addLegendHeaderWithRefreshingTarget:self refreshingAction:@selector(initArticle)];
+    [articleTableView addLegendFooterWithRefreshingTarget:self refreshingAction:@selector(getmoredata)];
+    
+    CGRect frame = articleTableView.tableHeaderView.frame;
+    frame.size.height = 25;
+    [self.view addSubview:articleTableView];
+}
+
+
+
+#pragma mark - UITableViewDataSource
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+    return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    return numbersOfRow;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return height;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    return 10;
+}
+
+#pragma mark - UITableViewDelegate
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    static NSString *CellIdentifier = @"article";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        cell.selectionStyle = UITableViewCellStyleDefault;
+        cell.accessoryType = UITableViewCellAccessoryNone;
+        
+        [self setElementInCell:cell atIndexPath:indexPath];
+    }
+        [self configElementInCell:cell atIndexPath:indexPath];
+    return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    NSLog(@"%ld",(long)indexPath.row);
+    NSDictionary *dic = articleArray[indexPath.row];
+    NSString *tempString= [dic objectForKey:@"content"];
+    
+    ArticleDetailViewController *articleDetailViewController = [[ArticleDetailViewController alloc]init];
+    articleDetailViewController.text = tempString;
+    articleDetailViewController.titleString = [dic objectForKey:@"title"];
+    if(![[dic objectForKey:@"photo"] isEqual: [NSNull null]]){
+        NSString *urlstring = [@"http://etotech.net:8080" stringByAppendingString:[dic objectForKey:@"photo"]];
+        NSURL *url =[NSURL URLWithString:urlstring];
+        articleDetailViewController.url = url;
+    }else{
+        articleDetailViewController.url = nil;
+    }
+    
+    [self.navigationController pushViewController:articleDetailViewController animated:YES];
+}
+
+
+- (void)setElementInCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath{
+    NSDictionary *dic = articleArray[indexPath.row];
+    
+    UIView *tempBackgroundView = [[UIView alloc]initWithFrame:CGRectMake(10, 0, SCREEN_WIDTH-20, height-1 )];
+    tempBackgroundView.backgroundColor = [UIColor colorWithRed:204.0/255.0 green:196.0/255.0 blue:235.0/255.0 alpha:1.0];
+    [cell addSubview:tempBackgroundView];
+    
+   
+    
+    UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(20, 10, 80, 80)];
+    
+    if(![[dic objectForKey:@"photo"] isEqual: [NSNull null]]){
+        NSString *urlstring = [@"http://etotech.net:8080" stringByAppendingString:[dic objectForKey:@"photo"]];
+        NSURL *url =[NSURL URLWithString:urlstring];
+        [imageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"default"]];
+    }else{
+        UIImage *image = [UIImage imageNamed:@"articleTest.png"];
+        [imageView setImage:image];
+    }
+    imageView.tag = 30;
+    [cell addSubview:imageView];
+    
+    UILabel *title = [[UILabel alloc]initWithFrame:CGRectMake(110, 20, SCREEN_WIDTH - 118 , 30)];
+    title.tag = 31;
+    title.text = [dic objectForKey:@"title"];
+    [cell addSubview:title];
+    
+    UILabel *time = [[UILabel alloc]initWithFrame:CGRectMake(110, 60, SCREEN_WIDTH - 100, 30)];
+    time.tag = 32;
+    time.text = [dic objectForKey:@"date"];
+    time.textColor = [UIColor grayColor];
+    time.font = [UIFont systemFontOfSize:12];
+    [cell addSubview:time];
+    
+    cell.backgroundColor = [UIColor colorWithRed:219.0/255.0 green:222.0/255.0 blue:221.0/255.0 alpha:1.0];
+}
+
+- (void)configElementInCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath{
+    NSDictionary *dic = articleArray[indexPath.row];
+    
+    UIImageView *imageView = (UIImageView *)[cell viewWithTag:30];
+    if(![[dic objectForKey:@"photo"] isEqual: [NSNull null]]){
+        NSString *urlstring = [@"http://etotech.net:8080" stringByAppendingString:[dic objectForKey:@"photo"]];
+        NSURL *url =[NSURL URLWithString:urlstring];
+        [imageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"default"]];
+    }else{
+        UIImage *image = [UIImage imageNamed:@"articleTest.png"];
+        [imageView setImage:image];
+    }
+    
+    
+    UILabel *title = (UILabel *)[cell viewWithTag:31];
+    title.text = [dic objectForKey:@"title"];
+    UILabel *time  = (UILabel *)[cell viewWithTag:32];
+    time.text = [dic objectForKey:@"date"];
+}
+
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

@@ -95,6 +95,9 @@ static const CGFloat MJDuration = 1.0;
 
 - (void)clearbtnclicked{
     nicknamefield.text = @"";
+    changenick.frame = CGRectMake(0, heightwhenkeyboardshow, SCREEN_WIDTH, 120);
+    nicknamefield.frame = CGRectMake(20, 10, SCREEN_WIDTH-40, 40);
+    comfirmbtn.frame  = CGRectMake(20, changenick.frame.size.height-60, SCREEN_WIDTH-40, 50);
 }
 
 - (void)publish{
@@ -106,7 +109,6 @@ static const CGFloat MJDuration = 1.0;
     
     self.navigationItem.rightBarButtonItem = right;
     
-    [self.view showProgress:YES];
     [AppWebService publishcomment:nicknamefield.text success:^(id result) {
         [self.view showProgress:NO];
         [self.view showResult:ResultViewTypeOK text:@"匿名心情发表成功"];
@@ -268,6 +270,7 @@ static const CGFloat MJDuration = 1.0;
     [self hideview:changenick height:SCREEN_HEIGHT];
     walltable.userInteractionEnabled = YES;
     [nicknamefield resignFirstResponder];
+    self.navigationItem.rightBarButtonItem = right;
 }
 
 - (void)comfirmbtnpress:(UIButton *)sender{
@@ -295,6 +298,10 @@ static const CGFloat MJDuration = 1.0;
         [self getlistdata];
         
         subpostid = nil;
+        
+        self.navigationItem.rightBarButtonItem = right;
+        
+        [nicknamefield resignFirstResponder];
         
     } failed:^(NSError *error) {
         
@@ -480,6 +487,8 @@ static const CGFloat MJDuration = 1.0;
     NSLog(@"hight_hitht:%f",kbSize.height);
     _keboardheight = kbSize.height;
     
+    heightwhenkeyboardshow = SCREEN_HEIGHT - _keboardheight-changenick.frame.size.height;
+    
     [self showview:changenick height:(SCREEN_HEIGHT - _keboardheight-changenick.frame.size.height)];
     walltable.userInteractionEnabled = NO;
     
@@ -608,6 +617,7 @@ static const CGFloat MJDuration = 1.0;
     CGSize sizeFrame =[textView.text sizeWithFont:[UIFont systemFontOfSize:16] constrainedToSize:constraintSize lineBreakMode:NSLineBreakByWordWrapping];
     
     if (sizeFrame.height<40) {
+        nicknamefield.frame = CGRectMake(20, 10, SCREEN_WIDTH-40, 40);
         return;
     }
     

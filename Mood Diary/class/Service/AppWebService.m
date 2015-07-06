@@ -64,6 +64,36 @@
     }];
 }
 
+//文章列表
++(void)articleListWithStart:(NSString *)start limit:(NSString *)limit success:(SuccessBlock)success failed:(FailedBlock)failed{
+    NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:start, @"start", limit, @"limit", nil];
+    
+    [[iTourAPIClient sharedClient] postPath:@"article/list" parameters:dict success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSError *error = nil;
+        
+        NSDictionary *responseJson = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
+        //NSLog(@"%@",responseJson);
+        
+        NSString *result = [NSString stringWithFormat:@"%@",[responseJson objectForKey:@"isSuccess"]];
+        NSString *errormsg = [responseJson objectForKey:@"msg"];
+        NSLog(@"%@",errormsg);
+        
+        if (result && [result isEqualToString:@"1"]) {
+            SAFE_BLOCK_CALL(success, responseJson);
+        }
+        else
+        {
+            error = [NSError errorWithMsg:errormsg];
+            SAFE_BLOCK_CALL(failed, error);
+        }
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"%@", error);
+        error = [NSError errorWithMsg:SERVER_ERROR];
+        SAFE_BLOCK_CALL(failed, error);
+    }];
+}
+
 //上传scl测试结果
 +(void)uploadresult:(NSString *)result success:(SuccessBlock)success failed:(FailedBlock)failed
 {
