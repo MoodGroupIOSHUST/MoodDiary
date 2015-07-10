@@ -1,4 +1,4 @@
-//
+    //
 //  ArticleDetailViewController.m
 //  Mood Diary
 //
@@ -8,89 +8,46 @@
 
 #import "ArticleDetailViewController.h"
 #import "UIImageView+WebCache.h"
+#import "DataModel.h"
+#import "ArticleDetail.h"
 @interface ArticleDetailViewController (){
-    UIScrollView *scrollerView;
-    UIImageView *imageView;
-    UITextView *textView;
+    UIWebView *webView;
     NSInteger lastPosition;
     UIView *buttonView;
     UIButton *likeButton;
     UIButton *shareButton;
     UIButton *collectButton;
     BOOL buttonFlag;
+    DataModel *_dataModel;
 }
 
 @end
 
 @implementation ArticleDetailViewController
+@synthesize frameheight;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self initScrollView];
+    _dataModel = [[DataModel alloc]init];
+    [self initWebView];
+    
 }
 
-- (void)initScrollView{
+- (void)initWebView{
     
     self.view.backgroundColor = [UIColor colorWithRed:219.0/255.0 green:222.0/255.0 blue:221.0/255.0 alpha:1.0];
-    self.title = self.titleString;
-    scrollerView = [[UIScrollView alloc]initWithFrame:CGRectMake(10, 64, SCREEN_WIDTH-20, SCREEN_HEIGHT-44 - 64)];
-    scrollerView.backgroundColor = [UIColor clearColor];
-    scrollerView.scrollEnabled = YES;
-    scrollerView.delegate = self;
-    scrollerView.backgroundColor = [UIColor colorWithRed:204.0/255.0 green:196.0/255.0 blue:235.0/255.0 alpha:1.0];
-    
-    imageView = [[UIImageView alloc]initWithFrame:CGRectMake(5, 5, SCREEN_WIDTH - 20 -10, 200)];
-    textView = [[UITextView alloc]initWithFrame:CGRectMake(0, 10, SCREEN_WIDTH-20, SCREEN_HEIGHT*5)];
-    
-    if (self.url == nil) {
-        
-        imageView.image = nil;
-        imageView.frame = CGRectMake(5, 10, SCREEN_WIDTH-20-10, 5);
-    }else{
-        
-        [imageView sd_setImageWithURL:self.url placeholderImage:[UIImage imageNamed:@"default"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-            
-            imageView.frame = CGRectMake(5, 10, SCREEN_WIDTH-20-10, (SCREEN_WIDTH-20-10)*image.size.height/image.size.width);
-            
-            textView.frame = CGRectMake(0, imageView.frame.origin.y+imageView.frame.size.height+10, SCREEN_WIDTH-20, SCREEN_HEIGHT*5);
-            
-            CGSize sizeFrame =[textView.text sizeWithFont:[UIFont systemFontOfSize:17] constrainedToSize:CGSizeMake(SCREEN_WIDTH-20, 10000) lineBreakMode:NSLineBreakByWordWrapping];
-            
-            textView.frame = CGRectMake(0, textView.frame.origin.y, SCREEN_WIDTH-20, sizeFrame.height +10);
-            
-            CGSize size = scrollerView.contentSize;
-            size.height = imageView.bounds.size.height + textView.bounds.size.height + 40;
-            scrollerView.contentSize = size;
-            
-        }];
-    }
-    
-    [scrollerView addSubview:imageView];
-    
-    textView.backgroundColor = [UIColor clearColor];
-    textView.font = [UIFont systemFontOfSize:17];
-    textView.editable = NO;
-    textView.text = _text;
-    
-    CGSize sizeFrame =[textView.text sizeWithFont:[UIFont systemFontOfSize:17] constrainedToSize:CGSizeMake(SCREEN_WIDTH-20, 10000) lineBreakMode:NSLineBreakByWordWrapping];
-    
-    textView.frame = CGRectMake(0, textView.frame.origin.y, SCREEN_WIDTH-20, sizeFrame.height +10);
-    textView.scrollEnabled = NO;
-    [scrollerView addSubview:textView];
-    
-    [self.view addSubview:scrollerView];
-    
-    CGSize size = scrollerView.contentSize;
-    size.height = imageView.bounds.size.height + textView.bounds.size.height + 40;
-    scrollerView.contentSize = size;
+    webView = [[UIWebView alloc]initWithFrame:CGRectMake(0, upsideheight, SCREEN_WIDTH, frameheight)];
+    NSURLRequest *request = [NSURLRequest requestWithURL:self.url];
+    [self.view addSubview:webView];
+    [webView loadRequest:request];
+    webView.scrollView.delegate = self;
     self.automaticallyAdjustsScrollViewInsets = NO;
     buttonFlag = NO;
-    
 }
 
 - (void)setButton{
     if (buttonFlag == 0) {
-        buttonView = [[UIView alloc]initWithFrame:CGRectMake(SCREEN_WIDTH - 120 -5, SCREEN_HEIGHT-44-55, 120, 40)];
+        buttonView = [[UIView alloc]initWithFrame:CGRectMake(SCREEN_WIDTH - 120 -5, frameheight+upsideheight-50, 120, 40)];
         buttonView.backgroundColor = [UIColor clearColor];
         
         likeButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 40, 40)];
@@ -127,7 +84,7 @@
 
 #pragma mark - ScrollViewDelegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
-    NSInteger currentPosition = scrollerView.contentOffset.y;
+    NSInteger currentPosition = webView.scrollView.contentOffset.y;
     if (currentPosition - lastPosition >25) {
         if (buttonFlag == 1) {
             [self setButton];
@@ -148,12 +105,27 @@
 
 - (void)collectButtonTapped:(id)sender{
     NSLog(@"collectButtonTapped");
+    ArticleDetail *articlDetail = [[ArticleDetail alloc]init];
+    articlDetail.thumbnailURL = _thumbnailURL;
+    articlDetail.titleString = _titleString;
+    articlDetail.dateString = _dateString;
+    articlDetail.articleURL = _url;
+    articlDetail.IDString = _IDString;
+    BOOL flag;
+    flag = [_dataModel addObject:articlDetail];
+    if (flag == 1) {
+        [self.view showResult:ResultViewTypeOK text:@"收藏成功"];
+        NSLog(@"已收藏");
+    }else{
+        NSLog(@"已取消收藏");
+        [self.view showResult:ResultViewTypeOK text:@"取消收藏"];
+    }
+    [_dataModel saveArticles];
 }
 
 - (void)shareButtonTapped:(id)sender{
     NSLog(@"shareButtonTapped");
 }
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

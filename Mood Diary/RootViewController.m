@@ -34,6 +34,8 @@
         navheight = [self getnavheight];
         upsideheight = stateheight + navheight;
     }
+    
+    self.automaticallyAdjustsScrollViewInsets = NO;
 }
 
 -(void)initnav

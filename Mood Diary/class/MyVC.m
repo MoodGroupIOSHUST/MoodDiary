@@ -11,6 +11,8 @@
 #import "QueryVC.h"
 #import "AboutusVC.h"
 #import "AlertPwdViewController.h"
+#import "MyCollectionsViewController.h"
+#import "MyTestVC.h"
 
 @interface MyVC ()
 
@@ -31,7 +33,7 @@
 }
 
 - (void)initsettable{
-    settable = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-49)];
+    settable = [[UITableView alloc]initWithFrame:CGRectMake(0, upsideheight, SCREEN_WIDTH, SCREEN_HEIGHT-49)];
     settable.delegate = self;
     settable.dataSource = self;
     settable.tableFooterView = [[UIView alloc]init];
@@ -139,6 +141,16 @@
         AlertPwdViewController *changepwd = [[AlertPwdViewController alloc]init];
         changepwd.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:changepwd animated:YES];
+    }
+    else if (indexPath.row == 4){
+        MyCollectionsViewController *myCollectionsViewController=[[MyCollectionsViewController alloc]init];
+        myCollectionsViewController.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:myCollectionsViewController animated:YES];
+    }
+    else if (indexPath.row == 2){
+        MyTestVC *mytest=[[MyTestVC alloc]init];
+         mytest.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:mytest animated:YES];
     }
     
     NSIndexPath *selected = [tableView indexPathForSelectedRow];

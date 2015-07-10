@@ -65,6 +65,7 @@ static const CGFloat MJDuration = 1.0;
 
 - (void)writemood{
     
+    //发表心情墙
     self.navigationItem.rightBarButtonItem = clearbtn;
     
     //修改昵称
@@ -114,7 +115,9 @@ static const CGFloat MJDuration = 1.0;
         [self.view showResult:ResultViewTypeOK text:@"匿名心情发表成功"];
         
         [nicknamefield resignFirstResponder];
+        isaftercomment = YES;
         
+        nicknamefield.text = @"";
         [self getlistdata];
         
     } failed:^(NSError *error) {
@@ -124,7 +127,7 @@ static const CGFloat MJDuration = 1.0;
 }
 
 - (void)initwall{
-    walltable = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-49)];
+    walltable = [[UITableView alloc]initWithFrame:CGRectMake(0, upsideheight, SCREEN_WIDTH, SCREEN_HEIGHT-49)];
     walltable.delegate = self;
     walltable.dataSource = self;
     walltable.backgroundColor = [UIColor whiteColor];
@@ -147,12 +150,15 @@ static const CGFloat MJDuration = 1.0;
 - (void)getlistdata{
     //下拉刷新
     
-    [self.view showProgress:YES text:@"获取心情墙..."];
+    if (isaftercomment == NO) {
+        [self.view showProgress:YES text:@"获取心情墙..."];
+    }
     
     walltable.userInteractionEnabled = NO;
     
     [AppWebService moodwalllist:@"0" limit:_limit success:^(id result) {
         NSLog(@"success");
+        isaftercomment = NO;
         NSDictionary *datadic = [[NSDictionary alloc]init];
         datadic = [result objectForKey:@"data"];
         
@@ -186,6 +192,7 @@ static const CGFloat MJDuration = 1.0;
         });
         
     } failed:^(NSError *error) {
+        isaftercomment = NO;
         [self.view showProgress:NO];
         [self.view showResult:ResultViewTypeFaild text:@"获取失败，请稍后再试"];
         walltable.userInteractionEnabled = YES;
@@ -275,6 +282,7 @@ static const CGFloat MJDuration = 1.0;
 
 - (void)comfirmbtnpress:(UIButton *)sender{
     
+    //评论某人
     if (nicknamefield.text.length == 0) {
         [self.view showResult:ResultViewTypeFaild text:@"内容不能为空"];
         return;
@@ -295,6 +303,8 @@ static const CGFloat MJDuration = 1.0;
         dic = [walllist objectAtIndex:index];
         [self getcommentlist:[dic objectForKey:@"id"] start:@"0" limit:@"10" index:[NSString stringWithFormat:@"%ld",(long)index]];
         
+        isaftercomment = YES;
+        
         [self getlistdata];
         
         subpostid = nil;
@@ -302,6 +312,7 @@ static const CGFloat MJDuration = 1.0;
         self.navigationItem.rightBarButtonItem = right;
         
         [nicknamefield resignFirstResponder];
+        nicknamefield.text = @"";
         
     } failed:^(NSError *error) {
         
@@ -315,18 +326,12 @@ static const CGFloat MJDuration = 1.0;
 - (void)commentbtnclicked:(UIButton *)sender{
     NSLog(@"%ld",(long)sender.tag);
     
-    //修改昵称
     changenick.backgroundColor = [UIColor colorWithRed:225/255.0 green:225/255.0 blue:225/255.0 alpha:1.0];
     
     nicknamefield.delegate = self;
     nicknamefield.font = [UIFont systemFontOfSize:16];
     nicknamefield.returnKeyType = UIReturnKeyDone;
     
-    //在textfield框内添加空白
-//    UIView *leftview = [[UIView alloc]initWithFrame:CGRectMake(20, 10, 10, nicknamefield.frame.size.height)];
-//    leftview.backgroundColor = [UIColor clearColor];
-//    [nicknamefield setLeftView:leftview];
-//    nicknamefield.leftViewMode = UITextFieldViewModeAlways;
     
     nicknamefield.layer.borderWidth = 1;
     nicknamefield.layer.cornerRadius = 5;

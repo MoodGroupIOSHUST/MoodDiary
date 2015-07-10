@@ -12,7 +12,7 @@
 #import "UserInfo.h"
 #import "UIImageView+WebCache.h"
 
-@interface PersonalInfoVC : RootViewController<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate,UIAlertViewDelegate>
+@interface PersonalInfoVC : RootViewController<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate,UIAlertViewDelegate,UIPickerViewDataSource,UIPickerViewDelegate>
 
 {
     UITableView *persontable;

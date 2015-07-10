@@ -52,7 +52,7 @@
 + (void)submitFile :(NSData *)fileData FileName:(NSString *)filename success:(SuccessBlock)success failed:(FailedBlock)failed;
 
 //修改信息
-+ (void)changenick:(NSString *)nickname success:(SuccessBlock)success failed:(FailedBlock)failed;
++ (void)changenick:(NSString *)nickname type:(NSString *)type success:(SuccessBlock)success failed:(FailedBlock)failed;
 
 //获取验证码
 + (void)getcode:(NSString *)phonenumber success:(SuccessBlock)success failed:(FailedBlock)failed;

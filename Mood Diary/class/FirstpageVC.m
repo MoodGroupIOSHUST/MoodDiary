@@ -29,7 +29,7 @@
 }
 
 - (void)initparts{
-    scrollback = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 10, SCREEN_WIDTH, SCREEN_HEIGHT-upsideheight)];
+    scrollback = [[UIScrollView alloc]initWithFrame:CGRectMake(0, upsideheight+10, SCREEN_WIDTH, SCREEN_HEIGHT-upsideheight)];
     scrollback.backgroundColor = [UIColor whiteColor];
     scrollback.delegate = self;
     [self.view addSubview:scrollback];

@@ -11,7 +11,10 @@
 @interface ArticleDetailViewController : RootViewController<UIScrollViewDelegate>{
         //UITextView *textView;
 }
-@property (nonatomic, strong) NSString *text;
 @property (nonatomic, strong) NSURL *url;
-@property (nonatomic, strong) NSString *titleString;
+@property (nonatomic, copy)NSString *titleString;
+@property (nonatomic, copy)NSString *dateString;
+@property (nonatomic, copy)NSURL *thumbnailURL;
+@property (nonatomic, copy)NSString *IDString;
+@property (nonatomic)float frameheight;
 @end

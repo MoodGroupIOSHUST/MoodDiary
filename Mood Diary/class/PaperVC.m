@@ -15,6 +15,8 @@
     CGFloat height;
     NSMutableArray *articleArray;
     NSInteger numbersOfRow;
+    //NSInteger selectedRowOfIndexPath;
+    UIWebView *webView;
 }
 
 @end
@@ -24,34 +26,53 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     height = 100;
-    //numbersOfRow = 9;
-    [self initArticle];
+    
+    self.title = @"美文";
+    self.view.backgroundColor = [UIColor whiteColor];
+    
     [self initTableView];
+    [self initArticle];
+
 }
 
 
 - (void)initArticle{
+    
+    articleTableView.userInteractionEnabled = NO;
+    [self.view showProgress:YES text:@"获取美文..."];
+    
     [AppWebService articleListWithStart:@"0" limit:@"10" success:^(id result) {
-        NSLog(@"success");
-        NSLog(@"1");
         NSDictionary *tempdata  = [result objectForKey:@"data"];
         articleArray = [[NSMutableArray alloc]initWithArray:[tempdata objectForKey:@"acticles"]]; //这里接口有拼写错误
-        
-        for (int i = 0; i<articleArray.count; i++) {
-            NSMutableDictionary *contentdic = [[NSMutableDictionary alloc] initWithDictionary:[articleArray objectAtIndex:i]];
-            NSString *content = [contentdic objectForKey:@"content"];
-            
-            content = [self filterHTML:content];
-            
-            content = [self htmlEntityDecode:content];
-            
-            [contentdic setObject:content forKey:@"content"];
-            [articleArray replaceObjectAtIndex:i withObject:contentdic];
-        }
-        numbersOfRow = [[tempdata objectForKey:@"recordsTotal"] integerValue];
-        NSLog(@"%ld",(long)numbersOfRow);
-        
+        numbersOfRow = [articleArray count];
+        [self.view showProgress:NO];
         [articleTableView.header endRefreshing];
+        [articleTableView reloadData];
+        articleTableView.userInteractionEnabled = YES;
+        
+    } failed:^(NSError *error) {
+        NSLog(@"fail");
+        [self.view showProgress:NO];
+        articleTableView.userInteractionEnabled = YES;
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:[error.userInfo objectForKey:NSLocalizedDescriptionKey] delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];
+        [alert show];
+    }];
+}
+
+- (void)getmoredata{
+    
+    NSInteger count = [articleArray count];
+    NSString *string = [[NSString alloc]initWithFormat:@"%ld",(long)count];
+    
+    [AppWebService articleListWithStart:string limit:@"10" success:^(id result) {
+        NSDictionary *tempdata  = [result objectForKey:@"data"];
+        NSMutableArray *articleArray2 = [[NSMutableArray alloc]initWithArray:[tempdata objectForKey:@"acticles"]]; //这里接口有拼写错误
+        for (NSDictionary *dic in articleArray2) {
+            [articleArray addObject:dic];
+        }
+        numbersOfRow = [articleArray count];
+        
+        [articleTableView.footer endRefreshing];
         [articleTableView reloadData];
         
     } failed:^(NSError *error) {
@@ -60,55 +81,20 @@
         self.view.userInteractionEnabled = YES;
         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:[error.userInfo objectForKey:NSLocalizedDescriptionKey] delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];
         [alert show];
+        [articleTableView.footer endRefreshing];
     }];
-    
-}
-
-- (void)getmoredata{
-    
-}
-
--(NSString *)htmlEntityDecode:(NSString *)string
-{
-    string = [string stringByReplacingOccurrencesOfString:@"&quot;" withString:@"\""];
-    string = [string stringByReplacingOccurrencesOfString:@"&apos;" withString:@"'"];
-    string = [string stringByReplacingOccurrencesOfString:@"&amp;" withString:@"&"];
-    string = [string stringByReplacingOccurrencesOfString:@"&lt;" withString:@"<"];
-    string = [string stringByReplacingOccurrencesOfString:@"&gt;" withString:@">"];
-    
-    string = [string stringByReplacingOccurrencesOfString:@"&nbsp;" withString:@" "];
-    string = [string stringByReplacingOccurrencesOfString:@"&ldquo;" withString:@"“"];
-    string = [string stringByReplacingOccurrencesOfString:@"&rdquo;" withString:@"”"];
-    string = [string stringByReplacingOccurrencesOfString:@"&mdash;" withString:@"—"];
-    string = [string stringByReplacingOccurrencesOfString:@"&hellip;" withString:@"..."];
-    return string;
-}
-
--(NSString *)filterHTML:(NSString *)html
-{
-    NSScanner * scanner = [NSScanner scannerWithString:html];
-    NSString * text = nil;
-    while([scanner isAtEnd]==NO)
-    {
-        //找到标签的起始位置
-        [scanner scanUpToString:@"<" intoString:nil];
-        //找到标签的结束位置
-        [scanner scanUpToString:@">" intoString:&text];
-        //替换字符
-        html = [html stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"%@>",text] withString:@""];
-    }
-    //    NSString * regEx = @"<([^>]*)>";
-    //    html = [html stringByReplacingOccurrencesOfString:regEx withString:@""];
-    return html;
 }
 
 - (void)initTableView{
     NSLog(@"0");
-    articleTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-49)];
+    
+    articleTableView = [[UITableView alloc]initWithFrame:CGRectMake(0, upsideheight, SCREEN_WIDTH, SCREEN_HEIGHT-49-upsideheight)];
     articleTableView.delegate = self;
     articleTableView.dataSource = self;
     articleTableView.tableFooterView = [[UIView alloc]init];
     articleTableView.backgroundColor = [UIColor colorWithRed:219.0/255.0 green:222.0/255.0 blue:221.0/255.0 alpha:1.0];
+    [articleTableView setTableFooterView:[[UIView alloc]initWithFrame:CGRectZero]];
+    articleTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     //添加上拉加载和下拉刷新
     [articleTableView addLegendHeaderWithRefreshingTarget:self refreshingAction:@selector(initArticle)];
@@ -118,8 +104,6 @@
     frame.size.height = 25;
     [self.view addSubview:articleTableView];
 }
-
-
 
 #pragma mark - UITableViewDataSource
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
@@ -154,20 +138,24 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    NSLog(@"%ld",(long)indexPath.row);
     NSDictionary *dic = articleArray[indexPath.row];
-    NSString *tempString= [dic objectForKey:@"content"];
-    
     ArticleDetailViewController *articleDetailViewController = [[ArticleDetailViewController alloc]init];
-    articleDetailViewController.text = tempString;
+    NSString *tempString = [dic objectForKey:@"url"];
+    tempString = [@"http://etotech.net:8080" stringByAppendingString:tempString];
+    articleDetailViewController.url = [NSURL URLWithString:tempString];
     articleDetailViewController.titleString = [dic objectForKey:@"title"];
+    articleDetailViewController.dateString = [dic objectForKey:@"date"];
+    articleDetailViewController.frameheight = SCREEN_HEIGHT-upsideheight-49;
+    
     if(![[dic objectForKey:@"photo"] isEqual: [NSNull null]]){
         NSString *urlstring = [@"http://etotech.net:8080" stringByAppendingString:[dic objectForKey:@"photo"]];
         NSURL *url =[NSURL URLWithString:urlstring];
-        articleDetailViewController.url = url;
+        articleDetailViewController.thumbnailURL = url;
     }else{
-        articleDetailViewController.url = nil;
+        articleDetailViewController.thumbnailURL = nil;
     }
+
+    articleDetailViewController.IDString = [dic objectForKey:@"id"];
     
     [self.navigationController pushViewController:articleDetailViewController animated:YES];
 }
@@ -176,7 +164,7 @@
 - (void)setElementInCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath{
     NSDictionary *dic = articleArray[indexPath.row];
     
-    UIView *tempBackgroundView = [[UIView alloc]initWithFrame:CGRectMake(10, 0, SCREEN_WIDTH-20, height-1 )];
+    UIView *tempBackgroundView = [[UIView alloc]initWithFrame:CGRectMake(10, 4, SCREEN_WIDTH-20, height-4 )];
     tempBackgroundView.backgroundColor = [UIColor colorWithRed:204.0/255.0 green:196.0/255.0 blue:235.0/255.0 alpha:1.0];
     [cell addSubview:tempBackgroundView];
     
@@ -187,7 +175,7 @@
     if(![[dic objectForKey:@"photo"] isEqual: [NSNull null]]){
         NSString *urlstring = [@"http://etotech.net:8080" stringByAppendingString:[dic objectForKey:@"photo"]];
         NSURL *url =[NSURL URLWithString:urlstring];
-        [imageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"default"]];
+        [imageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"placeholder1"]];
     }else{
         UIImage *image = [UIImage imageNamed:@"articleTest.png"];
         [imageView setImage:image];
@@ -217,7 +205,7 @@
     if(![[dic objectForKey:@"photo"] isEqual: [NSNull null]]){
         NSString *urlstring = [@"http://etotech.net:8080" stringByAppendingString:[dic objectForKey:@"photo"]];
         NSURL *url =[NSURL URLWithString:urlstring];
-        [imageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"default"]];
+        [imageView sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"placeholder1"]];
     }else{
         UIImage *image = [UIImage imageNamed:@"articleTest.png"];
         [imageView setImage:image];

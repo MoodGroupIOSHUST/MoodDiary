@@ -26,7 +26,7 @@
 }
 
 - (void)initquerytable{
-    querytable = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
+    querytable = [[UITableView alloc]initWithFrame:CGRectMake(0, upsideheight, SCREEN_WIDTH, SCREEN_HEIGHT-upsideheight)];
     querytable.backgroundColor = [UIColor whiteColor];
     querytable.tableFooterView = [[UIView alloc]init];
     querytable.delegate = self;

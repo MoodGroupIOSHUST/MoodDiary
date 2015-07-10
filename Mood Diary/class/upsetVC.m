@@ -7,6 +7,7 @@
 //
 
 #import "upsetVC.h"
+#import "AdviceVC.h"
 
 @interface upsetVC ()
 
@@ -43,7 +44,7 @@
     upsetCollectionview.pagingEnabled = YES;
     upsetCollectionview.showsHorizontalScrollIndicator = NO;
     upsetCollectionview.showsVerticalScrollIndicator = NO;
-    [upsetCollectionview registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"testcell"];
+    [upsetCollectionview registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"upsetcell"];
     upsetCollectionview.dataSource = self;
     upsetCollectionview.delegate = self;
     
@@ -166,6 +167,7 @@
 - (void)upload{
     
     [upsetCollectionview removeFromSuperview];
+    [numberlabel removeFromSuperview];
     
     for (UIButton *btn in btarr) {
         [btn removeFromSuperview];
@@ -222,13 +224,10 @@
     NSString *replaced = [string stringByReplacingOccurrencesOfString:@"," withString:@""];
     NSLog(@"%@",string);
     
-    [self.view showProgress:YES];
     
     [AppWebService uploadupsetanddepress:replaced points:[NSString stringWithFormat:@"%d",result] type:@"2" success:^(id result) {
-        [self.view showProgress:NO];
-        [self.view showResult:ResultViewTypeOK text:@"上传成功"];
+        self.navigationItem.rightBarButtonItem = nil;
     } failed:^(NSError *error) {
-        [self.view showProgress:NO];
         [self.view showResult:ResultViewTypeFaild text:[error.userInfo objectForKey:NSLocalizedDescriptionKey]];
     }];
     
@@ -249,30 +248,47 @@
     
     [self.view addSubview:back];
     
+
     if (result<16) {
         //无
         imgview.image = [UIImage imageNamed:@"jiaolv_picresult0.jpg"];
         questionlable.text = @"没有焦虑";
     }
-    else if (result>=16&&result<=32){
+    else if (result>=16){
         //轻度
         imgview.image = [UIImage imageNamed:@"jiaolv_picresult1.jpg"];
         questionlable.text = @"轻度焦虑，请观察等待，随访时重复PHQ-9";
+        
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"轻度焦虑，请观察等待，随访时重复PHQ-9" delegate:self cancelButtonTitle:@"好的" otherButtonTitles:@"5个战胜焦虑的技巧",@"如何克服焦虑", nil];
+        alert.tag = 10086;
+        [alert show];
     }
-    else if (result>32&&result<=48){
+    else if (result>32){
         //中度
         imgview.image = [UIImage imageNamed:@"jiaolv_picresult2.jpg"];
         questionlable.text = @"中度焦虑，需要制定治疗计划，考虑咨询、随访或药物治疗";
+        
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"中度焦虑，需要制定治疗计划，考虑咨询、随访或药物治疗" delegate:self cancelButtonTitle:@"好的" otherButtonTitles:@"5个战胜焦虑的技巧",@"如何克服焦虑", nil];
+        alert.tag = 10086;
+        [alert show];
     }
-    else if (result>48&&result<=64){
+    else if (result>48){
         //重度
         imgview.image = [UIImage imageNamed:@"jiaolv_picresult3.jpg"];
         questionlable.text = @"中度焦虑，请采用积极的药物治疗或心理治疗";
+        
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"中度焦虑，请采用积极的药物治疗或心理治疗" delegate:self cancelButtonTitle:@"好的" otherButtonTitles:@"5个战胜焦虑的技巧",@"如何克服焦虑", nil];
+        alert.tag = 10086;
+        [alert show];
     }
     else if (result>64){
         //重度
         imgview.image = [UIImage imageNamed:@"jiaolv_picresult4.jpg"];
         questionlable.text = @"重度焦虑，需要立即选择药物治疗，若严重损伤或治疗无效，建议转至精神疾病治疗专家，进行心理治疗或综合治疗";
+        
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"重度焦虑，需要立即选择药物治疗，若严重损伤或治疗无效，建议转至精神疾病治疗专家，进行心理治疗或综合治疗" delegate:self cancelButtonTitle:@"好的"otherButtonTitles:@"5个战胜焦虑的技巧",@"如何克服焦虑", nil];
+        alert.tag = 10086;
+        [alert show];
     }
     
 }
@@ -285,7 +301,7 @@
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"testcell" forIndexPath:indexPath];
+    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"upsetcell" forIndexPath:indexPath];
     
     for (UIView *v in cell.contentView.subviews) {
         [v removeFromSuperview];
@@ -353,6 +369,27 @@
         
         if ((choicearr.count-itemIndex)==1) {
             [choicearr removeLastObject];
+        }
+    }
+}
+
+#pragma mark - uialertviewdelegate
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (alertView.tag == 10086) {
+        if (buttonIndex == 1) {
+            AdviceVC *advice = [[AdviceVC alloc]init];
+            advice.advicetype = @"jiaolv5";
+            
+            [self.navigationController pushViewController:advice animated:YES];
+        }
+        else if(buttonIndex ==2){
+            AdviceVC *advice = [[AdviceVC alloc]init];
+            advice.advicetype = @"kefujiaolvzhihu";
+            
+            [self.navigationController pushViewController:advice animated:YES];
+        }
+        else if (buttonIndex == 0){
+//            [self.navigationController popToRootViewControllerAnimated:YES];
         }
     }
 }

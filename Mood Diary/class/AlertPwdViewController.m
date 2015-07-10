@@ -27,7 +27,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.title = @"修改密码";
+    self.title = @"密码设置";
     self.view.backgroundColor = [UIColor colorWithRed:230/255.0 green:230/255.0 blue:230/255.0 alpha:1.0];
     [self initView];
     
@@ -164,7 +164,7 @@
 }
 
 -(void)alertPwdDone {
-    UserInfo *userInfo = [NSUserDefaults objectUserForKey:USER_STOKRN_KEY];
+
     if (orPwdTx.text.length==0) {
         [self.view showResult:ResultViewTypeFaild text:@"旧密码不能为空"];
         return;

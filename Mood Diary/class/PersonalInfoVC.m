@@ -15,9 +15,15 @@
 #import "SDImageCache.h"
 
 @interface PersonalInfoVC ()<UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIActionSheetDelegate, VPImageCropperDelegate>
+{
+    UIView *sexBackView;
+    
+    UIPickerView *sexPicker;
+}
 
 @property (nonatomic) CGFloat height;
 @property (nonatomic, retain) NSString *nickname;
+@property (nonatomic, retain) NSString *usersex;
 @property (nonatomic) CGFloat keboardheight;
 @property (nonatomic, strong) UIImageView *portraitImageView;
 
@@ -35,12 +41,24 @@
     _nickname = [NSString stringWithFormat:@"%@",info.nickname];
     self.title = @"账户设置";
     
+    if (info.sex == nil) {
+        _usersex = nil;
+    }
+    else if ([info.sex isEqualToString:@"1"])
+    {
+        _usersex = @"男";
+    }
+    else{
+        _usersex = @"女";
+    }
+    
     [self initpersonaltable];
     [self initKeyboardNotification];
+    [self initSexPickerModel];
 }
 
 - (void)initpersonaltable{
-    persontable = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-49)];
+    persontable = [[UITableView alloc]initWithFrame:CGRectMake(0, upsideheight, SCREEN_WIDTH, SCREEN_HEIGHT-49)];
     persontable.backgroundColor = [UIColor clearColor];
     persontable.delegate = self;
     persontable.dataSource = self;
@@ -48,6 +66,93 @@
     persontable.tableFooterView = [[UIView alloc]init];
     
     [self.view addSubview:persontable];
+}
+
+-(void)initSexPickerModel
+{
+    sexBackView = [[UIView alloc]initWithFrame:CGRectMake(0, SCREEN_HEIGHT, SCREEN_WIDTH, 200)];
+    sexBackView.backgroundColor = [UIColor colorWithRed:240/255.0 green:240/255.0 blue:240/255.0 alpha:1.0];
+    sexBackView.tag = 0;
+    [self.view addSubview:sexBackView];
+    
+    sexPicker = [[UIPickerView alloc]initWithFrame:CGRectMake(0, 40, SCREEN_WIDTH, 100)];
+    sexPicker.backgroundColor = [UIColor clearColor];
+    [sexBackView addSubview:sexPicker];
+    sexPicker.delegate = self;
+    sexPicker.dataSource = self;
+    
+    UIButton *sureBt = [[UIButton alloc]initWithFrame:CGRectMake(SCREEN_WIDTH-10-80, 5, 80, 30)];
+    sureBt.tag = 2;//跟row保持一致
+    sureBt.layer.masksToBounds = YES;
+    sureBt.layer.cornerRadius = 5;
+    sureBt.layer.borderWidth = 0;
+    sureBt.layer.borderColor = [UIColor colorWithRed:237/255.0 green:237/255.0 blue:237/255.0 alpha:1.0].CGColor;
+    [sureBt setTitle:@"完成" forState:UIControlStateNormal];
+    [sureBt setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [sureBt addTarget:self action:@selector(sureBtClicked:) forControlEvents:UIControlEventTouchUpInside];
+    [sexBackView addSubview:sureBt];
+    
+    UIView *line = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 1)];
+    line.backgroundColor = [UIColor colorWithRed:220/255.0 green:220/255.0 blue:237/255.0 alpha:1.0];
+    [sexBackView addSubview:line];
+    
+    line = [[UIView alloc]initWithFrame:CGRectMake(0, 39, SCREEN_WIDTH, 1)];
+    line.backgroundColor = [UIColor colorWithRed:220/255.0 green:220/255.0 blue:220/255.0 alpha:1.0];
+    [sexBackView addSubview:line];
+}
+
+- (void)sureBtClicked:(UIButton *)sender{
+    NSInteger index = [sexPicker selectedRowInComponent:0];
+    
+    [AppWebService changenick:[NSString stringWithFormat:@"%ld",(long)index] type:@"sex" success:^(id result) {
+        [self.view showProgress:NO];
+        [self.view showResult:ResultViewTypeOK text:@"性别修改成功"];
+        
+        UserInfo *info = [NSUserDefaults objectUserForKey:USER_STOKRN_KEY];
+        info.sex = [NSString stringWithFormat:@"%ld",(long)index];
+        
+        [NSUserDefaults setUserObject:info forKey:USER_STOKRN_KEY];
+        
+        if (index == 0) {
+            _usersex = @"女";
+        }
+        else if (index == 1){
+            _usersex = @"男";
+        }
+        
+        [persontable reloadData];
+        
+    } failed:^(NSError *error) {
+        [self.view showProgress:NO];
+        [self.view showResult:ResultViewTypeFaild text:[error.userInfo objectForKey:NSLocalizedDescriptionKey]];
+    }];
+
+    
+}
+
+- (void)comfirmbtnpress:(UIButton *)sender{
+    //修改昵称
+    [self hideview:changenick height:SCREEN_HEIGHT];
+    [changenick resignFirstResponder];
+    
+    [self.view showProgress:YES];
+    [AppWebService changenick:nicknamefield.text type:@"nickname" success:^(id result) {
+        [self.view showProgress:NO];
+        [self.view showResult:ResultViewTypeOK text:@"昵称修改成功"];
+        
+        UserInfo *info = [NSUserDefaults objectUserForKey:USER_STOKRN_KEY];
+        info.nickname = [NSString stringWithFormat:@"%@",nicknamefield.text];
+        
+        _nickname = nicknamefield.text;
+        
+        [NSUserDefaults setUserObject:info forKey:USER_STOKRN_KEY];
+        
+        [persontable reloadData];
+        
+    } failed:^(NSError *error) {
+        [self.view showProgress:NO];
+        [self.view showResult:ResultViewTypeFaild text:[error.userInfo objectForKey:NSLocalizedDescriptionKey]];
+    }];
 }
 
 - (void)picbtnpress:(UIButton *)sender{
@@ -60,24 +165,6 @@
 
 - (void)cancelbtnpress:(UIButton *)sender{
     [self hideview:changepicback height:SCREEN_HEIGHT];
-}
-
-- (void)comfirmbtnpress:(UIButton *)sender{
-    //修改昵称
-    [self hideview:changenick height:SCREEN_HEIGHT];
-    [changenick resignFirstResponder];
-    
-    [self.view showProgress:YES];
-    [AppWebService changenick:nicknamefield.text success:^(id result) {
-        [self.view showProgress:NO];
-        [self.view showResult:ResultViewTypeOK text:@"昵称修改成功"];
-        
-        [persontable reloadData];
-        
-    } failed:^(NSError *error) {
-        [self.view showProgress:NO];
-        [self.view showResult:ResultViewTypeFaild text:[error.userInfo objectForKey:NSLocalizedDescriptionKey]];
-    }];
 }
 
 - (void)initKeyboardNotification{
@@ -97,6 +184,8 @@
 }
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
+    
+    [self inView:sexBackView];
     [self hideview:changepicback height:SCREEN_HEIGHT];
     [self hideview:changenick height:SCREEN_HEIGHT];
     persontable.userInteractionEnabled = YES;
@@ -147,6 +236,47 @@
     return img;
 }
 
+-(void)popView:(UIView *)sender
+{
+    
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    [UIView beginAnimations:nil context:context];
+    [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
+    [UIView setAnimationDuration:0.4];//动画时间长度，单位秒，浮点数
+    [self.view exchangeSubviewAtIndex:0 withSubviewAtIndex:1];
+    sender.frame = CGRectMake(0, SCREEN_HEIGHT-200, SCREEN_WIDTH, 200);
+    
+    [UIView setAnimationDelegate:self];
+    // 动画完毕后调用animationFinished
+    [UIView setAnimationDidStopSelector:@selector(animationFinished)];
+    [UIView commitAnimations];
+    sender.tag = 1;
+    persontable.userInteractionEnabled = NO;
+    //    [self ViewAnimation:self.pickerView willHidden:NO];
+}
+
+-(void)inView:(UIView *)sender
+{
+    //    [self ViewAnimation:self.pickerView willHidden:YES];
+    
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    [UIView beginAnimations:nil context:context];
+    [UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
+    [UIView setAnimationDuration:0.4];//动画时间长度，单位秒，浮点数
+    sender.frame = CGRectMake(0, SCREEN_HEIGHT, SCREEN_WIDTH, 200);
+    
+    [UIView setAnimationDelegate:self];
+    // 动画完毕后调用animationFinished
+    [UIView setAnimationDidStopSelector:@selector(animationFinished)];
+    [UIView commitAnimations];
+    sender.tag = 0;
+    persontable.userInteractionEnabled = YES;
+}
+
+- (void)animationFinished{
+    
+}
+
 #pragma mark - KeyboardNotification
 -(void) keyboardWillShow:(NSNotification *) note
 {
@@ -172,7 +302,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 2;
+    return 3;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
@@ -212,6 +342,7 @@
     
     UILabel *content = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_WIDTH-10, 2, 100, _height-4)];
     content.textAlignment = NSTextAlignmentRight;
+
     
     if (indexPath.row == 0) {
         imgview.backgroundColor = [UIColor clearColor];
@@ -233,6 +364,20 @@
         }
         else{
             title.text = [NSString stringWithFormat:@"昵    称： %@",_nickname];
+        }
+        
+        [cell.contentView addSubview:title];
+        [cell.contentView addSubview:content];
+    }
+    
+    else if(indexPath.row == 2){
+        title.text = @"性    别：";
+        
+        if (_usersex == nil) {
+            content.text = @"";
+        }
+        else{
+            title.text = [NSString stringWithFormat:@"性    别： %@",_usersex];
         }
         
         [cell.contentView addSubview:title];
@@ -327,6 +472,35 @@
         [nicknamefield becomeFirstResponder];
         
     }
+    
+    else if (indexPath.row == 2){
+        [self popView:sexBackView];
+    }
+}
+
+#pragma pickerviewdatasource
+-(NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
+{
+    return 1;
+}
+
+-(NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
+{
+    return 2;
+}
+
+#pragma mark-pickerviewdelegate
+-(NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
+{
+    if (row == 0) {
+        return @"女";
+    }
+    return @"男";
+}
+
+-(CGFloat)pickerView:(UIPickerView *)pickerView widthForComponent:(NSInteger)component;
+{
+    return 40;
 }
 
 #pragma mark - uitextfielddelegate

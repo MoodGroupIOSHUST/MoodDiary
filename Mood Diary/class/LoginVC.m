@@ -7,7 +7,6 @@
 //
 
 #import "LoginVC.h"
-#import "WelcomeVC.h"
 #import "FindPasswordViewController.h"
 
 @interface LoginVC ()
@@ -187,7 +186,7 @@
     [signUpButton setTitle:@"注册" forState:UIControlStateNormal];
     [signUpButton setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
     [signUpButton setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
-    [scrollView addSubview:signUpButton];
+//    [scrollView addSubview:signUpButton];
     [signUpButton addTarget:self action:@selector(signUpClicked) forControlEvents:UIControlEventTouchUpInside];
 }
 
@@ -198,11 +197,11 @@
 #pragma mark - Action
 -(void)userlogin
 {
-//    if (useraccountTF.text.length == 0) {
-//        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"用户名不能为空！" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
-//        [alert show];
-//        return;
-//    }
+    if (useraccountTF.text.length == 0) {
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"用户名不能为空！" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+        [alert show];
+        return;
+    }
     if (pwdTF.text.length == 0) {
         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"密码不能为空！" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
         [alert show];
@@ -211,7 +210,7 @@
     
     self.view.userInteractionEnabled = NO;
     [self.view showProgress:YES text:@"请等待..."];
-    [AppWebService userLoginWithAccount:@"15271895560" loginpwd:pwdTF.text success:^(id result) {
+    [AppWebService userLoginWithAccount:useraccountTF.text loginpwd:pwdTF.text success:^(id result) {
         NSLog(@"success");
         [self.view showProgress:NO];
         self.view.userInteractionEnabled = YES;

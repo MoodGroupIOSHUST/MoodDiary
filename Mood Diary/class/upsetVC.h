@@ -8,7 +8,7 @@
 
 #import "RootViewController.h"
 
-@interface upsetVC : RootViewController<UICollectionViewDelegate,UICollectionViewDataSource>
+@interface upsetVC : RootViewController<UICollectionViewDelegate,UICollectionViewDataSource,UIAlertViewDelegate>
 {
     NSMutableArray *choicearr;
     

@@ -33,6 +33,8 @@
     BOOL morecomment;
     
     float heightwhenkeyboardshow;
+    
+    BOOL isaftercomment;
 }
 
 @end

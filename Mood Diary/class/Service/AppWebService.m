@@ -132,7 +132,7 @@
     [dict setObject:[NSNumber numberWithInt:score] forKey:@"points"];
     [dict setObject:[NSNumber numberWithInt:testtype] forKey:@"type"];
     
-    [[iTourAPIClient sharedClient] postPath:API_UPLOADTEST parameters:dict success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [[iTourAPIClient sharedClient] postPath:@"test/submit" parameters:dict success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSDictionary *responseJson = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
         NSLog(@"%@",responseJson);
         
@@ -501,8 +501,8 @@
 //}
 
 //修改信息
-+ (void)changenick:(NSString *)nickname success:(SuccessBlock)success failed:(FailedBlock)failed{
-    NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:nickname,@"nickname",nil];
++ (void)changenick:(NSString *)nickname type:(NSString *)type success:(SuccessBlock)success failed:(FailedBlock)failed{
+    NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:nickname,type,nil];
     [[iTourAPIClient sharedClient] postPath:@"user/modify?" parameters:dict success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSDictionary *responseJson = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
         NSLog(@"%@",responseJson);
