@@ -68,11 +68,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Mood Diary/class/Service/AppWebService.m"
-            timestampString = "458204451.338249"
+            timestampString = "458548748.915534"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "153"
-            endingLineNumber = "153"
+            startingLineNumber = "174"
+            endingLineNumber = "174"
             landmarkName = "+uploadupsetanddepress:points:type:success:failed:"
             landmarkType = "5">
          </BreakpointContent>

@@ -64,6 +64,27 @@
     }];
 }
 
+//用户登出
++(void)logoutsuccess:(SuccessBlock)success failed:(FailedBlock)failed{
+    [[iTourAPIClient sharedClient] postPath:@"logout" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSDictionary *responseJson = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];
+        //NSLog(@"%@",responseJson);
+        
+        NSString *errormsg = [responseJson objectForKey:@"msg"];
+        NSLog(@"%@",errormsg);
+        
+
+        SAFE_BLOCK_CALL(success, responseJson);
+ 
+            
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"%@", error);
+        error = [NSError errorWithMsg:SERVER_ERROR];
+        SAFE_BLOCK_CALL(failed, error);
+    }];
+}
+
 //文章列表
 +(void)articleListWithStart:(NSString *)start limit:(NSString *)limit success:(SuccessBlock)success failed:(FailedBlock)failed{
     NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:start, @"start", limit, @"limit", nil];

@@ -1070,6 +1070,9 @@
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = "Mood Group";
 				TargetAttributes = {
+					A573B9DE1AD564F500213FCD = {
+						DevelopmentTeam = 3S562NHR75;
+					};
 					A573B9F91AD564F500213FCD = {
 						TestTargetID = A573B9DE1AD564F500213FCD;
 					};
@@ -1421,8 +1424,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = NO;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Chen YongFu (8P2C2T228Q)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Chen YongFu (8P2C2T228Q)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: saisai Zhou (3S562NHR75)";
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = "Mood Diary/Mood Diary-Prefix.pch";
 				INFOPLIST_FILE = "Mood Diary/Mood Diary-Info.plist";
@@ -1430,7 +1433,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-all_load";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "abd27f3b-b679-46f2-979d-2554f5d5a5d8";
+				PROVISIONING_PROFILE = "9b6b5695-11ae-42b9-9e24-dce2a72c9564";
 				SKIP_INSTALL = NO;
 				WRAPPER_EXTENSION = app;
 			};
@@ -1442,8 +1445,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = NO;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Chen YongFu (8P2C2T228Q)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Chen YongFu (8P2C2T228Q)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: saisai Zhou (3S562NHR75)";
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = "Mood Diary/Mood Diary-Prefix.pch";
 				INFOPLIST_FILE = "Mood Diary/Mood Diary-Info.plist";
@@ -1451,7 +1454,7 @@
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-all_load";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "abd27f3b-b679-46f2-979d-2554f5d5a5d8";
+				PROVISIONING_PROFILE = "9b6b5695-11ae-42b9-9e24-dce2a72c9564";
 				SKIP_INSTALL = NO;
 				WRAPPER_EXTENSION = app;
 			};

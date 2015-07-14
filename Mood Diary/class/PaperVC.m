@@ -54,8 +54,10 @@
         NSLog(@"fail");
         [self.view showProgress:NO];
         articleTableView.userInteractionEnabled = YES;
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:[error.userInfo objectForKey:NSLocalizedDescriptionKey] delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];
-        [alert show];
+        
+        [self.view showResult:ResultViewTypeFaild text:[error.userInfo objectForKey:NSLocalizedDescriptionKey]];
+        
+        [articleTableView.header endRefreshing];
     }];
 }
 
@@ -79,8 +81,9 @@
         NSLog(@"fail");
         [self.view showProgress:NO];
         self.view.userInteractionEnabled = YES;
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:[error.userInfo objectForKey:NSLocalizedDescriptionKey] delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];
-        [alert show];
+        
+        [self.view showResult:ResultViewTypeFaild text:[error.userInfo objectForKey:NSLocalizedDescriptionKey]];
+        
         [articleTableView.footer endRefreshing];
     }];
 }

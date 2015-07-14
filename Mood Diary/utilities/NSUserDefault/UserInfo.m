@@ -24,6 +24,7 @@
 @synthesize signature;
 @synthesize status;
 @synthesize useraccount;
+@synthesize password;
 
 - (id)initWithCoder:(NSCoder *)decoder {
     self = [super init];
@@ -43,6 +44,7 @@
         self.signature = [decoder decodeObjectForKey:@"signature"];
         self.status = [decoder decodeObjectForKey:@"status"];
         self.useraccount = [decoder decodeObjectForKey:@"useraccount"];
+        self.password = [decoder decodeObjectForKey:@"password"];
     }
     
     return self;
@@ -64,6 +66,7 @@
     [encoder encodeObject:self.signature forKey:@"signature"];
     [encoder encodeObject:self.status forKey:@"status"];
     [encoder encodeObject:self.useraccount forKey:@"useraccount"];
+    [encoder encodeObject:self.password forKey:@"password"];
 }
 
 -(void)dealloc{

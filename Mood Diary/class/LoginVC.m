@@ -233,6 +233,7 @@
         userinfo.signature = [NSString stringWithFormat:@"%@",[infoDic objectForKey:@"signature"]];
         userinfo.status = [NSString stringWithFormat:@"%@",[infoDic objectForKey:@"status"]];
         userinfo.useraccount = [NSString stringWithFormat:@"%@",[infoDic objectForKey:@"username"]];
+        userinfo.password = pwdTF.text;
         
         [NSUserDefaults setUserObject:userinfo forKey:USER_STOKRN_KEY];
         [NSUserDefaults setBool:YES forKey:IS_LOGIN];
@@ -244,8 +245,7 @@
         NSLog(@"fail");
         [self.view showProgress:NO];
         self.view.userInteractionEnabled = YES;
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:[error.userInfo objectForKey:NSLocalizedDescriptionKey] delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];
-        [alert show];
+        [self.view showResult:ResultViewTypeFaild text:[error.userInfo objectForKey:NSLocalizedDescriptionKey]];
     }];
 }
 

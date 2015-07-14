@@ -33,10 +33,62 @@
 
 -(void)ininloginvc
 {
-    [NSUserDefaults setBool:NO forKey:IS_LOGIN];
-    LoginVC *loginvc = [[LoginVC alloc]init];
-    UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:loginvc];
-    self.window.rootViewController = nav;
+    UserInfo *info = [NSUserDefaults objectUserForKey:USER_STOKRN_KEY];
+    
+    if (info.useraccount.length>0&&info.password.length>0) {
+        //自动登陆
+        
+        NSString *passwaord = info.password;
+        
+        [AppWebService userLoginWithAccount:info.useraccount loginpwd:info.password success:^(id result) {
+            NSLog(@"success");
+
+            NSDictionary *temdata  = [result objectForKey:@"data"];
+            NSDictionary *infoDic = [[NSDictionary alloc]initWithDictionary:[temdata objectForKey:@"account"]];
+            
+            UserInfo *userinfo  = [[UserInfo alloc]init];
+            userinfo.accountType = [NSString stringWithFormat:@"%@",[infoDic objectForKey:@"accountType"]];
+            userinfo.birthday = [NSString stringWithFormat:@"%@",[infoDic objectForKey:@"birthday"]];
+            userinfo.email = [NSString stringWithFormat:@"%@",[infoDic objectForKey:@"email"]];
+            userinfo.userid = [NSString stringWithFormat:@"%@",[infoDic objectForKey:@"userid"]];
+            userinfo.idCard = [NSString stringWithFormat:@"%@",[infoDic objectForKey:@"idCard"]];
+            userinfo.loginCount = [NSString stringWithFormat:@"%@",[infoDic objectForKey:@"loginCount"]];
+            userinfo.name = [NSString stringWithFormat:@"%@",[infoDic objectForKey:@"name"]];
+            userinfo.nickname = [NSString stringWithFormat:@"%@",[infoDic objectForKey:@"nickname"]];
+            userinfo.phone = [NSString stringWithFormat:@"%@",[infoDic objectForKey:@"phone"]];
+            userinfo.photo = [NSString stringWithFormat:@"%@",[infoDic objectForKey:@"photo"]];
+            userinfo.registerDate = [NSString stringWithFormat:@"%@",[infoDic objectForKey:@"registerDate"]];
+            userinfo.sex = [NSString stringWithFormat:@"%@",[infoDic objectForKey:@"sex"]];
+            userinfo.signature = [NSString stringWithFormat:@"%@",[infoDic objectForKey:@"signature"]];
+            userinfo.status = [NSString stringWithFormat:@"%@",[infoDic objectForKey:@"status"]];
+            userinfo.useraccount = [NSString stringWithFormat:@"%@",[infoDic objectForKey:@"username"]];
+            userinfo.password = passwaord;
+            
+            [NSUserDefaults setUserObject:userinfo forKey:USER_STOKRN_KEY];
+            [NSUserDefaults setBool:YES forKey:IS_LOGIN];
+            
+            [[NSNotificationCenter defaultCenter] postNotificationName:GO_TO_CONTROLLER object:nil];
+            
+            
+        } failed:^(NSError *error) {
+            NSLog(@"fail");
+            
+            [NSUserDefaults setBool:NO forKey:IS_LOGIN];
+            
+            [self goToWhitchViewController];
+            
+            
+        }];
+
+    }
+    else{
+        
+        //手动登陆
+        [NSUserDefaults setBool:NO forKey:IS_LOGIN];
+        LoginVC *loginvc = [[LoginVC alloc]init];
+        UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:loginvc];
+        self.window.rootViewController = nav;
+    }
 }
 
 - (void)goToWhitchViewController{

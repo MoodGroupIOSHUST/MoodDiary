@@ -36,6 +36,7 @@
     settable = [[UITableView alloc]initWithFrame:CGRectMake(0, upsideheight, SCREEN_WIDTH, SCREEN_HEIGHT-49)];
     settable.delegate = self;
     settable.dataSource = self;
+    
     settable.tableFooterView = [[UIView alloc]init];
     
     CGRect frame = settable.tableHeaderView.frame;
@@ -45,16 +46,35 @@
     
 }
 
+- (void)logoutbtclicked{
+    [AppWebService logoutsuccess:^(id result) {
+        
+        [NSUserDefaults setBool:NO forKey:IS_LOGIN];
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:GO_TO_CONTROLLER object:nil];
+        
+    } failed:^(NSError *error) {
+        
+        [self.view showResult:ResultViewTypeFaild text:[error.userInfo objectForKey:NSLocalizedDescriptionKey]];
+    }];
+}
+
 #pragma mark - uitableviewdatasource
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 1;
+    return 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    if (section == 1) {
+        return 0;
+    }
     return 6;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    if (section == 1) {
+        return 70;
+    }
     return 0;
 }
 
@@ -118,6 +138,37 @@
     [cell.contentView addSubview:title];
     
     return cell;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
+    
+    if (section == 1) {
+        UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 70)];
+        view.backgroundColor = [UIColor clearColor];
+        
+        UIButton *logoutBt = [[UIButton alloc]initWithFrame:CGRectMake(30, 20, SCREEN_WIDTH-60, _height-20)];
+        [logoutBt addTarget:self action:@selector(logoutbtclicked) forControlEvents:UIControlEventTouchUpInside];
+        logoutBt.layer.masksToBounds = YES;
+        logoutBt.layer.cornerRadius = 5;
+        
+        logoutBt.backgroundColor = [UIColor colorWithRed:240/255.0 green:0/255.0 blue:50/255.0 alpha:0.9];
+        [logoutBt setTitle:@"注  销  登  陆" forState:UIControlStateNormal];
+        [logoutBt setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        
+        UIView *line = [[UIView alloc]initWithFrame:CGRectMake(15, 0, SCREEN_WIDTH, 0.5)];
+        line.backgroundColor = [UIColor colorWithRed:200/255.0 green:200/255.0 blue:200/255.0 alpha:1.0];
+//        line.backgroundColor = [UIColor lightGrayColor];
+        
+        [view addSubview:line];
+        
+        [view addSubview:logoutBt];
+        
+        return view;
+    }
+    
+    else{
+        return nil;
+    }
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
