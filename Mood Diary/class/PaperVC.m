@@ -148,6 +148,7 @@
     articleDetailViewController.url = [NSURL URLWithString:tempString];
     articleDetailViewController.titleString = [dic objectForKey:@"title"];
     articleDetailViewController.dateString = [dic objectForKey:@"date"];
+    articleDetailViewController.digest = [dic objectForKey:@"digest"];
     articleDetailViewController.frameheight = SCREEN_HEIGHT-upsideheight-49;
     
     if(![[dic objectForKey:@"photo"] isEqual: [NSNull null]]){

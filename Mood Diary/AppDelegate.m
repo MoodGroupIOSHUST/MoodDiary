@@ -8,6 +8,9 @@
 
 #import "AppDelegate.h"
 #import "LoginVC.h"
+#import "UMSocial.h"
+#import "UMSocialSinaHandler.h"
+#import "UMSocialQQHandler.h"
 
 
 @implementation AppDelegate
@@ -18,7 +21,10 @@
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
     [self registernotify];
+    [self setUmengShare];
+    
     [self ininloginvc];
+    
     
     [self.window makeKeyAndVisible];
     return YES;
@@ -29,6 +35,15 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(goToWhitchViewController)
                                                  name:GO_TO_CONTROLLER object:nil];
+}
+
+- (void)setUmengShare{
+    [UMSocialData setAppKey:@"5551a63e67e58ef9a3001ba3"];
+    //新浪分享
+    [UMSocialSinaHandler openSSOWithRedirectURL:@"http://sns.whalecloud.com/sina2/callback"];
+    //qq空间和好友
+    [UMSocialQQHandler setQQWithAppId:@"1104693283" appKey:@"wGqtJ9VZnpIB46Zp" url:@"www.dailymood.cn"];
+    //微信和微信好友
 }
 
 -(void)ininloginvc
@@ -102,6 +117,19 @@
         UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:loginvc];
         self.window.rootViewController = nav;
     }
+}
+
+#pragma mark - UmsocialCallback
+- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
+{
+    return  [UMSocialSnsService handleOpenURL:url];
+}
+- (BOOL)application:(UIApplication *)application
+            openURL:(NSURL *)url
+  sourceApplication:(NSString *)sourceApplication
+         annotation:(id)annotation
+{
+    return  [UMSocialSnsService handleOpenURL:url];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application

@@ -27,3 +27,5 @@
 
 #define SCREEN_WIDTH ([UIScreen mainScreen].bounds.size.width)
 #define SCREEN_HEIGHT ([UIScreen mainScreen].bounds.size.height)
+
+#define UmengAppkey @"5551a63e67e58ef9a3001ba3"

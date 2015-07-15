@@ -8,13 +8,19 @@
 
 #import <UIKit/UIKit.h>
 #import "RootViewController.h"
-@interface ArticleDetailViewController : RootViewController<UIScrollViewDelegate>{
+#import "UMSocial.h"
+@interface ArticleDetailViewController : RootViewController<UIScrollViewDelegate,UMSocialUIDelegate,UMSocialUIDelegate>{
         //UITextView *textView;
+    UMSocialData *socialData;
+    UMSocialDataService *socialDataService;
+    BOOL islike;
 }
 @property (nonatomic, strong) NSURL *url;
 @property (nonatomic, copy)NSString *titleString;
 @property (nonatomic, copy)NSString *dateString;
 @property (nonatomic, copy)NSURL *thumbnailURL;
 @property (nonatomic, copy)NSString *IDString;
+@property (nonatomic, copy)NSString *digest;
 @property (nonatomic)float frameheight;
+@property (nonatomic,retain)UILabel *likenumelabel;
 @end
