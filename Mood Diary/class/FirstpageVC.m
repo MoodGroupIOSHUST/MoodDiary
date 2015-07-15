@@ -29,7 +29,7 @@
 }
 
 - (void)initparts{
-    scrollback = [[UIScrollView alloc]initWithFrame:CGRectMake(0, upsideheight+10, SCREEN_WIDTH, SCREEN_HEIGHT-upsideheight)];
+    scrollback = [[UIScrollView alloc]initWithFrame:CGRectMake(0, upsideheight+10, SCREEN_WIDTH, SCREEN_HEIGHT-upsideheight-49-10)];
     scrollback.backgroundColor = [UIColor whiteColor];
     scrollback.delegate = self;
     [self.view addSubview:scrollback];
@@ -43,7 +43,7 @@
     btn1.layer.cornerRadius = 5;
     [btn1 addTarget:self action:@selector(btnpress:) forControlEvents:UIControlEventTouchUpInside];
     
-    btn2 = [[UIButton alloc]initWithFrame:CGRectMake(10, btn1.frame.origin.y + btn1.frame.size.height+20, (SCREEN_WIDTH-20-8)/2, (SCREEN_WIDTH-20-8)/1.4)];
+    btn2 = [[UIButton alloc]initWithFrame:CGRectMake(10, btn1.frame.origin.y + btn1.frame.size.height+10, (SCREEN_WIDTH-20-8)/2, (SCREEN_WIDTH-20-8)/1.4)];
     btn2.tag = 2;
     btn2.backgroundColor = [UIColor clearColor];
     [btn2 setBackgroundImage:[UIImage imageNamed:@"upset"] forState:UIControlStateNormal];
@@ -52,7 +52,7 @@
     btn2.layer.cornerRadius = 5;
     [btn2 addTarget:self action:@selector(btnpress:) forControlEvents:UIControlEventTouchUpInside];
     
-    btn3 = [[UIButton alloc]initWithFrame:CGRectMake(SCREEN_WIDTH-(SCREEN_WIDTH-20-8)/2-10, btn1.frame.origin.y + btn1.frame.size.height+20, (SCREEN_WIDTH-20-8)/2, (SCREEN_WIDTH-20-8)/1.4)];
+    btn3 = [[UIButton alloc]initWithFrame:CGRectMake(SCREEN_WIDTH-(SCREEN_WIDTH-20-8)/2-10, btn1.frame.origin.y + btn1.frame.size.height+10, (SCREEN_WIDTH-20-8)/2, (SCREEN_WIDTH-20-8)/1.4)];
     btn3.tag = 3;
     btn3.backgroundColor = [UIColor clearColor];
     btn3.layer.masksToBounds = YES;

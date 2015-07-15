@@ -160,8 +160,6 @@
     
     //如果以后cell数量增多，这里建议改为自定义cell
     
-    float width = 220;
-    
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
@@ -177,12 +175,13 @@
     UIImageView *imgview = [[UIImageView alloc]initWithFrame:CGRectMake(15, 50, 60, 60)];
     imgview.layer.cornerRadius = imgview.bounds.size.height/2;
     imgview.layer.masksToBounds = YES;
+    float width = 210;
     
-    UILabel *title = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_WIDTH-imgview.frame.size.width-width+10, 20, width, 25)];
+    UILabel *title = [[UILabel alloc]initWithFrame:CGRectMake(imgview.frame.size.width+imgview.frame.origin.x+20, 20, width, 25)];
     title.font = [UIFont systemFontOfSize:16];
     title.textColor = [UIColor blackColor];
     
-    UIHyperlinksButton* teleLbale1=[[UIHyperlinksButton alloc]initWithFrame:CGRectMake(SCREEN_WIDTH-imgview.frame.size.width-width+10, title.frame.origin.y+title.frame.size.height+10, width, 25)];
+    UIHyperlinksButton* teleLbale1=[[UIHyperlinksButton alloc]initWithFrame:CGRectMake(imgview.frame.size.width+imgview.frame.origin.x+20, title.frame.origin.y+title.frame.size.height+10, width, 25)];
     teleLbale1.tag=1;
     teleLbale1.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     teleLbale1.titleLabel.font =[UIFont systemFontOfSize:14];
@@ -192,7 +191,7 @@
     teleLbale1.titleLabel.textAlignment=NSTextAlignmentLeft;
     [teleLbale1 addTarget:self action:@selector(labelClicked:) forControlEvents:UIControlEventTouchUpInside];
     
-    UIHyperlinksButton* teleLbale2=[[UIHyperlinksButton alloc]initWithFrame:CGRectMake(SCREEN_WIDTH-imgview.frame.size.width-width+10, teleLbale1.frame.origin.y+teleLbale1.frame.size.height+10, width, 25)];
+    UIHyperlinksButton* teleLbale2=[[UIHyperlinksButton alloc]initWithFrame:CGRectMake(imgview.frame.size.width+imgview.frame.origin.x+20, teleLbale1.frame.origin.y+teleLbale1.frame.size.height+10, width, 25)];
     teleLbale2.tag=2;
     teleLbale2.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     teleLbale2.titleLabel.font =[UIFont systemFontOfSize:14];
@@ -202,7 +201,7 @@
     teleLbale2.titleLabel.textAlignment=NSTextAlignmentLeft;
     [teleLbale2 addTarget:self action:@selector(labelClicked:) forControlEvents:UIControlEventTouchUpInside];
     
-    UIHyperlinksButton* teleLbale3=[[UIHyperlinksButton alloc]initWithFrame:CGRectMake(SCREEN_WIDTH-imgview.frame.size.width-width+10, teleLbale2.frame.origin.y+teleLbale2.frame.size.height+10, width, 25)];
+    UIHyperlinksButton* teleLbale3=[[UIHyperlinksButton alloc]initWithFrame:CGRectMake(imgview.frame.size.width+imgview.frame.origin.x+20, teleLbale2.frame.origin.y+teleLbale2.frame.size.height+10, width, 25)];
     teleLbale3.tag=3;
     teleLbale3.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     teleLbale3.titleLabel.font =[UIFont systemFontOfSize:14];

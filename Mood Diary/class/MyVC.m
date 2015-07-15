@@ -33,7 +33,7 @@
 }
 
 - (void)initsettable{
-    settable = [[UITableView alloc]initWithFrame:CGRectMake(0, upsideheight, SCREEN_WIDTH, SCREEN_HEIGHT-49)];
+    settable = [[UITableView alloc]initWithFrame:CGRectMake(0, upsideheight, SCREEN_WIDTH, SCREEN_HEIGHT-49-upsideheight)];
     settable.delegate = self;
     settable.dataSource = self;
     
@@ -151,7 +151,7 @@
         logoutBt.layer.masksToBounds = YES;
         logoutBt.layer.cornerRadius = 5;
         
-        logoutBt.backgroundColor = [UIColor colorWithRed:240/255.0 green:0/255.0 blue:50/255.0 alpha:0.9];
+        logoutBt.backgroundColor = [UIColor colorWithRed:240/255.0 green:0/255.0 blue:0/255.0 alpha:0.9];
         [logoutBt setTitle:@"注  销  登  陆" forState:UIControlStateNormal];
         [logoutBt setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         
