@@ -72,9 +72,14 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     ArticleDetailViewController *articelDetailViewController = [[ArticleDetailViewController alloc]init];
     ArticleDetail *articleDetail = [_dataModel.articles objectAtIndex:indexPath.row];
+    
     articelDetailViewController.url = articleDetail.articleURL;
     articelDetailViewController.IDString = articleDetail.IDString;
     articelDetailViewController.frameheight = SCREEN_HEIGHT-upsideheight;
+    articelDetailViewController.thumbnailURL = articleDetail.thumbnailURL;
+    articelDetailViewController.titleString = articleDetail.titleString;
+    articelDetailViewController.digest = articleDetail.digest;
+    
     [self.navigationController pushViewController:articelDetailViewController animated:YES];
 }
 

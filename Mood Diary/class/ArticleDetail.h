@@ -14,4 +14,5 @@
 @property (nonatomic, copy)NSString *dateString;
 @property (nonatomic, copy)NSURL *articleURL;
 @property (nonatomic, copy)NSString *IDString;
+@property (nonatomic, copy)NSString *digest;
 @end

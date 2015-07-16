@@ -151,7 +151,7 @@
         logoutBt.layer.masksToBounds = YES;
         logoutBt.layer.cornerRadius = 5;
         
-        logoutBt.backgroundColor = [UIColor colorWithRed:240/255.0 green:0/255.0 blue:0/255.0 alpha:0.9];
+        logoutBt.backgroundColor = [UIColor colorWithRed:200/255.0 green:0/255.0 blue:0/255.0 alpha:0.5];
         [logoutBt setTitle:@"注  销  登  陆" forState:UIControlStateNormal];
         [logoutBt setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         

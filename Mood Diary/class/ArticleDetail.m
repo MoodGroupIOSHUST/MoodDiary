@@ -23,6 +23,7 @@
         self.dateString = [aDecoder decodeObjectForKey:@"DateString"];
         self.articleURL = [aDecoder decodeObjectForKey:@"ArticleURL"];
         self.IDString =  [aDecoder decodeObjectForKey:@"IDString"];
+        self.digest = [aDecoder decodeObjectForKey:@"Digest"];
     }
     return self;
 }
@@ -33,6 +34,7 @@
     [aCoder encodeObject:self.dateString forKey:@"DateString"];
     [aCoder encodeObject:self.articleURL forKey:@"ArticleURL"];
     [aCoder encodeObject:self.IDString forKey:@"IDString"];
+    [aCoder encodeObject:self.digest forKey:@"Digest"];
 }
 
 @end

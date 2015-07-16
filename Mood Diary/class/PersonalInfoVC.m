@@ -8,7 +8,6 @@
 
 #import "PersonalInfoVC.h"
 
-#import "ChangeUserPicViewController.h"
 #import "VPImageCropperViewController.h"
 #import <AssetsLibrary/AssetsLibrary.h>
 #import <MobileCoreServices/MobileCoreServices.h>
@@ -120,6 +119,8 @@
             _usersex = @"男";
         }
         
+        [self inView:sexBackView];
+        
         [persontable reloadData];
         
     } failed:^(NSError *error) {
@@ -213,20 +214,22 @@
         data = UIImagePNGRepresentation(img);
     }
     
-    NSString *filewholename=[NSString stringWithFormat:@"%@.png",@"userpic"];
-    
-    [self.view showProgress:YES text:@"上传图像中..."];
-    [AppWebService submitFile:data FileName:filewholename success:^(id result) {
-        [self.view showProgress:NO];
-        [self.view showResult:ResultViewTypeOK text:@"头像上传成功"];
-        
-        [self saveuserpic:img];
-        
-    } failed:^(NSError *error) {
-        [self.view showProgress:NO];
-        [self.view showResult:ResultViewTypeFaild text:[error.userInfo objectForKey:NSLocalizedDescriptionKey]];
-        
-    }];
+//    NSString *filewholename=[NSString stringWithFormat:@"%@.png",@"userpic"];
+//    
+//    [self.view showProgress:YES text:@"上传图像中..."];
+//    [AppWebService submitFile:data FileName:filewholename success:^(id result) {
+//        [self.view showProgress:NO];
+//        [self.view showResult:ResultViewTypeOK text:@"头像上传成功"];
+//        
+//        [self saveuserpic:img];
+//        
+//    } failed:^(NSError *error) {
+//        [self.view showProgress:NO];
+//        [self.view showResult:ResultViewTypeFaild text:[error.userInfo objectForKey:NSLocalizedDescriptionKey]];
+//        
+//    }];
+    [self saveuserpic:img];
+    [self hideview:changepicback height:SCREEN_HEIGHT];
 }
 
 - (UIImage *)loaduserimage{
@@ -302,7 +305,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 3;
+    return 4;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
@@ -339,9 +342,6 @@
     imgview.layer.masksToBounds = YES;
     
     UILabel *title = [[UILabel alloc]initWithFrame:CGRectMake(15, 2, 200, _height-4)];
-    
-    UILabel *content = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_WIDTH-10, 2, 100, _height-4)];
-    content.textAlignment = NSTextAlignmentRight;
 
     
     if (indexPath.row == 0) {
@@ -360,28 +360,41 @@
         title.text = @"昵    称：";
         
         if (_nickname == nil) {
-            content.text = @"";
+            
         }
         else{
             title.text = [NSString stringWithFormat:@"昵    称： %@",_nickname];
         }
         
         [cell.contentView addSubview:title];
-        [cell.contentView addSubview:content];
     }
     
     else if(indexPath.row == 2){
         title.text = @"性    别：";
         
         if (_usersex == nil) {
-            content.text = @"";
+            
         }
         else{
             title.text = [NSString stringWithFormat:@"性    别： %@",_usersex];
         }
         
         [cell.contentView addSubview:title];
+    }
+    else if (indexPath.row == 3){
+        float cache = [[SDImageCache sharedImageCache] getSize];
+        
+        cache = cache/1024.0/1024.0;
+        
+        title.text = @"清除缓存：";
+        
+        UILabel *content = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_WIDTH-100, 2, 80, _height-4)];
+        content.textAlignment = NSTextAlignmentRight;
+        content.backgroundColor = [UIColor clearColor];
+        content.text = [NSString stringWithFormat:@"%.2f M",cache];
+        content.textColor = [UIColor darkGrayColor];
         [cell.contentView addSubview:content];
+        cell.accessoryType = UITableViewCellEditingStyleNone;
     }
     
     [cell.contentView  addSubview:imgview];
@@ -475,6 +488,10 @@
     
     else if (indexPath.row == 2){
         [self popView:sexBackView];
+    }
+    else if (indexPath.row == 3){
+        [[SDImageCache sharedImageCache] clearDisk];
+        [persontable reloadData];
     }
 }
 

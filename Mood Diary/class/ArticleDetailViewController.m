@@ -168,6 +168,7 @@
     articlDetail.dateString = _dateString;
     articlDetail.articleURL = _url;
     articlDetail.IDString = _IDString;
+    articlDetail.digest = digest;
     
     BOOL flag;
     flag = [_dataModel addObject:articlDetail];
