@@ -417,6 +417,7 @@ static const CGFloat MJDuration = 1.0;
             
 //            NSDictionary *accountdic = [temdic objectForKey:@"account"];
             
+            //此处到时候由后台统一随机分配昵称
             int x = arc4random() % (typearr.count-1);
             NSString *typestr = [typearr objectAtIndex:x];
             

@@ -42,7 +42,7 @@
     //新浪分享
     [UMSocialSinaHandler openSSOWithRedirectURL:@"http://sns.whalecloud.com/sina2/callback"];
     //qq空间和好友
-    [UMSocialQQHandler setQQWithAppId:@"1104693283" appKey:@"wGqtJ9VZnpIB46Zp" url:@"www.dailymood.cn"];
+    [UMSocialQQHandler setQQWithAppId:@"1104693283" appKey:@"wGqtJ9VZnpIB46Zp" url:@"http://etotech.net:8080/psychology/toIndex"];
     //微信和微信好友
 }
 
@@ -122,6 +122,7 @@
 #pragma mark - UmsocialCallback
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
 {
+    NSLog(@"------first------url%@",url);
     return  [UMSocialSnsService handleOpenURL:url];
 }
 - (BOOL)application:(UIApplication *)application
@@ -129,6 +130,7 @@
   sourceApplication:(NSString *)sourceApplication
          annotation:(id)annotation
 {
+    NSLog(@"------second------url%@",url);
     return  [UMSocialSnsService handleOpenURL:url];
 }
 

@@ -207,11 +207,25 @@
                                        delegate:self];
     
 
-    //        [UMSocialConfig setFollowWeiboUids:@{UMShareToSina:@"2091897557"}];
+            [UMSocialConfig setFollowWeiboUids:@{UMShareToSina:@"3214415900"}];
     
 
             [[UMSocialDataService defaultDataService] requestAddFollow:UMShareToSina followedUsid:@[@"2091897557"] completion:nil];
 
+}
+
+-(void)didFinishGetUMSocialDataInViewController:(UMSocialResponseEntity *)response
+{
+    //根据responseCode得到发送结果,如果分享成功
+    if(response.responseCode == UMSResponseCodeSuccess)
+    {
+        //得到分享到的微博平台名
+        NSLog(@"share to sns name is %@",[[response.data allKeys] objectAtIndex:0]);
+        [self.view showResult:ResultViewTypeOK text:[NSString stringWithFormat:@"分享成功"]];
+    }
+    else{
+        [self.view showResult:ResultViewTypeFaild text:@"分享失败，请检查分享内容或重新授权"];
+    }
 }
 
 - (void)didReceiveMemoryWarning {
