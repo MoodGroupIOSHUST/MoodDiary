@@ -11,6 +11,7 @@
 #import "UMSocial.h"
 #import "UMSocialSinaHandler.h"
 #import "UMSocialQQHandler.h"
+#import "UMSocialWechatHandler.h"
 
 
 @implementation AppDelegate
@@ -44,6 +45,7 @@
     //qq空间和好友
     [UMSocialQQHandler setQQWithAppId:@"1104693283" appKey:@"wGqtJ9VZnpIB46Zp" url:@"http://etotech.net:8080/psychology/toIndex"];
     //微信和微信好友
+    [UMSocialWechatHandler setWXAppId:@"wx5e74fd852036b2a2" appSecret:@"3e5e2431327e00f9089ef2311d2ab338" url:@"http://www.umeng.com/social"];
 }
 
 -(void)ininloginvc

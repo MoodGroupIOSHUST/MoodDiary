@@ -199,12 +199,18 @@
     //设置分享标题qq空间
     [UMSocialData defaultData].extConfig.qzoneData.title = [NSString stringWithFormat:@"%@",_titleString];
     
+    //设置分享平台
     [UMSocialSnsService presentSnsIconSheetView:self
                                          appKey:UmengAppkey
                                       shareText:[NSString stringWithFormat:@"%@  (分享自心情日记iOS客户端) %@",digest,_url]
                                      shareImage:[UIImage imageWithData:data]
                                 shareToSnsNames:sharearr
                                        delegate:self];
+    
+    //设置微信和朋友圈跳转链接
+    [UMSocialData defaultData].extConfig.wechatSessionData.url = [NSString stringWithFormat:@"%@",_url];
+    
+    [UMSocialData defaultData].extConfig.wechatTimelineData.url = [NSString stringWithFormat:@"%@",_url];
     
 
             [UMSocialConfig setFollowWeiboUids:@{UMShareToSina:@"3214415900"}];
