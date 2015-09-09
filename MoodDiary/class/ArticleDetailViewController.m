@@ -212,6 +212,10 @@
     
     [UMSocialData defaultData].extConfig.wechatTimelineData.url = [NSString stringWithFormat:@"%@",_url];
     
+    [UMSocialData defaultData].extConfig.wechatSessionData.title = [NSString stringWithFormat:@"%@",_titleString];
+    
+    [UMSocialData defaultData].extConfig.wechatTimelineData.title = [NSString stringWithFormat:@"%@",_titleString];
+    
 
             [UMSocialConfig setFollowWeiboUids:@{UMShareToSina:@"3214415900"}];
     

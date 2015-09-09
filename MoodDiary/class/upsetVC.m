@@ -291,6 +291,16 @@
         [alert show];
     }
     
+    UserInfo *userinfo = [NSUserDefaults objectUserForKey:USER_STOKRN_KEY];
+    NSDate *date = [[NSDate alloc]init];
+    NSDateFormatter *dateformatter = [[NSDateFormatter alloc]init];
+    [dateformatter setDateFormat:@"YYYY-MM-dd"];
+    NSString *datestr = [dateformatter stringFromDate:date];
+    NSMutableDictionary *temdic = [[NSMutableDictionary alloc]initWithDictionary:userinfo.testresult];
+    [temdic setObject:[[NSString alloc]initWithFormat:@"%@(测评时间：%@)",questionlable.text,datestr] forKey:@"upset"];
+    userinfo.testresult = temdic;
+    [NSUserDefaults setUserObject:userinfo forKey:USER_STOKRN_KEY];
+    
 }
 
 #pragma mark - uicollectionviewdatasource

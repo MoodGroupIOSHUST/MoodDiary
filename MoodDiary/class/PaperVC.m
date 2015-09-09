@@ -39,20 +39,20 @@
 - (void)initArticle{
     
     articleTableView.userInteractionEnabled = NO;
-    [self.view showProgress:YES text:@"获取美文..."];
+//    [self.view showProgress:YES text:@"获取美文..."];
     
     [AppWebService articleListWithStart:@"0" limit:@"10" success:^(id result) {
         NSDictionary *tempdata  = [result objectForKey:@"data"];
         articleArray = [[NSMutableArray alloc]initWithArray:[tempdata objectForKey:@"acticles"]]; //这里接口有拼写错误
         numbersOfRow = [articleArray count];
-        [self.view showProgress:NO];
+//        [self.view showProgress:NO];
         [articleTableView.header endRefreshing];
         [articleTableView reloadData];
         articleTableView.userInteractionEnabled = YES;
         
     } failed:^(NSError *error) {
         NSLog(@"fail");
-        [self.view showProgress:NO];
+//        [self.view showProgress:NO];
         articleTableView.userInteractionEnabled = YES;
         
         [self.view showResult:ResultViewTypeFaild text:[error.userInfo objectForKey:NSLocalizedDescriptionKey]];
@@ -79,7 +79,7 @@
         
     } failed:^(NSError *error) {
         NSLog(@"fail");
-        [self.view showProgress:NO];
+//        [self.view showProgress:NO];
         self.view.userInteractionEnabled = YES;
         
         [self.view showResult:ResultViewTypeFaild text:[error.userInfo objectForKey:NSLocalizedDescriptionKey]];

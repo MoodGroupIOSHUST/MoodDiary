@@ -55,7 +55,13 @@
     if (info.useraccount.length>0&&info.password.length>0) {
         //自动登陆
         
-        NSString *passwaord = info.password;
+        NSString *passwaord = [[NSString alloc]initWithFormat:@"%@",info.password];
+        
+        NSMutableDictionary *temdic = [[NSMutableDictionary alloc]init];
+        
+        if (info.testresult) {
+            temdic = info.testresult;
+        }
         
         [AppWebService userLoginWithAccount:info.useraccount loginpwd:info.password success:^(id result) {
             NSLog(@"success");
@@ -64,6 +70,7 @@
             NSDictionary *infoDic = [[NSDictionary alloc]initWithDictionary:[temdata objectForKey:@"account"]];
             
             UserInfo *userinfo  = [[UserInfo alloc]init];
+            userinfo.testresult = temdic;
             userinfo.accountType = [NSString stringWithFormat:@"%@",[infoDic objectForKey:@"accountType"]];
             userinfo.birthday = [NSString stringWithFormat:@"%@",[infoDic objectForKey:@"birthday"]];
             userinfo.email = [NSString stringWithFormat:@"%@",[infoDic objectForKey:@"email"]];

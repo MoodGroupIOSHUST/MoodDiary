@@ -11,6 +11,9 @@
 #import "MJRefresh.h"
 
 @interface WallVC ()
+{
+    NSString *nowDateStr;
+}
 
 @property (nonatomic, retain)NSString *start;
 @property (nonatomic, retain)NSString *limit;
@@ -37,7 +40,9 @@ static const CGFloat MJDuration = 1.0;
     commentheight = [[NSMutableArray alloc]init];
     commentlistarr = [[NSMutableArray alloc]init];
     selectedstate = [[NSMutableArray alloc]init];
+    
     subpostid = [[NSString alloc]init];
+    nowDateStr = [[NSString alloc]init];
     subpostid = nil;
     
     right = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"create"] style:UIBarButtonItemStylePlain target:self action:@selector(writemood)];
@@ -127,14 +132,19 @@ static const CGFloat MJDuration = 1.0;
 }
 
 - (void)initwall{
+    
     walltable = [[UITableView alloc]initWithFrame:CGRectMake(0, upsideheight, SCREEN_WIDTH, SCREEN_HEIGHT-49)];
     walltable.delegate = self;
     walltable.dataSource = self;
-    walltable.backgroundColor = [UIColor whiteColor];
+    walltable.backgroundColor = [UIColor colorWithRed:196/255.0 green:250/255.0 blue:226/255.0 alpha:1.0];
     [walltable setTableFooterView:[[UIView alloc]initWithFrame:CGRectZero]];
     walltable.separatorStyle = UITableViewCellSeparatorStyleNone;
+    
+    UIView *headerview = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 20)];
+    headerview.backgroundColor = [UIColor colorWithRed:196/255.0 green:250/255.0 blue:226/255.0 alpha:1.0];
+    [walltable setTableHeaderView:headerview];
+    
     [walltable addLegendHeaderWithRefreshingTarget:self refreshingAction:@selector(getlistdata)];
-    [walltable addLegendFooterWithRefreshingTarget:self refreshingAction:@selector(getmorelistdata)];
     
     if (IS_IOS_7) {
         self.automaticallyAdjustsScrollViewInsets = NO;
@@ -151,13 +161,23 @@ static const CGFloat MJDuration = 1.0;
     //下拉刷新
     
     if (isaftercomment == NO) {
-        [self.view showProgress:YES text:@"获取心情墙..."];
+//        [self.view showProgress:YES text:@"获取心情墙..."];
+        [walltable.header beginRefreshing];
     }
     
     walltable.userInteractionEnabled = NO;
     
     [AppWebService moodwalllist:@"0" limit:_limit success:^(id result) {
         NSLog(@"success");
+        
+        NSDate *senddate=[NSDate date];
+        
+        NSDateFormatter  *dateformatter=[[NSDateFormatter alloc] init];
+        
+        [dateformatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+        
+        nowDateStr =[dateformatter stringFromDate:senddate];
+        
         isaftercomment = NO;
         NSDictionary *datadic = [[NSDictionary alloc]init];
         datadic = [result objectForKey:@"data"];
@@ -183,9 +203,13 @@ static const CGFloat MJDuration = 1.0;
             // 拿到当前的下拉刷新控件，结束刷新状态
             [walltable.header endRefreshing];
             
-            [self.view showProgress:NO];
+            
+//            [self.view showProgress:NO];
             
             [walltable reloadData];
+            
+            //添加上拉加载
+            [walltable addLegendFooterWithRefreshingTarget:self refreshingAction:@selector(getmorelistdata)];
             
             walltable.userInteractionEnabled = YES;
             
@@ -193,7 +217,7 @@ static const CGFloat MJDuration = 1.0;
         
     } failed:^(NSError *error) {
         isaftercomment = NO;
-        [self.view showProgress:NO];
+//        [self.view showProgress:NO];
         [self.view showResult:ResultViewTypeFaild text:@"获取失败，请稍后再试"];
         walltable.userInteractionEnabled = YES;
         NSLog(@"failed");
@@ -207,7 +231,8 @@ static const CGFloat MJDuration = 1.0;
     
     _start = [NSString stringWithFormat:@"%lu",(unsigned long)walllist.count];
     
-    [self.view showProgress:YES text:@"获取心情墙..."];
+//    [self.view showProgress:YES text:@"获取心情墙..."];
+    [walltable.footer beginRefreshing];
     
     [AppWebService moodwalllist:_start limit:_limit success:^(id result) {
         NSLog(@"success");
@@ -232,7 +257,7 @@ static const CGFloat MJDuration = 1.0;
             // 拿到当前的下拉刷新控件，结束刷新状态
             [walltable.footer endRefreshing];
             
-            [self.view showProgress:NO];
+//            [self.view showProgress:NO];
             
             [walltable reloadData];
             
@@ -241,7 +266,7 @@ static const CGFloat MJDuration = 1.0;
         });
         
     } failed:^(NSError *error) {
-        [self.view showProgress:NO];
+//        [self.view showProgress:NO];
         [self.view showResult:ResultViewTypeFaild text:@"获取失败，请稍后再试"];
         walltable.userInteractionEnabled = YES;
         NSLog(@"failed");
@@ -390,9 +415,9 @@ static const CGFloat MJDuration = 1.0;
         
         NSDictionary *commentdic = [temarr objectAtIndex:j];
         NSString *content = [commentdic objectForKey:@"content"];
-        CGSize contentsize = [self maxlabeisize:CGSizeMake(SCREEN_WIDTH-30, 999) fontsize:14 text:content];
+        CGSize contentsize = [self maxlabeisize:CGSizeMake(SCREEN_WIDTH-40, 999) fontsize:14 text:content];
 #pragma mark - 此处修改评论间距
-        temhight = temhight + (contentsize.height + 20);
+        temhight = temhight + (contentsize.height + 8.0f);
     }
     
     [commentheight replaceObjectAtIndex:i withObject:[NSString stringWithFormat:@"%f",temhight]];
@@ -521,7 +546,7 @@ static const CGFloat MJDuration = 1.0;
     temdic = [walllist objectAtIndex:indexPath.row];
     
     NSString *content = [temdic objectForKey:@"content"];
-    CGSize contentsize = [self maxlabeisize:CGSizeMake(SCREEN_WIDTH-25, 999) fontsize:16 text:content];
+    CGSize contentsize = [self maxlabeisize:CGSizeMake(SCREEN_WIDTH-40, 999) fontsize:16 text:content];
     
     
     if ([selectedstate containsObject:[NSString stringWithFormat:@"%ld",(long)indexPath.row]]) {
@@ -531,11 +556,11 @@ static const CGFloat MJDuration = 1.0;
         
         int commentcount = [[temdic objectForKey:@"commentCount"] intValue];
         
-        return contentsize.height+40+60+temheight+commentcount*3;
+        return contentsize.height+40+60+temheight+commentcount*1.5f+15;
     }
     else
     {
-        return contentsize.height+40+60;
+        return contentsize.height+40+60+15;
     }
     
 }
@@ -575,6 +600,7 @@ static const CGFloat MJDuration = 1.0;
         
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.accessoryType = UITableViewCellAccessoryNone;//箭头
+        cell.backgroundColor = [UIColor clearColor];
     }
     
     cell.delegate = self;
@@ -585,7 +611,7 @@ static const CGFloat MJDuration = 1.0;
         
         if ([class isKindOfClass:[NSString class]]) {
             //没有评论
-            [cell setcontent:[walllist objectAtIndex:indexPath.row] commentarr:nil height:0 more:NO number:indexPath.row];
+            [cell setcontent:[walllist objectAtIndex:indexPath.row] commentarr:nil height:0 more:NO number:indexPath.row  nowDate:(NSString *)nowDateStr];
         }
         else
         {
@@ -593,13 +619,13 @@ static const CGFloat MJDuration = 1.0;
             
             CGFloat temheight = [[commentheight objectAtIndex:indexPath.row] floatValue];
             
-            [cell setcontent:[walllist objectAtIndex:indexPath.row] commentarr:[commentlistarr objectAtIndex:indexPath.row] height:temheight more:morecomment number:indexPath.row];
+            [cell setcontent:[walllist objectAtIndex:indexPath.row] commentarr:[commentlistarr objectAtIndex:indexPath.row] height:temheight more:morecomment number:indexPath.row nowDate:(NSString *)nowDateStr];
         }
     }
     else
     {
         //行没有选中
-        [cell setcontent:[walllist objectAtIndex:indexPath.row] commentarr:nil height:0 more:NO number:indexPath.row];
+        [cell setcontent:[walllist objectAtIndex:indexPath.row] commentarr:nil height:0 more:NO number:indexPath.row  nowDate:(NSString *)nowDateStr];
     }
     
     NSInteger tag = indexPath.row;
@@ -640,6 +666,7 @@ static const CGFloat MJDuration = 1.0;
     if ([text isEqualToString:@"\n"])
     {
         [textView resignFirstResponder];
+        self.navigationItem.rightBarButtonItem = right;
         return NO;
     }
     return YES; 

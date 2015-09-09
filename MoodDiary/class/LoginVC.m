@@ -127,6 +127,12 @@
     useraccountTF.clearButtonMode = UITextFieldViewModeWhileEditing;
     useraccountTF.placeholder = @"手机号码/用户名";
     useraccountTF.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+    UserInfo *userinfo = [NSUserDefaults objectUserForKey:USER_STOKRN_KEY];
+    
+    if (userinfo.useraccount.length>0) {
+        useraccountTF.text = userinfo.useraccount;
+    }
+    
     [backview addSubview:useraccountTF];
     
     /*----password----*/
@@ -210,6 +216,15 @@
     
     self.view.userInteractionEnabled = NO;
     [self.view showProgress:YES text:@"请等待..."];
+    
+    UserInfo *userinfo = [NSUserDefaults objectUserForKey:USER_STOKRN_KEY];
+    
+    NSMutableDictionary *temdic = [[NSMutableDictionary alloc]init];
+    
+    if (userinfo.testresult) {
+        temdic = userinfo.testresult;
+    }
+    
     [AppWebService userLoginWithAccount:useraccountTF.text loginpwd:pwdTF.text success:^(id result) {
         NSLog(@"success");
         [self.view showProgress:NO];
@@ -218,6 +233,7 @@
         NSDictionary *infoDic = [[NSDictionary alloc]initWithDictionary:[temdata objectForKey:@"account"]];
         
         UserInfo *userinfo  = [[UserInfo alloc]init];
+        userinfo.testresult = temdic;
         userinfo.accountType = [NSString stringWithFormat:@"%@",[infoDic objectForKey:@"accountType"]];
         userinfo.birthday = [NSString stringWithFormat:@"%@",[infoDic objectForKey:@"birthday"]];
         userinfo.email = [NSString stringWithFormat:@"%@",[infoDic objectForKey:@"email"]];

@@ -192,6 +192,7 @@
     NSLog(@"%@",string);
     [AppWebService uploadresult:replaced success:^(id result) {
         NSLog(@"success");
+        
         [self.view showProgress:NO];
         self.view.userInteractionEnabled = YES;
         NSDictionary *temdic = [result objectForKey:@"data"];

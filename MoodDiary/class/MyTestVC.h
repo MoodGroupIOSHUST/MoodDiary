@@ -8,7 +8,7 @@
 
 #import "RootViewController.h"
 
-@interface MyTestVC : RootViewController<UITableViewDataSource,UITableViewDelegate>
+@interface MyTestVC : RootViewController<UITableViewDataSource,UITableViewDelegate,UIAlertViewDelegate>
 {
     UITableView *mytesttableview;
 }

@@ -30,9 +30,11 @@
     
     UIView *commentline;
     
-    NSMutableDictionary *cellnicknamedic;
-    
     NSMutableArray *celltypearr;
+    
+    UIView *lineview;
+    
+    UIView *backview;
     
 }
 
@@ -42,6 +44,6 @@
 
 @property (nonatomic, assign)id <CommentBtnDelegate> delegate;
 
-- (void)setcontent:(NSDictionary *)sender commentarr:(NSMutableArray *)arr height:(CGFloat)height more:(BOOL)more number:(NSInteger) index;
+- (void)setcontent:(NSDictionary *)sender commentarr:(NSMutableArray *)arr height:(CGFloat)height more:(BOOL)more number:(NSInteger) index nowDate:(NSString *)nowDateStr;
 
 @end

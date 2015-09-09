@@ -25,6 +25,8 @@
 @synthesize status;
 @synthesize useraccount;
 @synthesize password;
+@synthesize testresult;
+
 
 - (id)initWithCoder:(NSCoder *)decoder {
     self = [super init];
@@ -45,6 +47,7 @@
         self.status = [decoder decodeObjectForKey:@"status"];
         self.useraccount = [decoder decodeObjectForKey:@"useraccount"];
         self.password = [decoder decodeObjectForKey:@"password"];
+        self.testresult = [decoder decodeObjectForKey:@"testresult"];
     }
     
     return self;
@@ -67,6 +70,7 @@
     [encoder encodeObject:self.status forKey:@"status"];
     [encoder encodeObject:self.useraccount forKey:@"useraccount"];
     [encoder encodeObject:self.password forKey:@"password"];
+    [encoder encodeObject:self.testresult forKey:@"testresult"];
 }
 
 -(void)dealloc{

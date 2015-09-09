@@ -8,6 +8,8 @@
 
 #import "MyTestVC.h"
 #import "AdviceVC.h"
+#import "upsetVC.h"
+#import "depressVC.h"
 
 @interface MyTestVC ()
 
@@ -47,7 +49,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 4;
+    return 3;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
@@ -78,16 +80,13 @@
     UILabel *title = [[UILabel alloc]initWithFrame:CGRectMake(15, 2, 200, _height-4)];
     
     if (indexPath.row == 0) {
-        title.text = @"5个小技巧战胜焦虑";
+        title.text = @"SCL90测评";
     }
     else if (indexPath.row == 1){
-        title.text = @"如何克服焦虑（知乎）";
+        title.text = @"焦虑测评";
     }
     else if (indexPath.row ==2){
-        title.text = @"抑郁二三事";
-    }
-    else if (indexPath.row == 3){
-        title.text = @"走出抑郁";
+        title.text = @"抑郁测评";
     }
     
     [cell.contentView addSubview:title];
@@ -97,35 +96,95 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
+    UserInfo *info = [NSUserDefaults objectUserForKey:USER_STOKRN_KEY];
+    NSDictionary *dic = [[NSDictionary alloc]initWithDictionary:info.testresult];
+    
     if (indexPath.row ==0) {
-        AdviceVC *advice = [[AdviceVC alloc]init];
-        advice.advicetype = @"jiaolv5";
-        
-        [self.navigationController pushViewController:advice animated:YES];
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"SCL90测评结果将直接上传至学校，不会反馈给测试者^—^" delegate:self cancelButtonTitle:@"好的" otherButtonTitles:nil, nil];
+        [alert show];
     }
     else if(indexPath.row == 1){
-        AdviceVC *advice = [[AdviceVC alloc]init];
-        advice.advicetype = @"kefujiaolvzhihu";
         
-        [self.navigationController pushViewController:advice animated:YES];
+        NSString *result = [[NSString alloc]initWithFormat:@"%@",[dic objectForKey:@"upset"]];
+        
+        if (![result isEqualToString:@"(null)"]) {
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:result delegate:self cancelButtonTitle:@"好的"otherButtonTitles:@"5个战胜焦虑的技巧",@"如何克服焦虑", nil];
+            alert.tag = 10086;
+            [alert show];
+        }
+        else
+        {
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"您还没有参与过焦虑测评，快去测试一下吧^-^" delegate:self cancelButtonTitle:@"好的"otherButtonTitles:@"取消", nil];
+            alert.tag = 10000;
+            [alert show];
+        }
+        
     }
     else if (indexPath.row == 2){
-        AdviceVC *advice = [[AdviceVC alloc]init];
-        advice.advicetype = @"yiyu23";
         
-        [self.navigationController pushViewController:advice animated:YES];
-    }
-    else if (indexPath.row == 3){
-        AdviceVC *advice = [[AdviceVC alloc]init];
-        advice.advicetype = @"zouchuyiyu";
+        NSString *result = [[NSString alloc]initWithFormat:@"%@",[dic objectForKey:@"depress"]];
         
-        [self.navigationController pushViewController:advice animated:YES];
+        if (![result isEqualToString:@"(null)"]) {
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:result delegate:self cancelButtonTitle:@"好的"otherButtonTitles:@"5个战胜焦虑的技巧",@"如何克服焦虑", nil];
+            alert.tag = 10087;
+            [alert show];
+        }
+        else
+        {
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"您还没有参与过抑郁测评，快去测试一下吧^-^" delegate:self cancelButtonTitle:@"好的"otherButtonTitles:@"取消", nil];
+            alert.tag = 10001;
+            [alert show];
+        }
     }
     
     NSIndexPath *selected = [tableView indexPathForSelectedRow];
     if(selected)
     {
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    }
+}
+
+#pragma mark- uialertviewdelgate
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (alertView.tag == 10086) {
+        if (buttonIndex == 1) {
+            AdviceVC *advice = [[AdviceVC alloc]init];
+            advice.advicetype = @"jiaolv5";
+            
+            [self.navigationController pushViewController:advice animated:YES];
+        }
+        else if(buttonIndex ==2){
+            AdviceVC *advice = [[AdviceVC alloc]init];
+            advice.advicetype = @"kefujiaolvzhihu";
+            
+            [self.navigationController pushViewController:advice animated:YES];
+        }
+    }
+    else if (alertView.tag == 10000){
+        if (buttonIndex == 0) {
+            upsetVC *upset = [[upsetVC alloc]init];
+            [self.navigationController pushViewController:upset animated:YES];
+        }
+    }
+    else if (alertView.tag == 10087){
+        if (buttonIndex == 1) {
+            AdviceVC *advice = [[AdviceVC alloc]init];
+            advice.advicetype = @"yiyu23";
+            
+            [self.navigationController pushViewController:advice animated:YES];
+        }
+        else if(buttonIndex ==2){
+            AdviceVC *advice = [[AdviceVC alloc]init];
+            advice.advicetype = @"zouchuyiyu";
+            
+            [self.navigationController pushViewController:advice animated:YES];
+        }
+    }
+    else if (alertView.tag == 10001){
+        if (buttonIndex == 0) {
+            depressVC *depress = [[depressVC alloc]init];
+            [self.navigationController pushViewController:depress animated:YES];
+        }
     }
 }
 

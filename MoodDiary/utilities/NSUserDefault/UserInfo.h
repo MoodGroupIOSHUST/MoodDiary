@@ -25,6 +25,7 @@
     NSString *status;//状态
     NSString *useraccount;//账号
     NSString *password;//登陆密码
+    NSMutableDictionary *testresult;//测评结果
  }
 
 @property (nonatomic, retain) NSString *accountType;
@@ -43,5 +44,6 @@
 @property (nonatomic, retain) NSString *status;
 @property (nonatomic, retain) NSString *useraccount;
 @property (nonatomic, retain) NSString *password;
+@property (nonatomic, retain) NSMutableDictionary *testresult;
 
 @end

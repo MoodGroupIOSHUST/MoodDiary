@@ -73,7 +73,16 @@
 //    [scrollback addSubview:btn5];
 //    [btn5 addTarget:self action:@selector(btnpress:) forControlEvents:UIControlEventTouchUpInside];
     
-    scrollback.contentSize = CGSizeMake(SCREEN_WIDTH, btn3.frame.origin.y+btn3.frame.size.height);
+    if ((btn3.frame.origin.y+btn3.frame.size.height)<(SCREEN_HEIGHT-upsideheight-49)) {
+        scrollback.contentSize = CGSizeMake(SCREEN_WIDTH, SCREEN_HEIGHT-upsideheight-49);
+    }
+    else
+    {
+        scrollback.contentSize = CGSizeMake(SCREEN_WIDTH, btn3.frame.origin.y+btn3.frame.size.height);
+    }
+    
+    scrollback.showsVerticalScrollIndicator = NO;
+    
 }
 
 - (void)btnpress:(UIButton *)sender{
