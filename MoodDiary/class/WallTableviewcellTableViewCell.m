@@ -7,10 +7,10 @@
 //
 
 #import "WallTableviewcellTableViewCell.h"
-#define malecolor [UIColor colorWithRed:108/255.0 green:134/255.0 blue:169/255.0 alpha:1.0];
-#define femalecolor [UIColor colorWithRed:228/255.0 green:53/255.0 blue:0/255.0 alpha:1.0];
-#define contentmale [UIColor colorWithRed:203/255.0 green:213/255.0 blue:225/255.0 alpha:1.0];
-#define contentfemale [UIColor colorWithRed:255/255.0 green:217/255.0 blue:206/255.0 alpha:1.0];
+#define malecolor [UIColor colorWithRed:102/255.0 green:153/255.0 blue:204/255.0 alpha:1.0];
+#define femalecolor [UIColor colorWithRed:255/255.0 green:102/255.0 blue:102/255.0 alpha:1.0];
+#define contentmale [UIColor colorWithRed:210/255.0 green:235/255.0 blue:245/255.0 alpha:1.0];
+#define contentfemale [UIColor colorWithRed:253/255.0 green:225/255.0 blue:224/255.0 alpha:1.0];
 
 @implementation WallTableviewcellTableViewCell
 
@@ -23,7 +23,7 @@
         // Initialization code
         
         lineview = [[UIView alloc]initWithFrame:CGRectMake(10, 0, SCREEN_WIDTH-20, 35)];
-        lineview.backgroundColor = [UIColor greenColor];
+        lineview.backgroundColor = [UIColor clearColor];
         lineview.alpha = 0.5f;
         [self addSubview:lineview];
         
@@ -70,6 +70,9 @@
         
         commentview  =[[UIView alloc]initWithFrame:CGRectMake(20+10, _commentbtn.frame.origin.y+_commentbtn.frame.size.height+10, SCREEN_WIDTH-30-20, 16)];
         
+        sexbackview = [[UIImageView alloc]init];
+        sexbackview.backgroundColor = [UIColor clearColor];
+        
         [self addSubview:backview];
         [lineview addSubview:timelabel];
         [self addSubview:_commentbtn];
@@ -78,6 +81,8 @@
         
         [lineview addSubview:namelabel];
         [lineview addSubview:img];
+        
+        [backview addSubview:sexbackview];
         [self addSubview:contentlabel];
         [self addSubview:commentview];
         [self addSubview:commentline];
@@ -90,17 +95,32 @@
     
     NSDictionary *accountdic = [NSDictionary dictionaryWithDictionary:[sender objectForKeyedSubscript:@"account"]];
     
+    img.frame = CGRectMake(10, 4, 30, 30);
+    
     //昵称
     NSString *nickname = [NSString stringWithFormat:@"%@",[accountdic objectForKey:@"anonymity"]];
     
     CGSize namesize = [self maxlabeisize:CGSizeMake(999, 25) fontsize:14 text:nickname];
-    namelabel.frame = CGRectMake(10, 5, namesize.width, 25);
+    namelabel.frame = CGRectMake(img.frame.origin.x+5+img.frame.size.width, 5, namesize.width, 25);
     namelabel.font = [UIFont systemFontOfSize:14];
     namelabel.text = nickname;
     namelabel.backgroundColor = [UIColor clearColor];
     namelabel.textColor = [UIColor whiteColor];
     
-    img.frame = CGRectMake(namelabel.frame.origin.x+10+namelabel.frame.size.width, 7, 25, 20);
+    //内容
+    NSString *content = [sender objectForKey:@"content"];
+    CGSize contentsize = [self maxlabeisize:CGSizeMake(SCREEN_WIDTH-40, 999) fontsize:16 text:content];
+    contentlabel.frame = CGRectMake(10+10, lineview.frame.origin.y+lineview.frame.size.height+15, SCREEN_WIDTH-40, contentsize.height);
+    contentlabel.font = [UIFont systemFontOfSize:16];
+    contentlabel.textColor = [UIColor colorWithRed:120/255.0 green:120/255.0 blue:120/255.0 alpha:1.0];
+    contentlabel.text = content;
+    contentlabel.backgroundColor = [UIColor clearColor];
+    
+    //背景
+    backview.frame = CGRectMake(10, lineview.frame.origin.y+lineview.frame.size.height, SCREEN_WIDTH-20, contentsize.height+40+15);
+    
+    //性别符号高度
+    CGFloat sexheight = backview.frame.size.height*4/5;
     
     //性别
     NSString *sex;
@@ -108,32 +128,25 @@
     if ([sex isEqualToString:@"1"]) {
         img.image = [UIImage imageNamed:@"male"];
         lineview.backgroundColor = malecolor;
-        contentlabel.backgroundColor = contentmale;
         backview.backgroundColor = contentmale;
+        sexbackview.image = [UIImage imageNamed:@"male_back"];
+        sexbackview.frame = CGRectMake(0, backview.frame.size.height-sexheight, sexheight/1.5f, sexheight);
     }
     else if ([sex isEqualToString:@"0"]){
         img.image = [UIImage imageNamed:@"female"];
         lineview.backgroundColor = femalecolor;
-        contentlabel.backgroundColor = contentfemale;
         backview.backgroundColor = contentfemale;
+        sexbackview.image = [UIImage imageNamed:@"female_back"];
+        sexbackview.frame = CGRectMake(0, backview.frame.size.height-sexheight, sexheight*2/3, sexheight);
     }
     else
     {
-        img.image = nil;
-        lineview.backgroundColor = malecolor;
-        contentlabel.backgroundColor = contentmale;
-        backview.backgroundColor = contentmale;
+        img.image = [UIImage imageNamed:@"female"];
+        lineview.backgroundColor = femalecolor;
+        backview.backgroundColor = contentfemale;
+        sexbackview.image = [UIImage imageNamed:@"female_back"];
+        sexbackview.frame = CGRectMake(0, backview.frame.size.height-sexheight, sexheight*2/3, sexheight);
     }
-    
-    //内容
-    NSString *content = [sender objectForKey:@"content"];
-    CGSize contentsize = [self maxlabeisize:CGSizeMake(SCREEN_WIDTH-40, 999) fontsize:16 text:content];
-    contentlabel.frame = CGRectMake(10+10, lineview.frame.origin.y+lineview.frame.size.height+15, SCREEN_WIDTH-40, contentsize.height);
-    contentlabel.font = [UIFont systemFontOfSize:16];
-    contentlabel.text = content;
-    
-    //背景
-    backview.frame = CGRectMake(10, lineview.frame.origin.y+lineview.frame.size.height, SCREEN_WIDTH-20, contentsize.height+40+15);
     
     //时间
     timelabel.text = [self timeCaculation:[sender objectForKey:@"date"] publishDate:nowDateStr];

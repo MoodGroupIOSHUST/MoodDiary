@@ -9,6 +9,11 @@
 #import "NewTestVC.h"
 
 @interface NewTestVC ()
+{
+    CGFloat totalBtnHeight;
+    
+    CGFloat realHeight;
+}
 
 @end
 
@@ -46,22 +51,31 @@
     [collectionview registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"testcell"];
     collectionview.dataSource = self;
     collectionview.delegate = self;
-    
-    numberlabel = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_WIDTH-60, 220, 60, 30)];
-    numberlabel.adjustsFontSizeToFitWidth = YES;
 
     
     [self.view addSubview:collectionview];
-    [self.view addSubview:numberlabel];
+    
 }
 
 - (void)initanswerbtn{
     btarr = [[NSMutableArray alloc]init];
     
+    totalBtnHeight = 40*5+20*3;
+    
+    realHeight = SCREEN_HEIGHT-upsideheight-collectionview.frame.size.height-totalBtnHeight;
+    
+    if (realHeight>0) {
+        collectionview.frame = CGRectMake(0, upsideheight, SCREEN_WIDTH, 250);
+    }
+    else
+    {
+        realHeight = 0;
+    }
+    
         numberlabel.text = @"1/90";
         NSArray *answerarr = [[NSArray alloc]initWithObjects:@"无",@"很轻",@"中等",@"偏重",@"严重", nil];
         for (int i = 0; i<5; i++) {
-            answerBt = [[UIButton alloc]initWithFrame:CGRectMake(30, collectionview.frame.size.height+40*i+20, SCREEN_WIDTH-60, 30)];
+            answerBt = [[UIButton alloc]initWithFrame:CGRectMake(30, collectionview.frame.size.height+collectionview.frame.origin.y+40*i+20+realHeight/3, SCREEN_WIDTH-60, 30)];
             answerBt.tag = i;
             answerBt.backgroundColor = [UIColor colorWithRed:60/255.0 green:173/255.0 blue:235/255.0 alpha:1.0];
             [answerBt setTitle:[answerarr objectAtIndex:i] forState:UIControlStateNormal];
@@ -73,6 +87,10 @@
             [self.view addSubview:answerBt];
             [btarr addObject:answerBt];
         }
+    
+    numberlabel = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_WIDTH-60, collectionview.frame.origin.y+collectionview.frame.size.height-30, 60, 30)];
+    numberlabel.adjustsFontSizeToFitWidth = YES;
+    [self.view addSubview:numberlabel];
 
 }
 

@@ -136,12 +136,12 @@ static const CGFloat MJDuration = 1.0;
     walltable = [[UITableView alloc]initWithFrame:CGRectMake(0, upsideheight, SCREEN_WIDTH, SCREEN_HEIGHT-49)];
     walltable.delegate = self;
     walltable.dataSource = self;
-    walltable.backgroundColor = [UIColor colorWithRed:196/255.0 green:250/255.0 blue:226/255.0 alpha:1.0];
+    walltable.backgroundColor = [UIColor whiteColor];
     [walltable setTableFooterView:[[UIView alloc]initWithFrame:CGRectZero]];
     walltable.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     UIView *headerview = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 20)];
-    headerview.backgroundColor = [UIColor colorWithRed:196/255.0 green:250/255.0 blue:226/255.0 alpha:1.0];
+    headerview.backgroundColor = [UIColor whiteColor];
     [walltable setTableHeaderView:headerview];
     
     [walltable addLegendHeaderWithRefreshingTarget:self refreshingAction:@selector(getlistdata)];
@@ -556,11 +556,11 @@ static const CGFloat MJDuration = 1.0;
         
         int commentcount = [[temdic objectForKey:@"commentCount"] intValue];
         
-        return contentsize.height+40+60+temheight+commentcount*1.5f+15;
+        return contentsize.height+40+60+temheight+commentcount*1.5f+5;
     }
     else
     {
-        return contentsize.height+40+60+15;
+        return contentsize.height+40+60+5;
     }
     
 }

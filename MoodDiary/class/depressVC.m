@@ -10,6 +10,11 @@
 #import "AdviceVC.h"
 
 @interface depressVC ()
+{
+    CGFloat totalBtnHeight;
+    
+    CGFloat realHeight;
+}
 
 @end
 
@@ -43,7 +48,7 @@
     flowLayout.minimumLineSpacing = 0;
     flowLayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
     
-    depressCollectionview = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 250) collectionViewLayout:flowLayout];
+    depressCollectionview = [[UICollectionView alloc] initWithFrame:CGRectMake(0, upsideheight+10, SCREEN_WIDTH, 220) collectionViewLayout:flowLayout];
     depressCollectionview.backgroundColor = [UIColor clearColor];
     depressCollectionview.pagingEnabled = YES;
     depressCollectionview.showsHorizontalScrollIndicator = NO;
@@ -51,22 +56,31 @@
     [depressCollectionview registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"depresscell"];
     depressCollectionview.dataSource = self;
     depressCollectionview.delegate = self;
-    
-    numberlabel = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_WIDTH-50, 240, 50, 30)];
-    numberlabel.adjustsFontSizeToFitWidth = YES;
-    
-    
+
     [self.view addSubview:depressCollectionview];
-    [self.view addSubview:numberlabel];
 }
 
 - (void)initanswerbtn{
     btarr = [[NSMutableArray alloc]init];
     
+    totalBtnHeight = 40*4+20*3;
+    
+    realHeight = SCREEN_HEIGHT-upsideheight-depressCollectionview.frame.size.height-totalBtnHeight;
+    
+    if (realHeight>0) {
+        depressCollectionview.frame = CGRectMake(0, upsideheight+realHeight/3+10, SCREEN_WIDTH, 220);
+    }
+    else
+    {
+        realHeight = 0;
+    }
+    
+    NSLog(@"%f",depressCollectionview.frame.origin.y);
+    
     numberlabel.text = @"1/9";
     NSArray *answerarr = [[NSArray alloc]initWithObjects:@"完全不会",@"好几天",@"一半以上的天数",@"几乎每天", nil];
     for (int i = 0; i<4; i++) {
-        answerBt = [[UIButton alloc]initWithFrame:CGRectMake(30, depressCollectionview.frame.size.height+40*i+20, SCREEN_WIDTH-60, 30)];
+        answerBt = [[UIButton alloc]initWithFrame:CGRectMake(30, depressCollectionview.frame.origin.y+depressCollectionview.frame.size.height+40*i+20+realHeight/3, SCREEN_WIDTH-60, 30)];
         answerBt.tag = i;
         answerBt.backgroundColor = [UIColor colorWithRed:60/255.0 green:173/255.0 blue:235/255.0 alpha:1.0];
         [answerBt setTitle:[answerarr objectAtIndex:i] forState:UIControlStateNormal];
@@ -79,6 +93,8 @@
         [btarr addObject:answerBt];
     }
     
+    numberlabel = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_WIDTH-50, depressCollectionview.frame.origin.y+depressCollectionview.frame.size.height-30, 50, 30)];
+    [self.view addSubview:numberlabel];
 }
 
 - (void)initkind{
@@ -173,6 +189,8 @@
         [btn removeFromSuperview];
     }
     
+    [numberlabel removeFromSuperview];
+    
     int result = 0;
     
     for (int i = 0; i<choicearr.count; i++) {
@@ -212,18 +230,19 @@
         [self.view showResult:ResultViewTypeFaild text:[error.userInfo objectForKey:NSLocalizedDescriptionKey]];
     }];
     
-    UIView *back = [[UIView alloc]initWithFrame:CGRectMake(0, 44, SCREEN_WIDTH, 250)];
+    UIView *back = [[UIView alloc]initWithFrame:CGRectMake(0, 44+realHeight/2, SCREEN_WIDTH, 250)];
     back.backgroundColor = [UIColor whiteColor];
     
-    UILabel *questionlable = [[UILabel alloc]initWithFrame:CGRectMake(20, 190, SCREEN_WIDTH-40, 30)];
+    UILabel *questionlable = [[UILabel alloc]initWithFrame:CGRectMake(20, 0, SCREEN_WIDTH-40, 80)];
     questionlable.lineBreakMode = NSLineBreakByCharWrapping;
     questionlable.numberOfLines = 0;
     questionlable.font =[UIFont systemFontOfSize:16];
     questionlable.backgroundColor = [UIColor clearColor];
     questionlable.textAlignment = NSTextAlignmentCenter;
+    
     [back addSubview:questionlable];
     
-    UIImageView *imgview = [[UIImageView alloc]initWithFrame:CGRectMake((SCREEN_WIDTH-200)/2, 30, 200, 160)];
+    UIImageView *imgview = [[UIImageView alloc]initWithFrame:CGRectMake((SCREEN_WIDTH-200)/2, 90, 200, 160)];
     
     [back addSubview:imgview];
     
@@ -297,17 +316,20 @@
         [v removeFromSuperview];
     }
     
-    UILabel *questionlable = [[UILabel alloc]initWithFrame:CGRectMake(20, 195, SCREEN_WIDTH-40, 30)];
+    UILabel *questionlable = [[UILabel alloc]initWithFrame:CGRectMake(30, -20, SCREEN_WIDTH-60, 50)];
     questionlable.lineBreakMode = NSLineBreakByCharWrapping;
     questionlable.numberOfLines = 0;
-    questionlable.font =[UIFont systemFontOfSize:16];
+    questionlable.font =[UIFont systemFontOfSize:14];
     questionlable.backgroundColor = [UIColor clearColor];
-    questionlable.textAlignment = NSTextAlignmentCenter;
+//    questionlable.textAlignment = NSTextAlignmentCenter;
     [cell.contentView addSubview:questionlable];
     
-    UIImageView *imgview = [[UIImageView alloc]initWithFrame:CGRectMake((SCREEN_WIDTH-200)/2, 40, 178, 160)];
+    UIImageView *imgview = [[UIImageView alloc]initWithFrame:CGRectMake((SCREEN_WIDTH-200)/2, questionlable.frame.origin.y+questionlable.frame.size.height+10, 178, 160)];
     imgview.image = [UIImage imageNamed:[NSString stringWithFormat:@"yiyu%ld.jpg",(long)indexPath.row]];
     [cell.contentView addSubview:imgview];
+    
+    
+    numberlabel.adjustsFontSizeToFitWidth = YES;
     
     numberlabel.text = [NSString stringWithFormat:@"%ld/9",((long)indexPath.row+1)];
     NSString *str = [depressarr objectAtIndex:indexPath.row];

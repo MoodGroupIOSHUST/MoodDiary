@@ -36,6 +36,8 @@
     
     UIView *backview;
     
+    UIImageView *sexbackview;
+    
 }
 
 @property (nonatomic, retain)UIButton *commentbtn;

@@ -113,12 +113,14 @@
 - (void)pushtojiaolv{
     upsetVC *upset = [[upsetVC alloc]init];
     upset.testname = @"upset";
+    upset.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:upset animated:YES];
 }
 
 - (void)pushtoyiyu{
     depressVC *depress = [[depressVC alloc]init];
     depress.testname = @"depress";
+    depress.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:depress animated:YES];
 }
 
