@@ -14,7 +14,7 @@
 	</dict>
 	<dict>
 		<key>name</key>
-		<string>首页</string>
+		<string>测评</string>
 		<key>img_selected</key>
 		<string>home_selected</string>
 		<key>img_nomal</key>

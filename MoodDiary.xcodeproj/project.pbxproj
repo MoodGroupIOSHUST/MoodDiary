@@ -73,6 +73,7 @@
 		A5717E1F1B843C8400DCD8FF /* libUMSocial_Sdk_Shake_1.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A5717E011B843C8300DCD8FF /* libUMSocial_Sdk_Shake_1.0.a */; };
 		A5717E201B843C8400DCD8FF /* libSocialWechat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A5717E041B843C8300DCD8FF /* libSocialWechat.a */; };
 		A5717E211B843C8400DCD8FF /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A5717E051B843C8300DCD8FF /* libWeChatSDK.a */; };
+		A577FDC51BA6513C00784D0C /* FindPwdVC.m in Sources */ = {isa = PBXBuildFile; fileRef = A577FDC41BA6513C00784D0C /* FindPwdVC.m */; };
 		A58E4A511B577B8F0043240A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A58E4A501B577B8F0043240A /* main.m */; };
 		A58E4A541B577B8F0043240A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A58E4A531B577B8F0043240A /* AppDelegate.m */; };
 		A58E4A5A1B577B8F0043240A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A58E4A581B577B8F0043240A /* Main.storyboard */; };
@@ -383,6 +384,8 @@
 		A5717E061B843C8300DCD8FF /* UMSocialWechatHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMSocialWechatHandler.h; sourceTree = "<group>"; };
 		A5717E071B843C8300DCD8FF /* WXApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApi.h; sourceTree = "<group>"; };
 		A5717E081B843C8300DCD8FF /* WXApiObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApiObject.h; sourceTree = "<group>"; };
+		A577FDC31BA6513C00784D0C /* FindPwdVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FindPwdVC.h; sourceTree = "<group>"; };
+		A577FDC41BA6513C00784D0C /* FindPwdVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FindPwdVC.m; sourceTree = "<group>"; };
 		A58E4A4B1B577B8F0043240A /* MoodDiary.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MoodDiary.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A58E4A4F1B577B8F0043240A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A58E4A501B577B8F0043240A /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -1418,6 +1421,8 @@
 				A58E4A891B577BF50043240A /* FindPasswordViewController.m */,
 				A58E4A8C1B577BF50043240A /* LoginVC.h */,
 				A58E4A8D1B577BF50043240A /* LoginVC.m */,
+				A577FDC31BA6513C00784D0C /* FindPwdVC.h */,
+				A577FDC41BA6513C00784D0C /* FindPwdVC.m */,
 			);
 			name = login;
 			sourceTree = "<group>";
@@ -1698,6 +1703,7 @@
 				A58E4C5F1B577BF50043240A /* UIScrollView+MJRefresh.m in Sources */,
 				A58E4C4F1B577BF50043240A /* NSError+Helper.m in Sources */,
 				A58E4BCF1B577BF50043240A /* AppWebService.m in Sources */,
+				A577FDC51BA6513C00784D0C /* FindPwdVC.m in Sources */,
 				A58E4C6D1B577BF50043240A /* UIButton+WebCache.m in Sources */,
 				A58E4C6A1B577BF50043240A /* SDWebImageDownloaderOperation.m in Sources */,
 				A58E4C561B577BF50043240A /* MJRefreshComponent.m in Sources */,

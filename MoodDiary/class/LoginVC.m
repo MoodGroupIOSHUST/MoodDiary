@@ -8,6 +8,7 @@
 
 #import "LoginVC.h"
 #import "FindPasswordViewController.h"
+#import "FindPwdVC.h"
 
 @interface LoginVC ()
 
@@ -23,8 +24,7 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-//    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:235/255.0 green:235/255.0 blue:235/255.0 alpha:1.0];
-    //[self setTitle:@"登陆"];
+    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:235/255.0 green:235/255.0 blue:235/255.0 alpha:1.0];
     [self initBackground];
     [self initScrollView];
     //self.view.backgroundColor = [UIColor colorWithRed:235/255.0 green:240/255.0 blue:241/255.0 alpha:1.0];
@@ -37,6 +37,18 @@
     [self initbt];
     [self initKeyboardNotification];
     
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [self.navigationController setNavigationBarHidden:YES];
+}
+
+- (void)viewWillDisappear:(BOOL)animated{
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+
+    [self.navigationController setNavigationBarHidden:NO];
 }
 
 #pragma mark - Init
@@ -74,7 +86,6 @@
     UIImageView *backgroundView = [[UIImageView alloc]initWithFrame:self.view.bounds];
     backgroundView.image = [UIImage imageNamed:@"logInBackground.jpg"];
     [self.view addSubview:backgroundView];
-    [self.navigationController setNavigationBarHidden:YES];
 }
 
 - (void)initScrollView{
@@ -196,10 +207,6 @@
     [signUpButton addTarget:self action:@selector(signUpClicked) forControlEvents:UIControlEventTouchUpInside];
 }
 
-- (void)viewWillDisappear:(BOOL)animated{
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
 #pragma mark - Action
 -(void)userlogin
 {
@@ -285,7 +292,8 @@
 
 - (void)forgetPasswordClicked{
     NSLog(@"forgetPassword!");
-    FindPasswordViewController *find = [[FindPasswordViewController alloc]init];
+    FindPwdVC *find = [[FindPwdVC alloc]init];
+    find.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:find animated:YES];
 }
 

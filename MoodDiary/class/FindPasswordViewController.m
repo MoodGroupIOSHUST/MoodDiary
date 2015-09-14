@@ -9,7 +9,7 @@
 #import "FindPasswordViewController.h"
 #import "UserInfo.h"
 
-@interface FindPasswordViewController ()
+@interface FindPasswordViewController ()<UIAlertViewDelegate>
 
 @end
 
@@ -21,19 +21,21 @@
     // Do any additional setup after loading the view.
     self.title = @"找回密码";
     
-    self.navigationController.navigationBar.barStyle = UIStatusBarStyleDefault;
+    self.view.backgroundColor = [UIColor whiteColor];
+    
+    [self.navigationController.navigationBar setBarStyle:UIBarStyleBlack];
     [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
     
     [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor],UITextAttributeTextColor,nil]];
     
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     
+    self.navigationController.navigationBar.translucent = YES;
+    
     if (IS_IOS_7) {
-        [self.navigationController.navigationBar setBarTintColor:[UIColor colorWithRed:71/255.0 green:228/255.0 blue:160/255.0 alpha:1.0]];
+        [self.navigationController.navigationBar setBarTintColor:[UIColor redColor]];
         [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor],UITextAttributeTextColor,nil]];
     }
-    
-    self.view.backgroundColor = [UIColor whiteColor];
     
     [self initWithScrollView];
     [self initInputPhoneNum];
@@ -46,7 +48,7 @@
 -(void)initWithScrollView
 {
     //定义scrollview
-    mainScrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height-64)];
+    mainScrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, upsideheight, self.view.frame.size.width, self.view.frame.size.height-64)];
     mainScrollView.backgroundColor = [UIColor whiteColor];
     //设置代理
     mainScrollView.delegate=self;
@@ -405,7 +407,8 @@
     [self.view showProgress:YES];
     [AppWebService changepwdbycode:checkcode.text phonenum:phoneNumTx.text newpwd:newPwd.text success:^(id result) {
         [self.view showProgress:NO];
-        [self.view showResult:ResultViewTypeOK text:@"重置成功"];
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"密码重置成功" delegate:self cancelButtonTitle:@"返回登陆页面" otherButtonTitles:nil, nil];
+        [alert show];
     } failed:^(NSError *error) {
         [self.view showProgress:NO];
         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:[error.userInfo objectForKey:NSLocalizedDescriptionKey] delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil,nil];
@@ -550,6 +553,12 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
+#pragma mark- uialertviewdelegate
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (buttonIndex == 0) {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+}
 
 -(void)dealloc
 {
