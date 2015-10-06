@@ -24,7 +24,7 @@
 	</dict>
 	<dict>
 		<key>name</key>
-		<string>美文</string>
+		<string>阅读</string>
 		<key>img_selected</key>
 		<string>article_selected</string>
 		<key>img_nomal</key>
@@ -34,7 +34,7 @@
 	</dict>
 	<dict>
 		<key>name</key>
-		<string>我的</string>
+		<string>更多</string>
 		<key>img_selected</key>
 		<string>mine_selected</string>
 		<key>img_nomal</key>

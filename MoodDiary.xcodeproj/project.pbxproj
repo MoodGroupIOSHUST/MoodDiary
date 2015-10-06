@@ -48,6 +48,7 @@
 		A5659BE61BA0672800D80237 /* yiyu_result4.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A5659BBD1BA0672800D80237 /* yiyu_result4.jpg */; };
 		A5659BE71BA0672800D80237 /* female_back.png in Resources */ = {isa = PBXBuildFile; fileRef = A5659BBE1BA0672800D80237 /* female_back.png */; };
 		A5659BE81BA0672800D80237 /* male_back.png in Resources */ = {isa = PBXBuildFile; fileRef = A5659BBF1BA0672800D80237 /* male_back.png */; };
+		A5670BB51BBCCBC3004BE48F /* no_pic.png in Resources */ = {isa = PBXBuildFile; fileRef = A5670BB41BBCCBC3004BE48F /* no_pic.png */; };
 		A5717E091B843C8300DCD8FF /* UMSocialLocalizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = A5717DC91B843C8300DCD8FF /* UMSocialLocalizable.strings */; };
 		A5717E0A1B843C8300DCD8FF /* libUMSocial_Sdk_4.2.3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A5717DD71B843C8300DCD8FF /* libUMSocial_Sdk_4.2.3.a */; };
 		A5717E0B1B843C8300DCD8FF /* libUMSocial_Sdk_Comment_4.2.3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A5717DD81B843C8300DCD8FF /* libUMSocial_Sdk_Comment_4.2.3.a */; };
@@ -330,6 +331,7 @@
 		A5659BBD1BA0672800D80237 /* yiyu_result4.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = yiyu_result4.jpg; sourceTree = "<group>"; };
 		A5659BBE1BA0672800D80237 /* female_back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = female_back.png; sourceTree = "<group>"; };
 		A5659BBF1BA0672800D80237 /* male_back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = male_back.png; sourceTree = "<group>"; };
+		A5670BB41BBCCBC3004BE48F /* no_pic.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = no_pic.png; sourceTree = "<group>"; };
 		A5717DCA1B843C8300DCD8FF /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/UMSocialLocalizable.strings; sourceTree = "<group>"; };
 		A5717DCC1B843C8300DCD8FF /* UMSocial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMSocial.h; sourceTree = "<group>"; };
 		A5717DCD1B843C8300DCD8FF /* UMSocialAccountManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMSocialAccountManager.h; sourceTree = "<group>"; };
@@ -1027,6 +1029,7 @@
 		A58E4AB71B577BF50043240A /* image */ = {
 			isa = PBXGroup;
 			children = (
+				A5670BB41BBCCBC3004BE48F /* no_pic.png */,
 				A5A3C0471B99E5970054483E /* favourite_none.png */,
 				A58E4AB81B577BF50043240A /* account.png */,
 				A58E4AB91B577BF50043240A /* account@2x.png */,
@@ -1565,6 +1568,7 @@
 				A58E4BF11B577BF50043240A /* jiaolv3.jpg in Resources */,
 				A5717E1C1B843C8400DCD8FF /* ios-social-sdk-shake.html in Resources */,
 				A58E4C141B577BF50043240A /* home_selected.png in Resources */,
+				A5670BB51BBCCBC3004BE48F /* no_pic.png in Resources */,
 				A58E4BE01B577BF50043240A /* account@2x.png in Resources */,
 				A58E4BEB1B577BF50043240A /* jiaolv15.jpg in Resources */,
 				A58E4BBD1B577BF50043240A /* Main.storyboard in Resources */,

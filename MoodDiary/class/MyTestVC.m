@@ -100,7 +100,7 @@
     NSDictionary *dic = [[NSDictionary alloc]initWithDictionary:info.testresult];
     
     if (indexPath.row ==0) {
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"SCL90测评结果将直接上传至学校，不会反馈给测试者^—^" delegate:self cancelButtonTitle:@"好的" otherButtonTitles:nil, nil];
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"您的测试结果正常" delegate:self cancelButtonTitle:@"好的" otherButtonTitles:nil, nil];
         [alert show];
     }
     else if(indexPath.row == 1){
@@ -108,13 +108,13 @@
         NSString *result = [[NSString alloc]initWithFormat:@"%@",[dic objectForKey:@"upset"]];
         
         if (![result isEqualToString:@"(null)"]) {
-            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:result delegate:self cancelButtonTitle:@"好的"otherButtonTitles:@"5个战胜焦虑的技巧",@"如何克服焦虑", nil];
+             UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:result delegate:self cancelButtonTitle:@"我自己能运功疗伤"otherButtonTitles:@"找咨询师给我把把脉",@"找找网上有啥解药", nil];
             alert.tag = 10086;
             [alert show];
         }
         else
         {
-            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"您还没有参与过焦虑测评，快去测试一下吧^-^" delegate:self cancelButtonTitle:@"好的"otherButtonTitles:@"取消", nil];
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"抱歉，您号没有测试过，快给自己把把脉吧！" delegate:self cancelButtonTitle:@"好的"otherButtonTitles:@"取消", nil];
             alert.tag = 10000;
             [alert show];
         }
@@ -125,13 +125,13 @@
         NSString *result = [[NSString alloc]initWithFormat:@"%@",[dic objectForKey:@"depress"]];
         
         if (![result isEqualToString:@"(null)"]) {
-            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:result delegate:self cancelButtonTitle:@"好的"otherButtonTitles:@"5个战胜焦虑的技巧",@"如何克服焦虑", nil];
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:result delegate:self cancelButtonTitle:@"我自己能运功疗伤"otherButtonTitles:@"找咨询师给我把把脉",@"找找网上有啥解药", nil];
             alert.tag = 10087;
             [alert show];
         }
         else
         {
-            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"您还没有参与过抑郁测评，快去测试一下吧^-^" delegate:self cancelButtonTitle:@"好的"otherButtonTitles:@"取消", nil];
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"抱歉，您号没有测试过，快给自己把把脉吧！" delegate:self cancelButtonTitle:@"好的"otherButtonTitles:@"取消", nil];
             alert.tag = 10001;
             [alert show];
         }

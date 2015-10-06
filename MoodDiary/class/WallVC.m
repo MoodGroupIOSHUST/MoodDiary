@@ -440,17 +440,18 @@ static const CGFloat MJDuration = 1.0;
             NSDictionary *temdic = [[NSDictionary alloc]init];
             temdic = [commentdataarr objectAtIndex:i];
             
-//            NSDictionary *accountdic = [temdic objectForKey:@"account"];
+            NSDictionary *accountdic = [temdic objectForKey:@"account"];
+            NSString *nickNameStr = [NSString stringWithFormat:@"%@",[accountdic objectForKey:@"anonymity"]];
             
             //此处到时候由后台统一随机分配昵称
-            int x = arc4random() % (typearr.count-1);
-            NSString *typestr = [typearr objectAtIndex:x];
+//            int x = arc4random() % (typearr.count-1);
+//            NSString *typestr = [typearr objectAtIndex:x];
+//            
+//            NSArray *nicknamearr = [nicknamedic objectForKey:typestr];
+//            
+//            int y = arc4random() % (nicknamearr.count-1);
             
-            NSArray *nicknamearr = [nicknamedic objectForKey:typestr];
-            
-            int y = arc4random() % (nicknamearr.count-1);
-            
-            NSString *content = [NSString stringWithFormat:@"%@ : %@",[nicknamearr objectAtIndex:y],[temdic objectForKey:@"content"]];
+            NSString *content = [NSString stringWithFormat:@"%@ : %@",nickNameStr,[temdic objectForKey:@"content"]];
             
             NSMutableDictionary *datadic = [[NSMutableDictionary alloc]init];
             
