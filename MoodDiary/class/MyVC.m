@@ -173,7 +173,20 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
+    NSIndexPath *selected = [tableView indexPathForSelectedRow];
+    if(selected)
+    {
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    }
+    
     if (indexPath.row ==0) {
+        
+        if (![NSUserDefaults boolForKey:IS_LOGIN]) {
+            //没有登录
+            [self showLoginWindow];
+            return;
+        }
+        
         PersonalInfoVC *personal = [[PersonalInfoVC alloc]init];
         personal.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:personal animated:YES];
@@ -189,26 +202,42 @@
         [self.navigationController pushViewController:about animated:YES];
     }
     else if (indexPath.row == 1){
+        
+        if (![NSUserDefaults boolForKey:IS_LOGIN]) {
+            //没有登录
+            [self showLoginWindow];
+            return;
+        }
+        
         AlertPwdViewController *changepwd = [[AlertPwdViewController alloc]init];
         changepwd.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:changepwd animated:YES];
     }
     else if (indexPath.row == 4){
+        
+        if (![NSUserDefaults boolForKey:IS_LOGIN]) {
+            //没有登录
+            [self showLoginWindow];
+            return;
+        }
+        
         MyCollectionsViewController *myCollectionsViewController=[[MyCollectionsViewController alloc]init];
         myCollectionsViewController.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:myCollectionsViewController animated:YES];
     }
     else if (indexPath.row == 2){
+        
+        if (![NSUserDefaults boolForKey:IS_LOGIN]) {
+            //没有登录
+            [self showLoginWindow];
+            return;
+        }
+        
         MyTestVC *mytest=[[MyTestVC alloc]init];
          mytest.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:mytest animated:YES];
     }
     
-    NSIndexPath *selected = [tableView indexPathForSelectedRow];
-    if(selected)
-    {
-        [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    }
 }
 
 - (void)didReceiveMemoryWarning {

@@ -14,6 +14,11 @@
 {
     UIButton *confirmBt;
     BOOL done;
+    BOOL hollanddone;
 }
+
+@property (nonatomic, retain)NSString *content1;
+@property (nonatomic, retain)NSString *content2;
+@property (nonatomic, retain)NSString *testtype;
 
 @end

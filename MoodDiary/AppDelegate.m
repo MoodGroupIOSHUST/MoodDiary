@@ -21,7 +21,9 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
+    
     [self registernotify];
+    
     [self setUmengShare];
     
     [self ininloginvc];
@@ -36,6 +38,10 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(goToWhitchViewController)
                                                  name:GO_TO_CONTROLLER object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(againLogin)
+                                                 name:AGAIN_LOGIN object:nil];
 }
 
 - (void)setUmengShare{
@@ -117,15 +123,25 @@
 
 - (void)goToWhitchViewController{
     //先判断是否登陆
-    if ([NSUserDefaults boolForKey:IS_LOGIN]){
+//    if ([NSUserDefaults boolForKey:IS_LOGIN]){
         self.tabBarController = [[MainTabBarViewController alloc]init];
         self.window.rootViewController = self.tabBarController;
-    }
-    else{
-        LoginVC *loginvc = [[LoginVC alloc]init];
-        UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:loginvc];
-        self.window.rootViewController = nav;
-    }
+//    }
+//    else{
+//        LoginVC *loginvc = [[LoginVC alloc]init];
+//        UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:loginvc];
+//        self.window.rootViewController = nav;
+//    }
+}
+
+- (void)againLogin{
+    
+    NSLog(@"重新登录");
+    
+    [NSUserDefaults setBool:NO forKey:IS_LOGIN];
+    
+    [self goToWhitchViewController];
+    
 }
 
 #pragma mark - UmsocialCallback
@@ -162,6 +178,8 @@
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
+    
+    [NSUserDefaults setBool:NO forKey:IS_LOGIN];
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 

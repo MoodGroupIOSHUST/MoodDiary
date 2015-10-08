@@ -277,6 +277,8 @@
 		A59C651F1B5783CE0071E120 /* Images-3.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A59C651E1B5783CE0071E120 /* Images-3.xcassets */; };
 		A5A3C0481B99E5970054483E /* favourite_none.png in Resources */ = {isa = PBXBuildFile; fileRef = A5A3C0471B99E5970054483E /* favourite_none.png */; };
 		A5A3C04A1B99E5B20054483E /* comment_none.png in Resources */ = {isa = PBXBuildFile; fileRef = A5A3C0491B99E5B20054483E /* comment_none.png */; };
+		A5BC9DD71BC50EB100D7E61B /* Holland.json in Resources */ = {isa = PBXBuildFile; fileRef = A5BC9DD61BC50EB100D7E61B /* Holland.json */; };
+		A5BC9E291BC5145D00D7E61B /* HollandTestVC.m in Sources */ = {isa = PBXBuildFile; fileRef = A5BC9E281BC5145D00D7E61B /* HollandTestVC.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -678,6 +680,9 @@
 		A59C651E1B5783CE0071E120 /* Images-3.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Images-3.xcassets"; sourceTree = "<group>"; };
 		A5A3C0471B99E5970054483E /* favourite_none.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = favourite_none.png; sourceTree = "<group>"; };
 		A5A3C0491B99E5B20054483E /* comment_none.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = comment_none.png; sourceTree = "<group>"; };
+		A5BC9DD61BC50EB100D7E61B /* Holland.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Holland.json; sourceTree = "<group>"; };
+		A5BC9E271BC5145D00D7E61B /* HollandTestVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HollandTestVC.h; sourceTree = "<group>"; };
+		A5BC9E281BC5145D00D7E61B /* HollandTestVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HollandTestVC.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1006,6 +1011,7 @@
 		A58E4AAB1B577BF50043240A /* Configs */ = {
 			isa = PBXGroup;
 			children = (
+				A5BC9DD61BC50EB100D7E61B /* Holland.json */,
 				A58E4AAC1B577BF50043240A /* jiaolv.json */,
 				A58E4AAD1B577BF50043240A /* jiaolv5.json */,
 				A58E4AAE1B577BF50043240A /* jsonTest.json */,
@@ -1364,6 +1370,8 @@
 				A58E4A911B577BF50043240A /* MyTestVC.m */,
 				A58E4A941B577BF50043240A /* NewTestVC.h */,
 				A58E4A951B577BF50043240A /* NewTestVC.m */,
+				A5BC9E271BC5145D00D7E61B /* HollandTestVC.h */,
+				A5BC9E281BC5145D00D7E61B /* HollandTestVC.m */,
 				A58E4AA31B577BF50043240A /* SpecificVC.h */,
 				A58E4AA41B577BF50043240A /* SpecificVC.m */,
 				A58E4AA51B577BF50043240A /* upsetVC.h */,
@@ -1545,6 +1553,7 @@
 				A58E4BF71B577BF50043240A /* jiaolv9.jpg in Resources */,
 				A58E4BFD1B577BF50043240A /* yiyu0.jpg in Resources */,
 				A58E4C311B577BF50043240A /* set5.png in Resources */,
+				A5BC9DD71BC50EB100D7E61B /* Holland.json in Resources */,
 				A58E4C0D1B577BF50043240A /* create.png in Resources */,
 				A5659BDB1BA0672800D80237 /* yiyu2.jpg in Resources */,
 				A58E4BD61B577BF50043240A /* jiaolv.json in Resources */,
@@ -1767,6 +1776,7 @@
 				A58E4BD51B577BF50043240A /* WallVC.m in Sources */,
 				A58E4C501B577BF50043240A /* NSString+Additions.m in Sources */,
 				A58E4BC21B577BF50043240A /* ArticleDetailViewController.m in Sources */,
+				A5BC9E291BC5145D00D7E61B /* HollandTestVC.m in Sources */,
 				A58E4C661B577BF50043240A /* SDImageCache.m in Sources */,
 				A58E4C6C1B577BF50043240A /* SDWebImagePrefetcher.m in Sources */,
 				A58E4C691B577BF50043240A /* SDWebImageDownloader.m in Sources */,

@@ -16,6 +16,8 @@
 
 @implementation LoginVC{
     CGFloat keyboardHeightChange;
+    
+    NSInteger buttonnum;
 }
 
 
@@ -27,21 +29,40 @@
     self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:235/255.0 green:235/255.0 blue:235/255.0 alpha:1.0];
     [self initBackground];
     [self initScrollView];
+    
     //self.view.backgroundColor = [UIColor colorWithRed:235/255.0 green:240/255.0 blue:241/255.0 alpha:1.0];
+    
     if(IS_IOS_7)
     {
         [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor blackColor],UITextAttributeTextColor,nil]];
     }
     
     [self initloginpart];
+    
+    buttonnum = 1;
+    
+    if (_againLogin) {
+        
+        buttonnum = 2;
+    }
+
     [self initbt];
     [self initKeyboardNotification];
     
+    
+    
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
+- (void)viewWillAppear:(BOOL)animated{
+    
     [self.navigationController setNavigationBarHidden:YES];
+}
+
+- (void)viewDidAppear:(BOOL)animated{
+    
+    if (_againLogin) {
+        [self.view showResult:ResultViewTypeFaild text:@"您还没有登录，请先登录"];
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
@@ -171,9 +192,10 @@
 
 -(void)initbt
 {
-    NSArray *titlearr = [NSArray arrayWithObjects:@"登      陆",@"体       验",@"注      册", nil];
     
-    for (int i=0; i<1; i++) {
+    NSArray *titlearr = [NSArray arrayWithObjects:@"登      陆",@"返       回",@"注      册", nil];
+    
+    for (int i=0; i<buttonnum; i++) {
         UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(20+40, backview.frame.origin.y+62+i*50+50, SCREEN_WIDTH-40-80, 40)];
         button.tag = i;
         button.layer.masksToBounds = YES;
@@ -261,7 +283,16 @@
         [NSUserDefaults setUserObject:userinfo forKey:USER_STOKRN_KEY];
         [NSUserDefaults setBool:YES forKey:IS_LOGIN];
         
-        [[NSNotificationCenter defaultCenter] postNotificationName:GO_TO_CONTROLLER object:nil];
+        if (_againLogin) {
+            [self dismissViewControllerAnimated:YES completion:^{
+                
+            }];
+        }
+        else
+        {
+            [[NSNotificationCenter defaultCenter] postNotificationName:GO_TO_CONTROLLER object:nil];
+        }
+        
         
         
     } failed:^(NSError *error) {
@@ -283,6 +314,9 @@
     else if (sender.tag == 1)
     {
         //体验
+        [self dismissViewControllerAnimated:YES completion:^{
+            
+        }];
     }
     else if (sender.tag ==2)
     {

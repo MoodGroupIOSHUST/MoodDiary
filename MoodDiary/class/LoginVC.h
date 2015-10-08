@@ -16,4 +16,6 @@
     UIView *scrollView;
 }
 
+@property (nonatomic,assign)BOOL againLogin;
+
 @end

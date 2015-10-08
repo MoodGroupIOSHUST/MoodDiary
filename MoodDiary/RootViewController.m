@@ -7,6 +7,7 @@
 //
 
 #import "RootViewController.h"
+#import "LoginVC.h"
 
 @interface RootViewController ()
 
@@ -54,6 +55,17 @@
         [self.navigationController.navigationBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor],UITextAttributeTextColor,nil]];
     }
     
+}
+
+- (void)showLoginWindow{
+    
+    LoginVC *login = [[LoginVC alloc]init];
+    
+    login.againLogin = YES;
+    
+    [self presentViewController:login animated:YES completion:^{
+        
+    }];
 }
 
 //自适应文字

@@ -61,24 +61,28 @@
     [scrollback addSubview:btn3];
     [btn3 addTarget:self action:@selector(btnpress:) forControlEvents:UIControlEventTouchUpInside];
     
-//    btn4 = [[UIButton alloc]initWithFrame:CGRectMake(10, btn3.frame.origin.y + btn3.frame.size.height+10, (SCREEN_WIDTH-20-8)/2, (SCREEN_WIDTH-20-8)/2)];
-//    btn4.tag = 4;
-//    btn4.backgroundColor = [UIColor blueColor];
-//    [scrollback addSubview:btn4];
-//    [btn4 addTarget:self action:@selector(btnpress:) forControlEvents:UIControlEventTouchUpInside];
-//    
+    btn4 = [[UIButton alloc]initWithFrame:CGRectMake(10, btn3.frame.origin.y + btn3.frame.size.height+10, SCREEN_WIDTH-20,(SCREEN_WIDTH-20)/2 )];
+    btn4.tag = 4;
+    btn4.backgroundColor = [UIColor greenColor];
+    [btn4 setTitle:@"霍兰德" forState:UIControlStateNormal];
+//    [btn4 setBackgroundImage:[UIImage imageNamed:@"scl"] forState:UIControlStateNormal];
+    [scrollback addSubview:btn4];
+    btn4.layer.masksToBounds = YES;
+    btn4.layer.cornerRadius = 5;
+    [btn4 addTarget:self action:@selector(btnpress:) forControlEvents:UIControlEventTouchUpInside];
+//
 //    btn5 = [[UIButton alloc]initWithFrame:CGRectMake(SCREEN_WIDTH-(SCREEN_WIDTH-20-8)/2-10, btn3.frame.origin.y + btn3.frame.size.height+10, (SCREEN_WIDTH-20-8)/2, (SCREEN_WIDTH-20-8)/2)];
 //    btn5.tag = 5;
 //    btn5.backgroundColor = [UIColor orangeColor];
 //    [scrollback addSubview:btn5];
 //    [btn5 addTarget:self action:@selector(btnpress:) forControlEvents:UIControlEventTouchUpInside];
     
-    if ((btn3.frame.origin.y+btn3.frame.size.height)<(SCREEN_HEIGHT-upsideheight-49)) {
-        scrollback.contentSize = CGSizeMake(SCREEN_WIDTH, SCREEN_HEIGHT-upsideheight-49);
+    if ((btn4.frame.origin.y+btn4.frame.size.height)<(SCREEN_HEIGHT-upsideheight-49)) {
+        scrollback.contentSize = CGSizeMake(SCREEN_WIDTH, SCREEN_HEIGHT-upsideheight-49+10);
     }
     else
     {
-        scrollback.contentSize = CGSizeMake(SCREEN_WIDTH, btn3.frame.origin.y+btn3.frame.size.height);
+        scrollback.contentSize = CGSizeMake(SCREEN_WIDTH, btn4.frame.origin.y+btn4.frame.size.height+10);
     }
     
     scrollback.showsVerticalScrollIndicator = NO;
@@ -86,6 +90,13 @@
 }
 
 - (void)btnpress:(UIButton *)sender{
+    
+    if (![NSUserDefaults boolForKey:IS_LOGIN]) {
+        //没有登录
+        [self showLoginWindow];
+        return;
+    }
+    
     switch (sender.tag) {
         case 1:
             [self pushtoscl];
@@ -96,6 +107,8 @@
         case 3:
             [self pushtoyiyu];
             break;
+        case 4:
+            [self pushtoholland];
 
         default:
             break;
@@ -106,6 +119,9 @@
     
     SpecificVC *specific = [[SpecificVC alloc]init];
     specific.hidesBottomBarWhenPushed = YES;
+    specific.content1 = @"下面有90条测试项目，列出了有些人可能会有的问题，请仔细地阅读每一条，然后更具最近一星期以内你的实际感觉，选择合适的答案点击，请注意不要漏题";
+    specific.content2 = @"应当记住的是：\n\n1.每一测题只能选择一个答案；\n\n2.不可漏掉任何测题；\n\n3.尽量不选择中性答案；\n\n4.本测验有时间限制，但凭自己的直觉反应进行作答，不要迟疑不决，拖延时间；\n\n5.有些题目你可能从未思考过，或者感到不太容易回答。对于这样的题目，同样要求你做出一种倾向性的选择。";
+    specific.testtype = @"SCL90";
     [self.navigationController pushViewController:specific animated:YES];
 
 }
@@ -122,6 +138,15 @@
     depress.testname = @"depress";
     depress.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:depress animated:YES];
+}
+
+- (void)pushtoholland{
+    SpecificVC *specific = [[SpecificVC alloc]init];
+    specific.hidesBottomBarWhenPushed = YES;
+    specific.content1 = @"    人的个性与职业有着密切的关系，不同职业对从业者的人格特征的要求是有差距的，如果通过科学的测试，可以预知自己的个性特征，这有助于选择适合于个人发展的职业。您将要阅读的这个《职业价格自测问卷》，可以帮助您作个性自评，从而获自己的个性特征更适合从事哪方面的工作。";
+    specific.content2 = @"    请根据对每一题目的第一印象作答，不必仔细推敲，答案没有好坏、对错之分。\n\n具体填写方法是，根据自己的情况，如果符合自己的情况则选择A“是”;\n\n如果不符合自己的情况则选择B“否”.";
+    specific.testtype = @"霍兰德";
+    [self.navigationController pushViewController:specific animated:YES];
 }
 
 - (void)didReceiveMemoryWarning {

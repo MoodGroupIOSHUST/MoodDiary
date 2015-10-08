@@ -72,6 +72,7 @@
         for (NSDictionary *dic in articleArray2) {
             [articleArray addObject:dic];
         }
+        
         numbersOfRow = [articleArray count];
         
         [articleTableView.footer endRefreshing];

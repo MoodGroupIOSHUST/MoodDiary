@@ -70,6 +70,12 @@ static const CGFloat MJDuration = 1.0;
 
 - (void)writemood{
     
+    if (![NSUserDefaults boolForKey:IS_LOGIN]) {
+        //没有登录
+        [self showLoginWindow];
+        return;
+    }
+    
     //发表心情墙
     self.navigationItem.rightBarButtonItem = clearbtn;
     
@@ -161,7 +167,7 @@ static const CGFloat MJDuration = 1.0;
     //下拉刷新
     
     if (isaftercomment == NO) {
-//        [self.view showProgress:YES text:@"获取心情墙..."];
+
         [walltable.header beginRefreshing];
     }
     
@@ -216,11 +222,24 @@ static const CGFloat MJDuration = 1.0;
         });
         
     } failed:^(NSError *error) {
+        
         isaftercomment = NO;
-//        [self.view showProgress:NO];
-        [self.view showResult:ResultViewTypeFaild text:@"获取失败，请稍后再试"];
+        
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(MJDuration * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            // 刷新表格
+            
+            // 拿到当前的下拉刷新控件，结束刷新状态
+            [walltable.header endRefreshing];
+            
+            [self.view showResult:ResultViewTypeFaild text:@"获取失败，请稍后再试"];
+            
+        });
+
         walltable.userInteractionEnabled = YES;
+        
         NSLog(@"failed");
+        
+//        [walltable.header endRefreshing];
     }];
 }
 
@@ -397,6 +416,8 @@ static const CGFloat MJDuration = 1.0;
             [sender setTitle:[NSString stringWithFormat:@"%d",num] forState:UIControlStateNormal];
             sender.selected = NO;
         }
+        
+        sender.userInteractionEnabled = NO;
         
     } failed:^(NSError *error) {
         [self.view showProgress:NO];
