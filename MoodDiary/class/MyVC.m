@@ -116,12 +116,12 @@
     else if (indexPath.row ==2){
         imgview.backgroundColor = [UIColor clearColor];
         imgview.image = [UIImage imageNamed:@"set3"];
-        title.text = @"我的测评";
+        title.text = @"测评记录";
     }
     else if (indexPath.row == 3){
         imgview.backgroundColor = [UIColor clearColor];
         imgview.image = [UIImage imageNamed:@"set4"];
-        title.text = @"咨询指引";
+        title.text = @"心理咨询";
     }
     else if (indexPath.row == 4){
         imgview.backgroundColor = [UIColor clearColor];

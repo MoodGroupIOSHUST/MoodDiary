@@ -242,7 +242,7 @@
     NSLog(@"%@",string);
     
     
-    [AppWebService uploadupsetanddepress:replaced points:[NSString stringWithFormat:@"%d",result] type:@"2" success:^(id result) {
+    [AppWebService uploadupsetanddepress:replaced points:[NSString stringWithFormat:@"%d",result] type:@"1" success:^(id result) {
         self.navigationItem.rightBarButtonItem = nil;
     } failed:^(NSError *error) {
         [self.view showResult:ResultViewTypeFaild text:[error.userInfo objectForKey:NSLocalizedDescriptionKey]];

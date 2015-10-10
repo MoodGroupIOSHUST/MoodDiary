@@ -116,10 +116,10 @@
 }
 
 //上传scl测试结果
-+(void)uploadresult:(NSString *)result success:(SuccessBlock)success failed:(FailedBlock)failed
++(void)uploadresult:(NSString *)result type:(NSString *)type success:(SuccessBlock)success failed:(FailedBlock)failed
 {
     NSString *point = @"100";
-    NSString *type = @"3";
+//    NSString *type = @"3";
     NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:result,@"result",type,@"type", point,@"points",nil];
     [[iTourAPIClient sharedClient] postPath:API_UPLOADTEST parameters:dict success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSDictionary *responseJson = [NSJSONSerialization JSONObjectWithData:responseObject options:NSJSONReadingAllowFragments error:nil];

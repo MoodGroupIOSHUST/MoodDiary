@@ -97,7 +97,7 @@
             [NSUserDefaults setUserObject:userinfo forKey:USER_STOKRN_KEY];
             [NSUserDefaults setBool:YES forKey:IS_LOGIN];
             
-            [[NSNotificationCenter defaultCenter] postNotificationName:GO_TO_CONTROLLER object:nil];
+            [self goToViewController];
             
             
         } failed:^(NSError *error) {
@@ -105,7 +105,7 @@
             
             [NSUserDefaults setBool:NO forKey:IS_LOGIN];
             
-            [self goToWhitchViewController];
+            [self goToViewController];
             
             
         }];
@@ -121,17 +121,23 @@
     }
 }
 
+- (void)goToViewController{
+    //    先判断是否登陆
+    self.tabBarController = [[MainTabBarViewController alloc]init];
+    self.window.rootViewController = self.tabBarController;
+}
+
 - (void)goToWhitchViewController{
-    //先判断是否登陆
-//    if ([NSUserDefaults boolForKey:IS_LOGIN]){
+//    先判断是否登陆
+    if ([NSUserDefaults boolForKey:IS_LOGIN]){
         self.tabBarController = [[MainTabBarViewController alloc]init];
         self.window.rootViewController = self.tabBarController;
-//    }
-//    else{
-//        LoginVC *loginvc = [[LoginVC alloc]init];
-//        UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:loginvc];
-//        self.window.rootViewController = nav;
-//    }
+    }
+    else{
+        LoginVC *loginvc = [[LoginVC alloc]init];
+        UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:loginvc];
+        self.window.rootViewController = nav;
+    }
 }
 
 - (void)againLogin{

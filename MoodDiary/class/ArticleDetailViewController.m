@@ -53,19 +53,18 @@
 
 - (void)setButton{
     if (buttonFlag == 0) {
-        buttonView = [[UIView alloc]initWithFrame:CGRectMake(SCREEN_WIDTH - 120 -5, frameheight+upsideheight-50, 120, 40)];
+        buttonView = [[UIView alloc]initWithFrame:CGRectMake(SCREEN_WIDTH - 140 -5, frameheight+upsideheight-50, 140, 40)];
         buttonView.backgroundColor = [UIColor clearColor];
         
-        likeButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 2, 40, 40)];
-        UIImage *tempImage1 = [UIImage imageNamed:@"likeButton.png"];
+        likeButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 1, 38, 38)];
         
-        [likeButton setImage:[UIImage imageNamed:@"like_unselected"] forState:UIControlStateNormal];
-        [likeButton setImage:tempImage1 forState:UIControlStateSelected];
+        [likeButton setImage:[UIImage imageNamed:@"newunlike"] forState:UIControlStateNormal];
+        [likeButton setImage:[UIImage imageNamed:@"newlike"] forState:UIControlStateSelected];
 
         [likeButton addTarget:self action:@selector(likeButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
         [buttonView addSubview:likeButton];
         
-        likenumelabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 10, 20, 20)];
+        likenumelabel = [[UILabel alloc]initWithFrame:CGRectMake(12, 14, 20, 20)];
         [likeButton addSubview:likenumelabel];
         likenumelabel.adjustsFontSizeToFitWidth = YES;
         likenumelabel.backgroundColor = [UIColor clearColor];
@@ -90,21 +89,37 @@
         }
         
         
+        NSLog(@"collectButtonTapped");
+        ArticleDetail *articlDetail = [[ArticleDetail alloc]init];
+        articlDetail.thumbnailURL = _thumbnailURL;
+        articlDetail.titleString = _titleString;
+        articlDetail.dateString = _dateString;
+        articlDetail.articleURL = _url;
+        articlDetail.IDString = _IDString;
+        articlDetail.digest = digest;
         
-        collectButton = [[UIButton alloc]initWithFrame:CGRectMake(40, 0, 40, 40)];
-        UIImage  *tempImage2 = [UIImage imageNamed:@"collectButton.png"];
-        UIImageView *tempImageView2 = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 43, 40)];
-        [tempImageView2 setImage:tempImage2];
-        [collectButton addSubview:tempImageView2];
+        BOOL flag;
+        flag = [_dataModel addObject:articlDetail];
+        
+        collectButton = [[UIButton alloc]initWithFrame:CGRectMake(50, 0, 40, 40)];
+        [collectButton setImage:[UIImage imageNamed:@"newuncollect"] forState:UIControlStateNormal];
+        [collectButton setImage:[UIImage imageNamed:@"newcollect"] forState:UIControlStateSelected];
         [collectButton addTarget:self action:@selector(collectButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+        if (flag == 1) {
+            //未收藏
+            collectButton.selected = NO;
+        }
+        else{
+            collectButton.selected = YES;
+        }
         [buttonView addSubview:collectButton];
         
+        flag = [_dataModel addObject:articlDetail];
         
-        shareButton = [[UIButton alloc]initWithFrame:CGRectMake(80, 0, 40, 40)];
-        UIImage  *tempImage3 = [UIImage imageNamed:@"shareButton.png"];
-        UIImageView *tempImageView3 = [[UIImageView alloc]initWithFrame:CGRectMake(0, 3, 40, 40)];
-        [tempImageView3 setImage:tempImage3];
-        [shareButton addSubview:tempImageView3];
+        
+        shareButton = [[UIButton alloc]initWithFrame:CGRectMake(100, 0, 40, 40)];
+        [shareButton setImage:[UIImage imageNamed:@"newshare"] forState:UIControlStateNormal];
+        [shareButton setImage:[UIImage imageNamed:@"newunshare"] forState:UIControlStateSelected];
         [shareButton addTarget:self action:@selector(shareButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
         [buttonView addSubview:shareButton];
         
@@ -161,6 +176,7 @@
 }
 
 - (void)collectButtonTapped:(id)sender{
+    
     NSLog(@"collectButtonTapped");
     ArticleDetail *articlDetail = [[ArticleDetail alloc]init];
     articlDetail.thumbnailURL = _thumbnailURL;
@@ -172,13 +188,17 @@
     
     BOOL flag;
     flag = [_dataModel addObject:articlDetail];
+    
     if (flag == 1) {
+        collectButton.selected = YES;
         [self.view showResult:ResultViewTypeOK text:@"收藏成功"];
         NSLog(@"已收藏");
     }else{
         NSLog(@"已取消收藏");
+        collectButton.selected = NO;
         [self.view showResult:ResultViewTypeOK text:@"取消收藏"];
     }
+    
     [_dataModel saveArticles];
 }
 

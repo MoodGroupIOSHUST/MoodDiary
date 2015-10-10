@@ -133,7 +133,7 @@
 
     UITabBar *tabbar = self.tabBar;
     tabbar.layer.borderWidth = 1;
-    tabbar.layer.borderColor = [[UIColor colorWithRed:237/255.0 green:237/255.0 blue:237/255.0 alpha:1.0]CGColor];
+    tabbar.layer.borderColor = [[UIColor colorWithRed:225/255.0 green:225/255.0 blue:225/255.0 alpha:1.0]CGColor];
     tabbar.layer.masksToBounds = YES;
 
     NSArray *views = [tabbar subviews];
@@ -155,8 +155,8 @@
         [tabButton setImage:itemBarImage forState:UIControlStateNormal];
         [tabButton setImage:itemBarImage_selected forState:UIControlStateSelected];
         //设置及button里面title和image的位置上左下右
-        [tabButton setImageEdgeInsets:UIEdgeInsetsMake(5,30,20,28)];
-        [tabButton setTitleEdgeInsets:UIEdgeInsetsMake(45,-92,20,12)];
+        [tabButton setImageEdgeInsets:UIEdgeInsetsMake(0,21.5,0,21.5)];
+//        [tabButton setTitleEdgeInsets:UIEdgeInsetsMake(45,-86,20,12)];
 
         [tabButton addTarget:self action:@selector(tabButtonAction:) forControlEvents:UIControlEventTouchUpInside];
         //设置查询、周报权限
@@ -165,10 +165,11 @@
         [tabButtons addObject:tabButton];
         
         tabButton.titleLabel.font = [UIFont systemFontOfSize:12];
-        [tabButton setTitle:[NSString stringWithFormat:@"%@",itemBarName] forState:UIControlStateNormal];
+//        [tabButton setTitle:[NSString stringWithFormat:@"%@",itemBarName] forState:UIControlStateNormal];
         
         [tabButton setTitleColor:[UIColor colorWithRed:71/255.0 green:228/255.0 blue:160/255.0 alpha:1.0]forState:UIControlStateSelected];
-        [tabButton setTitleColor:[UIColor colorWithRed:175 / 255.0 green:175 / 255.0 blue:175 / 255.0 alpha:1] forState:UIControlStateNormal];
+        [tabButton setTitleColor:[UIColor colorWithRed:160 / 255.0 green:160 / 255.0 blue:160 / 255.0 alpha:1] forState:UIControlStateNormal];
+        tabButton.backgroundColor = [UIColor colorWithRed:250 / 255.0 green:250 / 255.0 blue:250 / 255.0 alpha:1];
     }
     
 }

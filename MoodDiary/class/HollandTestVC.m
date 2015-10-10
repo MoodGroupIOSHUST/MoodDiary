@@ -131,14 +131,14 @@
     
     last = now;
     now = [NSDate date];
-    if (last) {
-        //防作弊
-        NSTimeInterval sec = [now timeIntervalSinceDate:last];
-        if (sec < 0.3) {
-            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"您做的过快，请根据自身情况认真答题" delegate:nil cancelButtonTitle:@"好的" otherButtonTitles:nil, nil];
-            [alert show];
-        }
-    }
+//    if (last) {
+//        //防作弊
+//        NSTimeInterval sec = [now timeIntervalSinceDate:last];
+//        if (sec < 0.2) {
+//            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"您做的过快，请根据自身情况认真答题" delegate:nil cancelButtonTitle:@"好的" otherButtonTitles:nil, nil];
+//            [alert show];
+//        }
+//    }
     
     if (sender.tag == 0) {
         NSString *str = @"1";
@@ -174,16 +174,34 @@
 
 - (void)upload
 {
-    
+    //霍兰德
     UserInfo *info = [NSUserDefaults objectUserForKey:USER_STOKRN_KEY];
-    if ([info.accountType isEqualToString:@"2"]) {
-        
+    
+    NSString *typeStr = [NSString stringWithFormat:@"%@",info.accountType];
+    
+    int typeValue = [typeStr intValue];
+    int result = 0;
+    
+    NSMutableArray *arr = [[NSMutableArray alloc]init];
+    
+    for (int i = 0; i<typeStr.length; i++) {
+        result = typeValue%10;
+        [arr addObject:[NSNumber numberWithInt:result]];
+        typeValue = typeValue/10;
     }
-    else if ([info.accountType isEqualToString:@"0"]){
-        [self.view showResult:ResultViewTypeFaild text:@"您没有权限做此测评,系统将不会上传结果"];
+    
+    if ((arr.count == 3)&&[[NSString stringWithFormat:@"%@",[arr objectAtIndex:2]] isEqualToString:@"1"]) {
+        //测试账号
+//        [self.view showResult:ResultViewTypeFaild text:@"您的账号为测试账号"];
+    }
+    else if ((arr.count == 3)&&[[NSString stringWithFormat:@"%@",[arr objectAtIndex:0]] isEqualToString:@"0"]){
+        //没有权限
+        [self.view showResult:ResultViewTypeOK text:@"您没有权限做该测评"];
         return;
     }
-    else if( [info.accountType isEqualToString:@"3"]){
+    else if ((arr.count == 3)&&[[NSString stringWithFormat:@"%@",[arr objectAtIndex:0]] isEqualToString:@"2"])
+    {
+        //已经做完
         [self.view showResult:ResultViewTypeOK text:@"您已完成测评"];
         return;
     }
@@ -194,16 +212,29 @@
     NSString *string = [choicearr componentsJoinedByString:@","];
     NSString *replaced = [string stringByReplacingOccurrencesOfString:@"," withString:@""];
     NSLog(@"%@",string);
-    [AppWebService uploadresult:replaced success:^(id result) {
+    [AppWebService uploadresult:replaced type:@"4" success:^(id result) {
         NSLog(@"success");
         
         [self.view showProgress:NO];
         self.view.userInteractionEnabled = YES;
+        
+        NSString *msg = [NSString stringWithFormat:@"%@",[result objectForKey:@"msg"]];
         NSDictionary *temdic = [result objectForKey:@"data"];
         NSDictionary *studic = [temdic objectForKey:@"student"];
         NSDictionary *accountdic = [studic objectForKey:@"account"];
         
+//        [self.view showResult:ResultViewTypeOK text:msg];
+        
         UserInfo *userinfo = [NSUserDefaults objectUserForKey:USER_STOKRN_KEY];
+        
+        NSDate *date = [[NSDate alloc]init];
+        NSDateFormatter *dateformatter = [[NSDateFormatter alloc]init];
+        [dateformatter setDateFormat:@"YYYY-MM-dd"];
+        NSString *datestr = [dateformatter stringFromDate:date];
+        NSMutableDictionary *resultdic = [[NSMutableDictionary alloc]initWithDictionary:userinfo.testresult];
+        [resultdic setObject:[[NSString alloc]initWithFormat:@"%@(测评时间：%@)",msg,datestr] forKey:@"holland"];
+        userinfo.testresult = resultdic;
+        [NSUserDefaults setUserObject:userinfo forKey:USER_STOKRN_KEY];
         
         userinfo.accountType = [NSString stringWithFormat:@"%@",[accountdic objectForKey:@"accountType"]];
         userinfo.birthday = [NSString stringWithFormat:@"%@",[accountdic objectForKey:@"birthday"]];
@@ -230,7 +261,8 @@
         
         self.navigationItem.rightBarButtonItem = nil;
         
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"上传结果成功！" delegate:self cancelButtonTitle:@"好的" otherButtonTitles:nil, nil];
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"职业分析" message:msg delegate:self cancelButtonTitle:@"好的" otherButtonTitles:nil, nil];
+        alert.tag = 10086;
         [alert show];
         
     } failed:^(NSError *error) {

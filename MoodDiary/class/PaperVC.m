@@ -17,6 +17,9 @@
     NSInteger numbersOfRow;
     //NSInteger selectedRowOfIndexPath;
     UIWebView *webView;
+    
+    UIButton *reloadBtn;
+    UIImageView *reloadImage;
 }
 
 @end
@@ -27,8 +30,15 @@
     [super viewDidLoad];
     height = 120;
     
-    self.title = @"美文";
+    self.title = @"阅读";
     self.view.backgroundColor = [UIColor whiteColor];
+    
+    reloadBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, upsideheight, SCREEN_WIDTH, SCREEN_HEIGHT-upsideheight)];
+    [reloadBtn addTarget:self action:@selector(initArticle) forControlEvents:UIControlEventTouchUpInside];
+    reloadBtn.backgroundColor = [UIColor clearColor];
+    
+    reloadImage = [[UIImageView alloc]initWithFrame:CGRectMake(100, (SCREEN_HEIGHT-SCREEN_WIDTH+200)/2, SCREEN_WIDTH-200, SCREEN_WIDTH-200)];
+    reloadImage.image = [UIImage imageNamed:@"reload"];
     
     [self initTableView];
     [self initArticle];
@@ -42,6 +52,8 @@
 //    [self.view showProgress:YES text:@"获取美文..."];
     
     [AppWebService articleListWithStart:@"0" limit:@"10" success:^(id result) {
+        [reloadBtn removeFromSuperview];
+        [reloadImage removeFromSuperview];
         NSDictionary *tempdata  = [result objectForKey:@"data"];
         articleArray = [[NSMutableArray alloc]initWithArray:[tempdata objectForKey:@"acticles"]]; //这里接口有拼写错误
         numbersOfRow = [articleArray count];
@@ -50,10 +62,15 @@
         [articleTableView reloadData];
         articleTableView.userInteractionEnabled = YES;
         
+        [articleTableView addLegendFooterWithRefreshingTarget:self refreshingAction:@selector(getmoredata)];
+        
     } failed:^(NSError *error) {
         NSLog(@"fail");
+        [self.view addSubview:reloadImage];
+        [self.view addSubview:reloadBtn];
 //        [self.view showProgress:NO];
         articleTableView.userInteractionEnabled = YES;
+        
         
         [self.view showResult:ResultViewTypeFaild text:[error.userInfo objectForKey:NSLocalizedDescriptionKey]];
         
@@ -67,6 +84,10 @@
     NSString *string = [[NSString alloc]initWithFormat:@"%ld",(long)count];
     
     [AppWebService articleListWithStart:string limit:@"10" success:^(id result) {
+        
+        [reloadBtn removeFromSuperview];
+        [reloadImage removeFromSuperview];
+        
         NSDictionary *tempdata  = [result objectForKey:@"data"];
         NSMutableArray *articleArray2 = [[NSMutableArray alloc]initWithArray:[tempdata objectForKey:@"acticles"]]; //这里接口有拼写错误
         for (NSDictionary *dic in articleArray2) {
@@ -81,6 +102,8 @@
     } failed:^(NSError *error) {
         NSLog(@"fail");
 //        [self.view showProgress:NO];
+        [self.view addSubview:reloadImage];
+        [self.view addSubview:reloadBtn];
         self.view.userInteractionEnabled = YES;
         
         [self.view showResult:ResultViewTypeFaild text:[error.userInfo objectForKey:NSLocalizedDescriptionKey]];
@@ -102,7 +125,6 @@
     
     //添加上拉加载和下拉刷新
     [articleTableView addLegendHeaderWithRefreshingTarget:self refreshingAction:@selector(initArticle)];
-    [articleTableView addLegendFooterWithRefreshingTarget:self refreshingAction:@selector(getmoredata)];
     
     CGRect frame = articleTableView.tableHeaderView.frame;
     frame.size.height = 25;

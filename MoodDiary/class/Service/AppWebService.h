@@ -11,7 +11,7 @@
 
 @interface AppWebService:NSObject
 #define API_LOGIN @"login"
-#define API_UPLOADTEST @"admin/student/test/submit"
+#define API_UPLOADTEST @"test/submit"
 #define API_LOGOUT @"logout"
 #define API_CHANGEPWD @"user/resetPwd"
 
@@ -25,7 +25,7 @@
 +(void)articleListWithStart:(NSString *)start limit:(NSString *)limit success:(SuccessBlock)success failed:(FailedBlock)failed;
 
 //上传测试结果
-+(void)uploadresult:(NSString *)result success:(SuccessBlock)success failed:(FailedBlock)failed;
++(void)uploadresult:(NSString *)result type:(NSString *)type success:(SuccessBlock)success failed:(FailedBlock)failed;
 
 //上传测试结果
 +(void)uploadupsetanddepress:(NSString *)result points:(NSString *)points type:(NSString *)type success:(SuccessBlock)success failed:(FailedBlock)failed;

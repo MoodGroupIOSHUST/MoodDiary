@@ -50,8 +50,9 @@
         return;
     }
     
+    
     UILabel *label1 = [[UILabel alloc]initWithFrame:CGRectMake(20, upsideheight+10, SCREEN_WIDTH-40, 100)];
-    label1.backgroundColor = [UIColor whiteColor];
+    label1.backgroundColor = [UIColor clearColor];
     label1.font = [UIFont systemFontOfSize:13];
     label1.lineBreakMode = NSLineBreakByCharWrapping;
     label1.numberOfLines = 0;
@@ -59,12 +60,18 @@
     [self.view addSubview:label1];
     
     UILabel *label2 = [[UILabel alloc]initWithFrame:CGRectMake(20, label1.frame.origin.y+100, SCREEN_WIDTH-40, 230)];
-    label2.backgroundColor = [UIColor whiteColor];
+    label2.backgroundColor = [UIColor clearColor];
     label2.font = [UIFont systemFontOfSize:13];
     label2.lineBreakMode = NSLineBreakByCharWrapping;
     label2.numberOfLines = 0;
     label2.text = _content2;
     [self.view addSubview:label2];
+    
+    if ([_testtype isEqualToString:@"霍兰德"]) {
+        label1.frame = CGRectMake(20, upsideheight+40, SCREEN_WIDTH-40, 100);
+        [label1 removeFromSuperview];
+        [self.view addSubview:label1];
+    }
     
     confirmBt = [[UIButton alloc]initWithFrame:CGRectMake(20, label2.frame.origin.y+210+20, SCREEN_WIDTH-40, 40)];
     [confirmBt setTitle:@"确认" forState:UIControlStateNormal];

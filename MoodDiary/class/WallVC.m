@@ -13,6 +13,8 @@
 @interface WallVC ()
 {
     NSString *nowDateStr;
+    UIButton *reloadBtn;
+    UIImageView *reloadImage;
 }
 
 @property (nonatomic, retain)NSString *start;
@@ -45,7 +47,7 @@ static const CGFloat MJDuration = 1.0;
     nowDateStr = [[NSString alloc]init];
     subpostid = nil;
     
-    right = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"create"] style:UIBarButtonItemStylePlain target:self action:@selector(writemood)];
+    right = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"newwrite"] style:UIBarButtonItemStylePlain target:self action:@selector(writemood)];
     
     clearbtn = [[UIBarButtonItem alloc]initWithTitle:@"清空" style:UIBarButtonItemStylePlain target:self action:@selector(clearbtnclicked)];
     
@@ -59,6 +61,13 @@ static const CGFloat MJDuration = 1.0;
     NSString *jsonString = [[NSString alloc]initWithContentsOfFile:path encoding:NSUTF8StringEncoding error:nil];
     NSString *json = [jsonString stringByReplacingOccurrencesOfString:@";" withString:@","];
     nicknamedic = [json objectFromJSONString];
+    
+    reloadBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, upsideheight, SCREEN_WIDTH, SCREEN_HEIGHT-upsideheight)];
+    [reloadBtn addTarget:self action:@selector(getlistdata) forControlEvents:UIControlEventTouchUpInside];
+    reloadBtn.backgroundColor = [UIColor clearColor];
+    
+    reloadImage = [[UIImageView alloc]initWithFrame:CGRectMake(100, (SCREEN_HEIGHT-SCREEN_WIDTH+200)/2, SCREEN_WIDTH-200, SCREEN_WIDTH-200)];
+    reloadImage.image = [UIImage imageNamed:@"reload"];
     
     [self initKeyboardNotification];
     
@@ -176,6 +185,9 @@ static const CGFloat MJDuration = 1.0;
     [AppWebService moodwalllist:@"0" limit:_limit success:^(id result) {
         NSLog(@"success");
         
+        [reloadImage removeFromSuperview];
+        [reloadBtn removeFromSuperview];
+        
         NSDate *senddate=[NSDate date];
         
         NSDateFormatter  *dateformatter=[[NSDateFormatter alloc] init];
@@ -225,13 +237,18 @@ static const CGFloat MJDuration = 1.0;
         
         isaftercomment = NO;
         
+        [self.view addSubview:reloadImage];
+        [self.view addSubview:reloadBtn];
+        
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(MJDuration * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             // 刷新表格
             
             // 拿到当前的下拉刷新控件，结束刷新状态
             [walltable.header endRefreshing];
             
-            [self.view showResult:ResultViewTypeFaild text:@"获取失败，请稍后再试"];
+            
+            
+            [self.view showResult:ResultViewTypeFaild text:@"获取失败"];
             
         });
 
@@ -255,6 +272,8 @@ static const CGFloat MJDuration = 1.0;
     
     [AppWebService moodwalllist:_start limit:_limit success:^(id result) {
         NSLog(@"success");
+        [reloadImage removeFromSuperview];
+        [reloadBtn removeFromSuperview];
         NSDictionary *datadic = [[NSDictionary alloc]init];
         datadic = [result objectForKey:@"data"];
         
@@ -286,7 +305,10 @@ static const CGFloat MJDuration = 1.0;
         
     } failed:^(NSError *error) {
 //        [self.view showProgress:NO];
-        [self.view showResult:ResultViewTypeFaild text:@"获取失败，请稍后再试"];
+        
+        [self.view addSubview:reloadImage];
+        [self.view addSubview:reloadBtn];
+        [self.view showResult:ResultViewTypeFaild text:@"获取失败"];
         walltable.userInteractionEnabled = YES;
         NSLog(@"failed");
     }];

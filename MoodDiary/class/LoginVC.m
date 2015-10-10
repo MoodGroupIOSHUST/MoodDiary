@@ -165,6 +165,10 @@
         useraccountTF.text = userinfo.useraccount;
     }
     
+    if ([userinfo.useraccount isEqualToString:@"(null)"]) {
+        useraccountTF.text = @"";
+    }
+    
     [backview addSubview:useraccountTF];
     
     /*----password----*/

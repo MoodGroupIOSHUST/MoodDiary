@@ -10,6 +10,7 @@
 #import "AdviceVC.h"
 #import "upsetVC.h"
 #import "depressVC.h"
+#import "HollandTestVC.h"
 
 @interface MyTestVC ()
 
@@ -49,7 +50,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 3;
+    return 4;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
@@ -83,9 +84,12 @@
         title.text = @"SCL90测评";
     }
     else if (indexPath.row == 1){
+        title.text = @"霍兰德职业兴趣测评";
+    }
+    else if (indexPath.row == 2){
         title.text = @"焦虑测评";
     }
-    else if (indexPath.row ==2){
+    else if (indexPath.row ==3){
         title.text = @"抑郁测评";
     }
     
@@ -105,10 +109,10 @@
     }
     else if(indexPath.row == 1){
         
-        NSString *result = [[NSString alloc]initWithFormat:@"%@",[dic objectForKey:@"upset"]];
+        NSString *result = [[NSString alloc]initWithFormat:@"%@",[dic objectForKey:@"holland"]];
         
         if (![result isEqualToString:@"(null)"]) {
-             UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:result delegate:self cancelButtonTitle:@"我自己能运功疗伤"otherButtonTitles:@"找咨询师给我把把脉",@"找找网上有啥解药", nil];
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:result delegate:self cancelButtonTitle:@"我自己能洞察天机"otherButtonTitles:@"找咨询师给我把把脉",@"找找网上有啥解药", nil];
             alert.tag = 10086;
             [alert show];
         }
@@ -122,7 +126,7 @@
     }
     else if (indexPath.row == 2){
         
-        NSString *result = [[NSString alloc]initWithFormat:@"%@",[dic objectForKey:@"depress"]];
+        NSString *result = [[NSString alloc]initWithFormat:@"%@",[dic objectForKey:@"upset"]];
         
         if (![result isEqualToString:@"(null)"]) {
             UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:result delegate:self cancelButtonTitle:@"我自己能运功疗伤"otherButtonTitles:@"找咨询师给我把把脉",@"找找网上有啥解药", nil];
@@ -133,6 +137,22 @@
         {
             UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"抱歉，您号没有测试过，快给自己把把脉吧！" delegate:self cancelButtonTitle:@"好的"otherButtonTitles:@"取消", nil];
             alert.tag = 10001;
+            [alert show];
+        }
+        
+    }
+    else if (indexPath.row == 3){
+        NSString *result = [[NSString alloc]initWithFormat:@"%@",[dic objectForKey:@"depress"]];
+        
+        if (![result isEqualToString:@"(null)"]) {
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:result delegate:self cancelButtonTitle:@"我自己能运功疗伤"otherButtonTitles:@"找咨询师给我把把脉",@"找找网上有啥解药", nil];
+            alert.tag = 10088;
+            [alert show];
+        }
+        else
+        {
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"抱歉，您号没有测试过，快给自己把把脉吧！" delegate:self cancelButtonTitle:@"好的"otherButtonTitles:@"取消", nil];
+            alert.tag = 10002;
             [alert show];
         }
     }
@@ -147,6 +167,26 @@
 #pragma mark- uialertviewdelgate
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     if (alertView.tag == 10086) {
+//        if (buttonIndex == 1) {
+//            HollandTestVC *advice = [[HollandTestVC alloc]init];
+////            advice.advicetype = @"jiaolv5";
+//            
+//            [self.navigationController pushViewController:advice animated:YES];
+//        }
+//        else if(buttonIndex ==2){
+//            HollandTestVC *advice = [[AdviceVC alloc]init];
+//            advice.advicetype = @"kefujiaolvzhihu";
+//            
+//            [self.navigationController pushViewController:advice animated:YES];
+//        }
+    }
+    else if (alertView.tag == 10000){
+        if (buttonIndex == 0) {
+            HollandTestVC *upset = [[HollandTestVC alloc]init];
+            [self.navigationController pushViewController:upset animated:YES];
+        }
+    }
+    else if (alertView.tag == 10087){
         if (buttonIndex == 1) {
             AdviceVC *advice = [[AdviceVC alloc]init];
             advice.advicetype = @"jiaolv5";
@@ -166,7 +206,7 @@
             [self.navigationController pushViewController:upset animated:YES];
         }
     }
-    else if (alertView.tag == 10087){
+    else if (alertView.tag == 10088){
         if (buttonIndex == 1) {
             AdviceVC *advice = [[AdviceVC alloc]init];
             advice.advicetype = @"yiyu23";
@@ -180,7 +220,7 @@
             [self.navigationController pushViewController:advice animated:YES];
         }
     }
-    else if (alertView.tag == 10001){
+    else if (alertView.tag == 10002){
         if (buttonIndex == 0) {
             depressVC *depress = [[depressVC alloc]init];
             [self.navigationController pushViewController:depress animated:YES];
