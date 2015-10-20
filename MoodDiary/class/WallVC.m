@@ -433,13 +433,9 @@ static const CGFloat MJDuration = 1.0;
         [self.view showResult:ResultViewTypeOK text:@"点赞成功"];
         int num = [sender.titleLabel.text intValue];
         
-        if (!sender.selected) {
-            num = num + 1;
-            [sender setTitle:[NSString stringWithFormat:@"%d",num] forState:UIControlStateNormal];
-            sender.selected = NO;
-        }
-        
-        sender.userInteractionEnabled = NO;
+        num = num + 1;
+        [sender setTitle:[NSString stringWithFormat:@"%d",num] forState:UIControlStateNormal];
+        sender.selected = YES;
         
     } failed:^(NSError *error) {
         [self.view showProgress:NO];

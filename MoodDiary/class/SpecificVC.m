@@ -77,7 +77,7 @@
     [confirmBt setTitle:@"确认" forState:UIControlStateNormal];
     
 //    #warning 正式发布时，interaction改为no
-    confirmBt.userInteractionEnabled = YES;
+    confirmBt.userInteractionEnabled = NO;
     confirmBt.layer.masksToBounds = YES;
     confirmBt.layer.cornerRadius = 5;
     confirmBt.backgroundColor = [UIColor lightGrayColor];

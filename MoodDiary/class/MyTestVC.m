@@ -11,6 +11,7 @@
 #import "upsetVC.h"
 #import "depressVC.h"
 #import "HollandTestVC.h"
+#import "ResultVC.h"
 
 @interface MyTestVC ()
 
@@ -109,12 +110,14 @@
     }
     else if(indexPath.row == 1){
         
+        //霍兰德
         NSString *result = [[NSString alloc]initWithFormat:@"%@",[dic objectForKey:@"holland"]];
         
         if (![result isEqualToString:@"(null)"]) {
-            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:result delegate:self cancelButtonTitle:@"我自己能洞察天机"otherButtonTitles:@"找咨询师给我把把脉",@"找找网上有啥解药", nil];
-            alert.tag = 10086;
-            [alert show];
+            ResultVC *resultVc = [[ResultVC alloc]init];
+            resultVc.detailStr = result;
+            resultVc.isToRoot = NO;
+            [self.navigationController pushViewController:resultVc animated:YES];
         }
         else
         {
@@ -126,6 +129,7 @@
     }
     else if (indexPath.row == 2){
         
+        //焦虑
         NSString *result = [[NSString alloc]initWithFormat:@"%@",[dic objectForKey:@"upset"]];
         
         if (![result isEqualToString:@"(null)"]) {
@@ -142,6 +146,7 @@
         
     }
     else if (indexPath.row == 3){
+        //抑郁
         NSString *result = [[NSString alloc]initWithFormat:@"%@",[dic objectForKey:@"depress"]];
         
         if (![result isEqualToString:@"(null)"]) {

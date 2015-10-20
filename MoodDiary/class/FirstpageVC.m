@@ -8,9 +8,8 @@
 
 #import "FirstpageVC.h"
 #import "NewTestVC.h"
-#import "upsetVC.h"
-#import "depressVC.h"
 #import "SpecificVC.h"
+#import "PicturePageVC.h"
 
 @interface FirstpageVC ()
 
@@ -117,6 +116,38 @@
 
 - (void)pushtoscl{
     
+    //scl
+    UserInfo *info = [NSUserDefaults objectUserForKey:USER_STOKRN_KEY];
+    
+    NSString *typeStr = [NSString stringWithFormat:@"%@",info.accountType];
+    
+    int typeValue = [typeStr intValue];
+    int result = 0;
+    
+    NSMutableArray *arr = [[NSMutableArray alloc]init];
+    
+    for (int i = 0; i<typeStr.length; i++) {
+        result = typeValue%10;
+        [arr addObject:[NSNumber numberWithInt:result]];
+        typeValue = typeValue/10;
+    }
+    
+    if ((arr.count == 3)&&[[NSString stringWithFormat:@"%@",[arr objectAtIndex:2]] isEqualToString:@"1"]) {
+        //测试账号
+        //        [self.view showResult:ResultViewTypeFaild text:@"您的账号为测试账号"];
+    }
+    else if ((arr.count == 3)&&[[NSString stringWithFormat:@"%@",[arr objectAtIndex:1]] isEqualToString:@"0"]){
+        //没有权限
+        [self.view showResult:ResultViewTypeOK text:@"您没有权限做该测评"];
+        return;
+    }
+    else if ((arr.count == 3)&&[[NSString stringWithFormat:@"%@",[arr objectAtIndex:2]] isEqualToString:@"2"])
+    {
+        //已经做完
+        [self.view showResult:ResultViewTypeOK text:@"您已完成测评"];
+        return;
+    }
+    
     SpecificVC *specific = [[SpecificVC alloc]init];
     specific.hidesBottomBarWhenPushed = YES;
     specific.content1 = @"下面有90条测试项目，列出了有些人可能会有的问题，请仔细地阅读每一条，然后更具最近一星期以内你的实际感觉，选择合适的答案点击，请注意不要漏题";
@@ -127,20 +158,57 @@
 }
 
 - (void)pushtojiaolv{
-    upsetVC *upset = [[upsetVC alloc]init];
-    upset.testname = @"upset";
-    upset.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:upset animated:YES];
+    
+    PicturePageVC *picture = [[PicturePageVC alloc]init];
+    picture.testType = @"upset";
+
+    picture.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:picture animated:YES];
 }
 
 - (void)pushtoyiyu{
-    depressVC *depress = [[depressVC alloc]init];
-    depress.testname = @"depress";
-    depress.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:depress animated:YES];
+    
+    PicturePageVC *picture = [[PicturePageVC alloc]init];
+    picture.testType = @"depress";
+    
+    picture.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:picture animated:YES];
 }
 
 - (void)pushtoholland{
+    
+    //霍兰德
+    UserInfo *info = [NSUserDefaults objectUserForKey:USER_STOKRN_KEY];
+    
+    NSString *typeStr = [NSString stringWithFormat:@"%@",info.accountType];
+    
+    int typeValue = [typeStr intValue];
+    int result = 0;
+    
+    NSMutableArray *arr = [[NSMutableArray alloc]init];
+    
+    for (int i = 0; i<typeStr.length; i++) {
+        result = typeValue%10;
+        [arr addObject:[NSNumber numberWithInt:result]];
+        typeValue = typeValue/10;
+    }
+    
+    if ((arr.count == 3)&&[[NSString stringWithFormat:@"%@",[arr objectAtIndex:2]] isEqualToString:@"1"]) {
+        //测试账号
+        //        [self.view showResult:ResultViewTypeFaild text:@"您的账号为测试账号"];
+    }
+    else if ((arr.count == 3)&&[[NSString stringWithFormat:@"%@",[arr objectAtIndex:0]] isEqualToString:@"0"]){
+        //没有权限
+        [self.view showResult:ResultViewTypeOK text:@"您没有权限做该测评"];
+        return;
+    }
+    else if ((arr.count == 3)&&[[NSString stringWithFormat:@"%@",[arr objectAtIndex:0]] isEqualToString:@"2"])
+    {
+        //已经做完
+        [self.view showResult:ResultViewTypeOK text:@"您已完成测评"];
+        return;
+    }
+
     SpecificVC *specific = [[SpecificVC alloc]init];
     specific.hidesBottomBarWhenPushed = YES;
     specific.content1 = @"    人的个性与职业有着密切的关系，不同职业对从业者的人格特征的要求是有差距的，如果通过科学的测试，可以预知自己的个性特征，这有助于选择适合于个人发展的职业。您将要阅读的这个《职业价格自测问卷》，可以帮助您作个性自评，从而获自己的个性特征更适合从事哪方面的工作。";

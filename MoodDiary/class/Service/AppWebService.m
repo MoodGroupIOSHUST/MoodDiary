@@ -129,6 +129,15 @@
         NSString *result = [NSString stringWithFormat:@"%@",[responseJson objectForKey:@"isSuccess"]];
         NSString *errormsg = [responseJson objectForKey:@"msg"];
         NSLog(@"%@",errormsg);
+        
+        if (responseJson == nil) {
+            
+            NSString *errormsg = @"发生错误，请稍后再试";
+            
+            error = [NSError errorWithMsg:errormsg];
+            
+            SAFE_BLOCK_CALL(failed, error);
+        }
         if (result && [result isEqualToString:@"1"]) {
             SAFE_BLOCK_CALL(success, responseJson);
         }

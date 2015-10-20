@@ -141,21 +141,22 @@
         [view removeFromSuperview];
     }
     
-    CGFloat btWidth = self.view.frame.size.width / tabBarConfigs.count;
+    CGFloat btWidth = (SCREEN_WIDTH-49*4)/8.0;
+    
 //    UserInfo *userinfo = [NSUserDefaults objectUserForKey:USER_STOKRN_KEY];
     for (int i=0; i<tabBarConfigs.count; i++) {
         NSDictionary *dict = [tabBarConfigs objectAtIndex: i];
-        NSString *itemBarName = [dict objectForKey: @"name"];
+//        NSString *itemBarName = [dict objectForKey: @"name"];
 		UIImage *itemBarImage = [UIImage imageNamed:[dict objectForKey: @"img_nomal"]];
         UIImage *itemBarImage_selected = [UIImage imageNamed:[dict objectForKey: @"img_selected"]];
         
         UIButton *tabButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        tabButton.frame = CGRectMake(i*btWidth, 0, btWidth, 49);
+        tabButton.frame = CGRectMake(btWidth+i*(49+btWidth*2), 0, 49, 49);
         tabButton.tag = i;
         [tabButton setImage:itemBarImage forState:UIControlStateNormal];
         [tabButton setImage:itemBarImage_selected forState:UIControlStateSelected];
         //设置及button里面title和image的位置上左下右
-        [tabButton setImageEdgeInsets:UIEdgeInsetsMake(0,21.5,0,21.5)];
+//        [tabButton setImageEdgeInsets:UIEdgeInsetsMake(0,21.5,0,21.5)];
 //        [tabButton setTitleEdgeInsets:UIEdgeInsetsMake(45,-86,20,12)];
 
         [tabButton addTarget:self action:@selector(tabButtonAction:) forControlEvents:UIControlEventTouchUpInside];
@@ -169,7 +170,7 @@
         
         [tabButton setTitleColor:[UIColor colorWithRed:71/255.0 green:228/255.0 blue:160/255.0 alpha:1.0]forState:UIControlStateSelected];
         [tabButton setTitleColor:[UIColor colorWithRed:160 / 255.0 green:160 / 255.0 blue:160 / 255.0 alpha:1] forState:UIControlStateNormal];
-        tabButton.backgroundColor = [UIColor colorWithRed:250 / 255.0 green:250 / 255.0 blue:250 / 255.0 alpha:1];
+        tabButton.backgroundColor = [UIColor clearColor];
     }
     
 }

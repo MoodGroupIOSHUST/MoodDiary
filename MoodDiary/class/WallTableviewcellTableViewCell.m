@@ -47,18 +47,18 @@
         
         _commentbtn = [[UIButton alloc]initWithFrame:CGRectMake(SCREEN_WIDTH-10-120-10, contentlabel.frame.origin.y+contentlabel.frame.size.height+10, 60, 30)];
         _commentbtn.backgroundColor = [UIColor clearColor];
-        [_commentbtn setTitleColor:[UIColor colorWithRed:107/255.0 green:107/255.0 blue:109/255.0 alpha:1.0] forState:UIControlStateSelected];
-        [_commentbtn setTitleColor:[UIColor colorWithRed:43/255.0 green:169/255.0 blue:111/255.0 alpha:1.0] forState:UIControlStateNormal];
-        [_commentbtn setImage:[UIImage imageNamed:@"comment"] forState:UIControlStateNormal];
-        [_commentbtn setImage:[UIImage imageNamed:@"comment_none"] forState:UIControlStateSelected];
+        [_commentbtn setTitleColor:[UIColor colorWithRed:107/255.0 green:107/255.0 blue:109/255.0 alpha:1.0] forState:UIControlStateNormal];
+        [_commentbtn setTitleColor:[UIColor colorWithRed:43/255.0 green:169/255.0 blue:111/255.0 alpha:1.0] forState:UIControlStateSelected];
+        [_commentbtn setImage:[UIImage imageNamed:@"comment_none"] forState:UIControlStateNormal];
+        [_commentbtn setImage:[UIImage imageNamed:@"comment"] forState:UIControlStateSelected];
         [_commentbtn setImageEdgeInsets:UIEdgeInsetsMake(7,15,5,17)];
         
         _favouritebtn = [[UIButton alloc]initWithFrame:CGRectMake(SCREEN_WIDTH-15-60, contentlabel.frame.origin.y+contentlabel.frame.size.height+10, 60, 30)];
         _favouritebtn.backgroundColor = [UIColor clearColor];
-        [_favouritebtn setTitleColor:[UIColor colorWithRed:107/255.0 green:107/255.0 blue:109/255.0 alpha:1.0] forState:UIControlStateSelected];
-        [_favouritebtn setTitleColor:[UIColor colorWithRed:43/255.0 green:169/255.0 blue:111/255.0 alpha:1.0] forState:UIControlStateNormal];;
-        [_favouritebtn setImage:[UIImage imageNamed:@"favourite"] forState:UIControlStateNormal];
-        [_favouritebtn setImage:[UIImage imageNamed:@"favourite_none"] forState:UIControlStateSelected];
+        [_favouritebtn setTitleColor:[UIColor colorWithRed:107/255.0 green:107/255.0 blue:109/255.0 alpha:1.0] forState:UIControlStateNormal];
+        [_favouritebtn setTitleColor:[UIColor colorWithRed:43/255.0 green:169/255.0 blue:111/255.0 alpha:1.0] forState:UIControlStateSelected];;
+        [_favouritebtn setImage:[UIImage imageNamed:@"favourite_none"] forState:UIControlStateNormal];
+        [_favouritebtn setImage:[UIImage imageNamed:@"favourite"] forState:UIControlStateSelected];
         [_favouritebtn setImageEdgeInsets:UIEdgeInsetsMake(5,17,5,17)];
         
         line = [[UIView alloc]initWithFrame:CGRectMake(10, self.frame.size.height-5, SCREEN_WIDTH-20, 20)];
@@ -158,11 +158,11 @@
     
     //评论
     if ([[sender objectForKey:@"commentCount"] intValue] == 0) {
-        _commentbtn.selected = YES;
+        _commentbtn.selected = NO;
     }
     else
     {
-        _commentbtn.selected = NO;
+        _commentbtn.selected = YES;
     }
     
     [_commentbtn setTitle:[NSString stringWithFormat:@"%@",[sender objectForKey:@"commentCount"]] forState:UIControlStateNormal];
@@ -170,10 +170,10 @@
     
     //点赞
     if ([[sender objectForKey:@"favourCount"] intValue] == 0) {
-        _favouritebtn.selected = YES;
+        _favouritebtn.selected = NO;
     }
     else{
-        _favouritebtn.selected = NO;
+        _favouritebtn.selected = YES;
     }
     
     [_favouritebtn setTitle:[NSString stringWithFormat:@"%@",[sender objectForKey:@"favourCount"]] forState:UIControlStateNormal];

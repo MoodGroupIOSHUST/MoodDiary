@@ -1,15 +1,15 @@
 //
-//  HollandTestVC.m
+//  UpiVC.m
 //  MoodDiary
 //
-//  Created by Sunc on 15/10/7.
+//  Created by Sunc on 15/10/20.
 //  Copyright (c) 2015年 Sunc. All rights reserved.
 //
 
-#import "HollandTestVC.h"
+#import "UpiVC.h"
 #import "ResultVC.h"
 
-@interface HollandTestVC ()
+@interface UpiVC ()
 {
     CGFloat totalBtnHeight;
     
@@ -20,7 +20,7 @@
 
 @end
 
-@implementation HollandTestVC
+@implementation UpiVC
 
 @synthesize testname;
 @synthesize collectionview;
@@ -84,7 +84,7 @@
         realHeight = 0;
     }
     
-    numberlabel.text = @"1/60";
+    numberlabel.text = @"1/64";
     NSArray *answerarr = [[NSArray alloc]initWithObjects:@"是",@"否", nil];
     for (int i = 0; i<2; i++) {
         answerBt = [[UIButton alloc]initWithFrame:CGRectMake(30, collectionview.frame.size.height+collectionview.frame.origin.y+40*i+20+realHeight/3, SCREEN_WIDTH-60, 30)];
@@ -108,9 +108,9 @@
 
 - (void)initkind{
     
-    self.title = @"霍兰德职业测评";
+    self.title = @"UPI测评";
     
-    NSString *name = @"Holland";
+    NSString *name = @"Upi";
     NSString *path = [[NSBundle mainBundle]pathForResource:name ofType:@"json"];
     NSString *jsonString = [[NSString alloc]initWithContentsOfFile:path encoding:NSUTF8StringEncoding error:nil];
     NSString *json = [jsonString stringByReplacingOccurrencesOfString:@";" withString:@","];
@@ -134,7 +134,7 @@
         return;
     }
     
-    if (choicearr.count == 60) {
+    if (choicearr.count == 64) {
         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"您已做完全部题目，请提测评交结果" delegate:nil cancelButtonTitle:@"好的" otherButtonTitles:nil, nil];
         [alert show];
         return;
@@ -161,11 +161,11 @@
         [choicearr addObject:str];
     }
     
-    if (choicearr.count < 60) {
+    if (choicearr.count < 64) {
         [collectionview scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:choicearr.count inSection:0] atScrollPosition:UICollectionViewScrollPositionNone animated:YES];
     }
     
-    if (choicearr.count == 60) {
+    if (choicearr.count == 64) {
         //答题完毕
         self.navigationItem.rightBarButtonItem = right;
         
@@ -175,7 +175,7 @@
     }
     else
     {
-        NSString *number = [NSString stringWithFormat:@"%lu/60",choicearr.count+1];
+        NSString *number = [NSString stringWithFormat:@"%lu/64",choicearr.count+1];
         numberlabel.text = number;
         for (UIButton *tembt in btarr) {
             tembt.selected = NO;
@@ -202,7 +202,7 @@
         NSDictionary *studic = [temdic objectForKey:@"student"];
         NSDictionary *accountdic = [studic objectForKey:@"account"];
         
-//        [self.view showResult:ResultViewTypeOK text:msg];
+        //        [self.view showResult:ResultViewTypeOK text:msg];
         
         UserInfo *userinfo = [NSUserDefaults objectUserForKey:USER_STOKRN_KEY];
         
@@ -234,9 +234,6 @@
         [NSUserDefaults setUserObject:userinfo forKey:USER_STOKRN_KEY];
         
         //设置说明页面题目做完状态
-        if ([_delegate respondsToSelector:@selector(hollandSetdone)]) {
-            [_delegate hollandSetdone];
-        }
         
         self.navigationItem.rightBarButtonItem = nil;
         
@@ -259,7 +256,7 @@
 #pragma mark - uicollectionviewdatasource
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     
-    return 60;
+    return 64;
     
 }
 
@@ -276,7 +273,7 @@
     
     int group = (int)((indexPath.row)/10);
     int num = (int)((indexPath.row)%10);
-    numberlabel.text = [NSString stringWithFormat:@"%ld/60",((long)indexPath.row+1)];
+    numberlabel.text = [NSString stringWithFormat:@"%ld/64",((long)indexPath.row+1)];
     NSArray *arr = [sclarr objectAtIndex:group];
     NSString *str = [arr objectAtIndex:num];
     NSLog(@"%@",str);
@@ -330,6 +327,7 @@
         [self popBack];
     }
 }
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

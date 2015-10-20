@@ -29,3 +29,5 @@
 #define SCREEN_HEIGHT ([UIScreen mainScreen].bounds.size.height)
 
 #define UmengAppkey @"5551a63e67e58ef9a3001ba3"
+
+#define CLOSE_BIG_VIEW @"CLOSE_BIG_VIEW"

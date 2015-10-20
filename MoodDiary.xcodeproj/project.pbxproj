@@ -89,6 +89,12 @@
 		A5717E201B843C8400DCD8FF /* libSocialWechat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A5717E041B843C8300DCD8FF /* libSocialWechat.a */; };
 		A5717E211B843C8400DCD8FF /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A5717E051B843C8300DCD8FF /* libWeChatSDK.a */; };
 		A577FDC51BA6513C00784D0C /* FindPwdVC.m in Sources */ = {isa = PBXBuildFile; fileRef = A577FDC41BA6513C00784D0C /* FindPwdVC.m */; };
+		A5891D001BD5C62800646ED8 /* depresspic.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A5891CFE1BD5C62800646ED8 /* depresspic.jpg */; };
+		A5891D011BD5C62800646ED8 /* upsetpage.png in Resources */ = {isa = PBXBuildFile; fileRef = A5891CFF1BD5C62800646ED8 /* upsetpage.png */; };
+		A5891D041BD5C67600646ED8 /* PicturePageVC.m in Sources */ = {isa = PBXBuildFile; fileRef = A5891D031BD5C67600646ED8 /* PicturePageVC.m */; };
+		A5891D071BD5CBEC00646ED8 /* UpiVC.m in Sources */ = {isa = PBXBuildFile; fileRef = A5891D061BD5CBEC00646ED8 /* UpiVC.m */; };
+		A58A986C1BCCECA600BC3F45 /* KGModal.m in Sources */ = {isa = PBXBuildFile; fileRef = A58A986B1BCCECA600BC3F45 /* KGModal.m */; };
+		A58A986F1BCCF50700BC3F45 /* ResultVC.m in Sources */ = {isa = PBXBuildFile; fileRef = A58A986E1BCCF50700BC3F45 /* ResultVC.m */; };
 		A58E4A511B577B8F0043240A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A58E4A501B577B8F0043240A /* main.m */; };
 		A58E4A541B577B8F0043240A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A58E4A531B577B8F0043240A /* AppDelegate.m */; };
 		A58E4A5A1B577B8F0043240A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A58E4A581B577B8F0043240A /* Main.storyboard */; };
@@ -419,6 +425,16 @@
 		A5717E081B843C8300DCD8FF /* WXApiObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApiObject.h; sourceTree = "<group>"; };
 		A577FDC31BA6513C00784D0C /* FindPwdVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FindPwdVC.h; sourceTree = "<group>"; };
 		A577FDC41BA6513C00784D0C /* FindPwdVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FindPwdVC.m; sourceTree = "<group>"; };
+		A5891CFE1BD5C62800646ED8 /* depresspic.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = depresspic.jpg; sourceTree = "<group>"; };
+		A5891CFF1BD5C62800646ED8 /* upsetpage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = upsetpage.png; sourceTree = "<group>"; };
+		A5891D021BD5C67600646ED8 /* PicturePageVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PicturePageVC.h; sourceTree = "<group>"; };
+		A5891D031BD5C67600646ED8 /* PicturePageVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PicturePageVC.m; sourceTree = "<group>"; };
+		A5891D051BD5CBEC00646ED8 /* UpiVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UpiVC.h; sourceTree = "<group>"; };
+		A5891D061BD5CBEC00646ED8 /* UpiVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UpiVC.m; sourceTree = "<group>"; };
+		A58A986A1BCCECA600BC3F45 /* KGModal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KGModal.h; sourceTree = "<group>"; };
+		A58A986B1BCCECA600BC3F45 /* KGModal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KGModal.m; sourceTree = "<group>"; };
+		A58A986D1BCCF50600BC3F45 /* ResultVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResultVC.h; sourceTree = "<group>"; };
+		A58A986E1BCCF50700BC3F45 /* ResultVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResultVC.m; sourceTree = "<group>"; };
 		A58E4A4B1B577B8F0043240A /* MoodDiary.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MoodDiary.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A58E4A4F1B577B8F0043240A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A58E4A501B577B8F0043240A /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -803,6 +819,8 @@
 			children = (
 				A5C1CB801BC8A7C0002C4165 /* reload.png */,
 				A56ED4FB1BC7D81E0044F435 /* newuncollect.png */,
+				A5891CFE1BD5C62800646ED8 /* depresspic.jpg */,
+				A5891CFF1BD5C62800646ED8 /* upsetpage.png */,
 				A56ED4FC1BC7D81E0044F435 /* newlike.png */,
 				A56ED4FD1BC7D81E0044F435 /* newshare.png */,
 				A56ED4FE1BC7D81E0044F435 /* newcollect.png */,
@@ -945,6 +963,15 @@
 				A5717E081B843C8300DCD8FF /* WXApiObject.h */,
 			);
 			path = Wechat;
+			sourceTree = "<group>";
+		};
+		A58A98691BCCECA600BC3F45 /* KGModal */ = {
+			isa = PBXGroup;
+			children = (
+				A58A986A1BCCECA600BC3F45 /* KGModal.h */,
+				A58A986B1BCCECA600BC3F45 /* KGModal.m */,
+			);
+			path = KGModal;
 			sourceTree = "<group>";
 		};
 		A58E4A421B577B8F0043240A = {
@@ -1205,6 +1232,7 @@
 		A58E4B201B577BF50043240A /* utilities */ = {
 			isa = PBXGroup;
 			children = (
+				A58A98691BCCECA600BC3F45 /* KGModal */,
 				A58E4B211B577BF50043240A /* AFNetworking */,
 				A58E4B351B577BF50043240A /* Category */,
 				A58E4B431B577BF50043240A /* ImageCropper */,
@@ -1425,8 +1453,14 @@
 				A58E4A951B577BF50043240A /* NewTestVC.m */,
 				A5BC9E271BC5145D00D7E61B /* HollandTestVC.h */,
 				A5BC9E281BC5145D00D7E61B /* HollandTestVC.m */,
+				A5891D051BD5CBEC00646ED8 /* UpiVC.h */,
+				A5891D061BD5CBEC00646ED8 /* UpiVC.m */,
+				A58A986D1BCCF50600BC3F45 /* ResultVC.h */,
+				A58A986E1BCCF50700BC3F45 /* ResultVC.m */,
 				A58E4AA31B577BF50043240A /* SpecificVC.h */,
 				A58E4AA41B577BF50043240A /* SpecificVC.m */,
+				A5891D021BD5C67600646ED8 /* PicturePageVC.h */,
+				A5891D031BD5C67600646ED8 /* PicturePageVC.m */,
 				A58E4AA51B577BF50043240A /* upsetVC.h */,
 				A58E4AA61B577BF50043240A /* upsetVC.m */,
 			);
@@ -1696,6 +1730,7 @@
 				A56ED5091BC7D81E0044F435 /* newunlike.png in Resources */,
 				A58E4BFA1B577BF50043240A /* jiaolv_picresult2.jpg in Resources */,
 				A58E4C211B577BF50043240A /* pic2.png in Resources */,
+				A5891D011BD5C62800646ED8 /* upsetpage.png in Resources */,
 				A58E4C201B577BF50043240A /* pic1.png in Resources */,
 				A58E4C2B1B577BF50043240A /* scl.png in Resources */,
 				A58E4BF21B577BF50043240A /* jiaolv4.jpg in Resources */,
@@ -1753,6 +1788,7 @@
 				A58E4BF31B577BF50043240A /* jiaolv5.jpg in Resources */,
 				A58E4C021B577BF50043240A /* yiyu5.jpg in Resources */,
 				A56ED50B1BC7D81E0044F435 /* newunwrite.png in Resources */,
+				A5891D001BD5C62800646ED8 /* depresspic.jpg in Resources */,
 				A58E4C071B577BF50043240A /* yiyu_result1.jpg in Resources */,
 				A58E4C1B1B577BF50043240A /* mine.png in Resources */,
 				A5659BC71BA0672800D80237 /* jiaolv15.jpg in Resources */,
@@ -1780,6 +1816,7 @@
 				A58E4C5A1B577BF50043240A /* MJRefreshGifHeader.m in Sources */,
 				A58E4BD31B577BF50043240A /* upsetVC.m in Sources */,
 				A58E4BCA1B577BF50043240A /* MyVC.m in Sources */,
+				A58A986C1BCCECA600BC3F45 /* KGModal.m in Sources */,
 				A58E4C4A1B577BF50043240A /* AFPropertyListRequestOperation.m in Sources */,
 				A58E4C5F1B577BF50043240A /* UIScrollView+MJRefresh.m in Sources */,
 				A58E4C4F1B577BF50043240A /* NSError+Helper.m in Sources */,
@@ -1793,6 +1830,7 @@
 				A58E4C571B577BF50043240A /* MJRefreshConst.m in Sources */,
 				A58E4C441B577BF50043240A /* AFHTTPClient.m in Sources */,
 				A58E4BCC1B577BF50043240A /* PaperVC.m in Sources */,
+				A58A986F1BCCF50700BC3F45 /* ResultVC.m in Sources */,
 				A58E4C6F1B577BF50043240A /* UIImage+MultiFormat.m in Sources */,
 				A58E4C4E1B577BF50043240A /* NSDictionaryAdditions.m in Sources */,
 				A58E4A541B577B8F0043240A /* AppDelegate.m in Sources */,
@@ -1833,6 +1871,7 @@
 				A58E4BBF1B577BF50043240A /* AdviceVC.m in Sources */,
 				A58E4C711B577BF50043240A /* UIImageView+HighlightedWebCache.m in Sources */,
 				A58E4A511B577B8F0043240A /* main.m in Sources */,
+				A5891D071BD5CBEC00646ED8 /* UpiVC.m in Sources */,
 				A58E4BD41B577BF50043240A /* WallTableviewcellTableViewCell.m in Sources */,
 				A58E4C421B577BF50043240A /* RootViewController.m in Sources */,
 				A58E4C591B577BF50043240A /* MJRefreshGifFooter.m in Sources */,
@@ -1845,6 +1884,7 @@
 				A58E4C501B577BF50043240A /* NSString+Additions.m in Sources */,
 				A58E4BC21B577BF50043240A /* ArticleDetailViewController.m in Sources */,
 				A5BC9E291BC5145D00D7E61B /* HollandTestVC.m in Sources */,
+				A5891D041BD5C67600646ED8 /* PicturePageVC.m in Sources */,
 				A58E4C661B577BF50043240A /* SDImageCache.m in Sources */,
 				A58E4C6C1B577BF50043240A /* SDWebImagePrefetcher.m in Sources */,
 				A58E4C691B577BF50043240A /* SDWebImageDownloader.m in Sources */,

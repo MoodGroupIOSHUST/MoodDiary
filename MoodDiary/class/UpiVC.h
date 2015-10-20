@@ -1,20 +1,14 @@
 //
-//  HollandTestVC.h
+//  UpiVC.h
 //  MoodDiary
 //
-//  Created by Sunc on 15/10/7.
+//  Created by Sunc on 15/10/20.
 //  Copyright (c) 2015年 Sunc. All rights reserved.
 //
 
 #import "RootViewController.h"
 
-@protocol Hollandisdone <NSObject>
-
--(void)hollandSetdone;
-
-@end
-
-@interface HollandTestVC : RootViewController<UICollectionViewDataSource,UICollectionViewDelegate,UIAlertViewDelegate>
+@interface UpiVC : RootViewController<UICollectionViewDataSource,UICollectionViewDelegate,UIAlertViewDelegate>
 {
     NSMutableArray *choicearr;
     
@@ -39,8 +33,6 @@
 
 @property (nonatomic,retain) UICollectionView *collectionview;
 
-@property(nonatomic,assign) id<Hollandisdone>delegate;
 @property(nonatomic,assign) BOOL hasdone;
 
 @end
-

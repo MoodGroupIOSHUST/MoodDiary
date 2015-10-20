@@ -133,7 +133,7 @@
     if (last) {
         //防作弊
         NSTimeInterval sec = [now timeIntervalSinceDate:last];
-        if (sec < 0.2) {
+        if (sec < 0.5) {
             UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"您做的过快，请根据自身情况认真答题" delegate:nil cancelButtonTitle:@"好的" otherButtonTitles:nil, nil];
             [alert show];
         }
@@ -188,38 +188,6 @@
 
 - (void)upload
 {
-    //scl
-    UserInfo *info = [NSUserDefaults objectUserForKey:USER_STOKRN_KEY];
-    
-    NSString *typeStr = [NSString stringWithFormat:@"%@",info.accountType];
-    
-    int typeValue = [typeStr intValue];
-    int result = 0;
-    
-    NSMutableArray *arr = [[NSMutableArray alloc]init];
-    
-    for (int i = 0; i<typeStr.length; i++) {
-        result = typeValue%10;
-        [arr addObject:[NSNumber numberWithInt:result]];
-        typeValue = typeValue/10;
-    }
-    
-    if ((arr.count == 3)&&[[NSString stringWithFormat:@"%@",[arr objectAtIndex:2]] isEqualToString:@"1"]) {
-        //测试账号
-//        [self.view showResult:ResultViewTypeFaild text:@"您的账号为测试账号"];
-    }
-    else if ((arr.count == 3)&&[[NSString stringWithFormat:@"%@",[arr objectAtIndex:1]] isEqualToString:@"0"]){
-        //没有权限
-        [self.view showResult:ResultViewTypeOK text:@"您没有权限做该测评"];
-        return;
-    }
-    else if ((arr.count == 3)&&[[NSString stringWithFormat:@"%@",[arr objectAtIndex:2]] isEqualToString:@"0"])
-    {
-        //已经做完
-        [self.view showResult:ResultViewTypeOK text:@"您已完成测评"];
-        return;
-    }
-    
     NSLog(@"%lu",(unsigned long)choicearr.count);
     [self.view showProgress:YES text:@"上传结果..."];
     self.view.userInteractionEnabled = NO;
