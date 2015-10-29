@@ -11,6 +11,11 @@
 #import <MessageUI/MFMailComposeViewController.h>
 
 @interface QueryVC ()
+{
+    NSArray *detailArr;
+    
+    UIBarButtonItem *left;
+}
 
 @end
 
@@ -22,10 +27,28 @@
     
     self.title = @"咨询指引";
     
+    left = [[UIBarButtonItem alloc]initWithTitle:@"返回" style:UIBarButtonItemStyleBordered target:self action:@selector(goBack)];
+    
+    self.navigationItem.leftBarButtonItem = left;
+    
     [self initquerytable];
 }
 
+- (void)goBack
+{
+    if (_isToRoot) {
+        [self.navigationController popToRootViewControllerAnimated:YES];
+    }
+    else
+    {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+}
+
 - (void)initquerytable{
+    
+    detailArr = @[@{@"school":@"华中科技大学心理咨询",@"tel":@"87543148",@"web":@"Http://xlzx.hust.edu.cn",@"email":@"zhangjy@mail.hust.edu.cn",@"image":@"hust"},@{@"school":@"武汉大学大学心理咨询",@"tel":@"68774413",@"web":@"Http://202.114.99.43/xlzx/AO",@"email":@"xlzx-whu@yahoo.cn",@"image":@"whu"},@{@"school":@"湖北第二师范学院心理咨询",@"tel":@"65523985",@"web":@"http://www.hue.edu.cn/index.php?action=view&id=1754#",@"email":@"2544186425@qq.com/3087442435@qq.com",@"image":@"HUE.jpg"},];
+    
     querytable = [[UITableView alloc]initWithFrame:CGRectMake(0, upsideheight, SCREEN_WIDTH, SCREEN_HEIGHT-upsideheight)];
     querytable.backgroundColor = [UIColor whiteColor];
     querytable.tableFooterView = [[UIView alloc]init];
@@ -137,7 +160,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 2;
+    return detailArr.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
@@ -211,46 +234,75 @@
     teleLbale3.titleLabel.textAlignment=NSTextAlignmentLeft;
     [teleLbale3 addTarget:self action:@selector(labelClicked:) forControlEvents:UIControlEventTouchUpInside];
     
+    NSDictionary *dic = [[NSDictionary alloc]init];
+    
     if (indexPath.row == 0) {
         
+        dic = [[NSDictionary alloc]initWithDictionary:[detailArr objectAtIndex:indexPath.row]];
+        
         imgview.backgroundColor = [UIColor clearColor];
-        imgview.image = [UIImage imageNamed:@"hust"];
+        imgview.image = [UIImage imageNamed:[dic objectForKey:@"image"]];
         [cell.contentView addSubview:imgview];
         
-        title.text = @"华中科技大学心理咨询室";
+        title.text = [dic objectForKey:@"school"];
         [cell.contentView addSubview:title];
         
-        [teleLbale1 setTitle:@"Http://xlzx.hust.edu.cn" forState:UIControlStateNormal];
-        teleLbale1.accessibilityLabel=@"Http://xlzx.hust.edu.cn";
+        [teleLbale1 setTitle:[dic objectForKey:@"web"] forState:UIControlStateNormal];
+        teleLbale1.accessibilityLabel=[dic objectForKey:@"web"];
         [cell.contentView addSubview:teleLbale1];
         
-        [teleLbale2 setTitle:@"Tel: 027-87543148" forState:UIControlStateNormal];
-        teleLbale2.accessibilityLabel=@"027-87543148";
+        [teleLbale2 setTitle:[NSString stringWithFormat:@"Tel: 027-%@",[dic objectForKey:@"tel"]] forState:UIControlStateNormal];
+        teleLbale2.accessibilityLabel=[NSString stringWithFormat:@"027-%@",[dic objectForKey:@"tel"]];
         [cell.contentView addSubview:teleLbale2];
         
-        [teleLbale3 setTitle:@"Mail: zhangjy@mail.hust.edu.cn" forState:UIControlStateNormal];
-        teleLbale3.accessibilityLabel=@"zhangjy@mail.hust.edu.cn";
+        [teleLbale3 setTitle:[NSString stringWithFormat:@"Mail: %@",[dic objectForKey:@"emai["]] forState:UIControlStateNormal];
+        teleLbale3.accessibilityLabel=[NSString stringWithFormat:@"%@",[dic objectForKey:@"email"]];
         [cell.contentView addSubview:teleLbale3];
+        
     }
     else if (indexPath.row ==1){
+        dic = [[NSDictionary alloc]initWithDictionary:[detailArr objectAtIndex:indexPath.row]];
+        
         imgview.backgroundColor = [UIColor clearColor];
-        imgview.image = [UIImage imageNamed:@"whu"];
-        imgview.frame = CGRectMake(15, 47, 65, 65);
+        imgview.image = [UIImage imageNamed:[dic objectForKey:@"image"]];
         [cell.contentView addSubview:imgview];
         
-        title.text = @"武汉大学心理咨询室";
+        title.text = [dic objectForKey:@"school"];
         [cell.contentView addSubview:title];
         
-        [teleLbale1 setTitle:@"Http://202.114.99.43/xlzx/AO" forState:UIControlStateNormal];
-        teleLbale1.accessibilityLabel=@"Http://202.114.99.43/xlzx/AO";
+        [teleLbale1 setTitle:[dic objectForKey:@"web"] forState:UIControlStateNormal];
+        teleLbale1.accessibilityLabel=[dic objectForKey:@"web"];
         [cell.contentView addSubview:teleLbale1];
         
-        [teleLbale2 setTitle:@"Tel: 027-68774413" forState:UIControlStateNormal];
-        teleLbale2.accessibilityLabel=@"027-68774413";
+        [teleLbale2 setTitle:[NSString stringWithFormat:@"Tel: 027-%@",[dic objectForKey:@"tel"]] forState:UIControlStateNormal];
+        teleLbale2.accessibilityLabel=[NSString stringWithFormat:@"027-%@",[dic objectForKey:@"tel"]];
         [cell.contentView addSubview:teleLbale2];
         
-        [teleLbale3 setTitle:@"Mail: xlzx-whu@yahoo.cn" forState:UIControlStateNormal];
-        teleLbale3.accessibilityLabel=@"xlzx-whu@yahoo.cn";
+        [teleLbale3 setTitle:[NSString stringWithFormat:@"Mail: %@",[dic objectForKey:@"email"]] forState:UIControlStateNormal];
+        teleLbale3.accessibilityLabel=[NSString stringWithFormat:@"%@",[dic objectForKey:@"email"]];
+        [cell.contentView addSubview:teleLbale3];
+    }
+    else if (indexPath.row == 2)
+    {
+        dic = [[NSDictionary alloc]initWithDictionary:[detailArr objectAtIndex:indexPath.row]];
+        
+        imgview.backgroundColor = [UIColor clearColor];
+        imgview.image = [UIImage imageNamed:[dic objectForKey:@"image"]];
+        [cell.contentView addSubview:imgview];
+        
+        title.text = [dic objectForKey:@"school"];
+        [cell.contentView addSubview:title];
+        
+        [teleLbale1 setTitle:[dic objectForKey:@"web"] forState:UIControlStateNormal];
+        teleLbale1.accessibilityLabel=@"";
+        [cell.contentView addSubview:teleLbale1];
+        
+        [teleLbale2 setTitle:[NSString stringWithFormat:@"Tel: 027-%@",[dic objectForKey:@"tel"]] forState:UIControlStateNormal];
+        teleLbale2.accessibilityLabel=[NSString stringWithFormat:@"027-%@",[dic objectForKey:@"tel"]];
+        [cell.contentView addSubview:teleLbale2];
+        
+        [teleLbale3 setTitle:[NSString stringWithFormat:@"Mail: %@",[dic objectForKey:@"email"]] forState:UIControlStateNormal];
+        teleLbale3.accessibilityLabel=[NSString stringWithFormat:@"%@",[dic objectForKey:@"email"]];
         [cell.contentView addSubview:teleLbale3];
     }
     

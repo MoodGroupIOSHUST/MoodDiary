@@ -14,4 +14,6 @@
     UITableView *querytable;
 }
 
+@property (nonatomic, assign)BOOL isToRoot;
+
 @end

@@ -28,7 +28,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    height = 120;
+    height = 135;
     
     self.title = @"阅读";
     self.view.backgroundColor = [UIColor whiteColor];
@@ -96,15 +96,30 @@
         
         numbersOfRow = [articleArray count];
         
+        [articleTableView addLegendFooterWithRefreshingTarget:self refreshingAction:@selector(getmoredata)];
+        
         [articleTableView.footer endRefreshing];
         [articleTableView reloadData];
         
     } failed:^(NSError *error) {
         NSLog(@"fail");
 //        [self.view showProgress:NO];
-        [self.view addSubview:reloadImage];
-        [self.view addSubview:reloadBtn];
+        
+        if(![[error.userInfo objectForKey:NSLocalizedDescriptionKey] isEqualToString:@"暂时没有数据"]&&articleArray.count == 0)
+        {
+            //如果不是暂时没有数据
+            [self.view addSubview:reloadImage];
+            [self.view addSubview:reloadBtn];
+        }
+        
+        if([[error.userInfo objectForKey:NSLocalizedDescriptionKey] isEqualToString:@"暂时没有数据"]){
+            //加载完毕
+            [articleTableView removeFooter];
+        }
+        
         self.view.userInteractionEnabled = YES;
+        
+        
         
         [self.view showResult:ResultViewTypeFaild text:[error.userInfo objectForKey:NSLocalizedDescriptionKey]];
         
@@ -198,7 +213,7 @@
     
    
     
-    UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(20, 20, 80, 80)];
+    UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(20, 20, 95, 95)];
     
     if(![[dic objectForKey:@"photo"] isEqual: [NSNull null]]){
         NSString *urlstring = [@"http://etotech.net:8080" stringByAppendingString:[dic objectForKey:@"photo"]];
@@ -212,7 +227,7 @@
     imageView.tag = 30;
     [cell addSubview:imageView];
     
-    UILabel *title = [[UILabel alloc]initWithFrame:CGRectMake(110, 15, SCREEN_WIDTH - 125 , 40)];
+    UILabel *title = [[UILabel alloc]initWithFrame:CGRectMake(125, 15, SCREEN_WIDTH - 140 , 40)];
     title.tag = 31;
     title.text = [dic objectForKey:@"title"];
 //    title.backgroundColor = [UIColor redColor];
@@ -222,15 +237,33 @@
     title.contentMode = UIViewContentModeCenter;
     [cell addSubview:title];
     
-    UILabel *time = [[UILabel alloc]initWithFrame:CGRectMake(110, 50, SCREEN_WIDTH - 125, 55)];
-    time.tag = 32;
-    time.text = [dic objectForKey:@"digest"];
-    time.textColor = [UIColor grayColor];
+    UILabel *digest = [[UILabel alloc]initWithFrame:CGRectMake(125, 50, SCREEN_WIDTH - 140, 55)];
+    digest.tag = 32;
+    digest.text = [dic objectForKey:@"digest"];
+    digest.textColor = [UIColor grayColor];
 //    time.backgroundColor = [UIColor greenColor];
-    time.font = [UIFont systemFontOfSize:12];
-    time.contentMode = UIViewContentModeCenter;
-    time.numberOfLines = 0;
+    digest.font = [UIFont systemFontOfSize:12];
+    digest.contentMode = UIViewContentModeCenter;
+    digest.numberOfLines = 0;
+    [cell addSubview:digest];
+    
+    UILabel *time = [[UILabel alloc]initWithFrame:CGRectMake(125, 105, 110, 15)];
+    time.backgroundColor = [UIColor clearColor];
+    time.text = [NSString stringWithFormat:@"%@",[dic objectForKey:@"date"]];
+    time.textColor = [UIColor grayColor];
+//    timeAndSource.adjustsFontSizeToFitWidth = YES;
+    time.font = [UIFont systemFontOfSize:11];
+    time.textAlignment = NSTextAlignmentLeft;
     [cell addSubview:time];
+    
+    UILabel *source = [[UILabel alloc]initWithFrame:CGRectMake(235, 105, SCREEN_WIDTH-255, 15)];
+    source.backgroundColor = [UIColor clearColor];
+    source.text = [NSString stringWithFormat:@"来自：%@",[dic objectForKey:@"source"]];
+    source.textColor = [UIColor grayColor];
+    //    timeAndSource.adjustsFontSizeToFitWidth = YES;
+    source.font = [UIFont systemFontOfSize:11];
+    source.textAlignment = NSTextAlignmentRight;
+    [cell addSubview:source];
     
     cell.backgroundColor = [UIColor clearColor];
 }

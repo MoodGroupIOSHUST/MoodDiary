@@ -23,9 +23,15 @@
 @implementation MyVC
 
 - (void)viewDidLoad {
+    
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.title = @"个人中心";
+    UILabel *titleText = [[UILabel alloc] initWithFrame:CGRectMake(160, 0, 120, 50)];
+    titleText.backgroundColor = [UIColor clearColor];
+    titleText.textColor=[UIColor whiteColor];
+    [titleText setFont:[UIFont systemFontOfSize:15.0]];
+    [titleText setText:@"个人信息"];
+    self.navigationItem.titleView=titleText;
     self.view.backgroundColor = [UIColor whiteColor];
     
     _height = 60;

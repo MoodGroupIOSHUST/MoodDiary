@@ -45,6 +45,44 @@
 	// Do any additional setup after loading the view.
 }
 
+-(void)viewWillLayoutSubviews{
+    
+    //自定义标题时，返回至rootview标题会重叠
+    
+    [super viewWillLayoutSubviews];
+    
+    for (UIView *child in self.tabBar.subviews) {
+        
+        if ([child isKindOfClass:NSClassFromString(@"UITabBarButton")]) {
+            
+            [child removeFromSuperview];
+            
+        }
+        
+    }
+    
+}
+
+//- (void)viewWillAppear:(BOOL)animated
+//
+//{
+//    
+//    // 删除系统自动生成的UITabBarButton
+//    
+//    for (UIView *child in self.tabBar.subviews) {
+//        
+//        if ([child isKindOfClass:[UIControl class]]) {
+//            
+//            [child removeFromSuperview];
+//            
+//        }
+//        
+//    }
+//    
+//    [super viewWillAppear:animated];
+//    
+//}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -165,11 +203,11 @@
         [self.tabBar addSubview:tabButton];
         [tabButtons addObject:tabButton];
         
-        tabButton.titleLabel.font = [UIFont systemFontOfSize:12];
+        tabButton.titleLabel.textColor = [UIColor clearColor];
 //        [tabButton setTitle:[NSString stringWithFormat:@"%@",itemBarName] forState:UIControlStateNormal];
         
-        [tabButton setTitleColor:[UIColor colorWithRed:71/255.0 green:228/255.0 blue:160/255.0 alpha:1.0]forState:UIControlStateSelected];
-        [tabButton setTitleColor:[UIColor colorWithRed:160 / 255.0 green:160 / 255.0 blue:160 / 255.0 alpha:1] forState:UIControlStateNormal];
+//        [tabButton setTitleColor:[UIColor colorWithRed:71/255.0 green:228/255.0 blue:160/255.0 alpha:1.0]forState:UIControlStateSelected];
+//        [tabButton setTitleColor:[UIColor colorWithRed:160 / 255.0 green:160 / 255.0 blue:160 / 255.0 alpha:1] forState:UIControlStateNormal];
         tabButton.backgroundColor = [UIColor clearColor];
     }
     

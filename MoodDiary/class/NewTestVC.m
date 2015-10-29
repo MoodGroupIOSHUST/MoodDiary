@@ -7,6 +7,7 @@
 //
 
 #import "NewTestVC.h"
+#import "QueryVC.h"
 
 @interface NewTestVC ()
 {
@@ -200,6 +201,11 @@
         [self.view showProgress:NO];
         self.view.userInteractionEnabled = YES;
         NSString *msg = [NSString stringWithFormat:@"%@",[result objectForKey:@"msg"]];
+        
+        if ([msg isEqualToString:@"<null>"]) {
+            msg = @"您的结果正常，如有疑问，请联系学校心理咨询中心";
+        }
+        
         NSDictionary *temdic = [result objectForKey:@"data"];
         NSDictionary *studic = [temdic objectForKey:@"student"];
         NSDictionary *accountdic = [studic objectForKey:@"account"];
@@ -231,7 +237,7 @@
         userinfo.sex = [NSString stringWithFormat:@"%@",[accountdic objectForKey:@"sex"]];
         userinfo.signature = [NSString stringWithFormat:@"%@",[accountdic objectForKey:@"signature"]];
         userinfo.status = [NSString stringWithFormat:@"%@",[accountdic objectForKey:@"status"]];
-        userinfo.useraccount = [NSString stringWithFormat:@"%@",[accountdic objectForKey:@"useraccount"]];
+        userinfo.useraccount = [NSString stringWithFormat:@"%@",[accountdic objectForKey:@"username"]];
         
         [NSUserDefaults setUserObject:userinfo forKey:USER_STOKRN_KEY];
         
@@ -242,7 +248,7 @@
         
         self.navigationItem.rightBarButtonItem = nil;
         
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"结果已成功上传至心里中心" delegate:self cancelButtonTitle:@"好的" otherButtonTitles:nil, nil];
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:msg delegate:self cancelButtonTitle:@"好的" otherButtonTitles:@"心理咨询", nil];
         alert.tag = 10086;
         [alert show];
         
@@ -338,7 +344,17 @@
 #pragma mark - uialertviewdelegate
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     if (alertView.tag == 10086) {
-        [self popBack];
+        if (buttonIndex == 0) {
+            [self.navigationController popToRootViewControllerAnimated:YES];
+        }
+        else if (buttonIndex == 1)
+        {
+            QueryVC *query = [[QueryVC alloc]init];
+            query.isToRoot = YES;
+            query.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:query animated:YES];
+            
+        }
     }
 }
 

@@ -8,6 +8,7 @@
 
 #import "UpiVC.h"
 #import "ResultVC.h"
+#import "QueryVC.h"
 
 @interface UpiVC ()
 {
@@ -110,7 +111,7 @@
     
     self.title = @"UPI测评";
     
-    NSString *name = @"Upi";
+    NSString *name = @"upi";
     NSString *path = [[NSBundle mainBundle]pathForResource:name ofType:@"json"];
     NSString *jsonString = [[NSString alloc]initWithContentsOfFile:path encoding:NSUTF8StringEncoding error:nil];
     NSString *json = [jsonString stringByReplacingOccurrencesOfString:@";" withString:@","];
@@ -191,13 +192,22 @@
     NSString *string = [choicearr componentsJoinedByString:@","];
     NSString *replaced = [string stringByReplacingOccurrencesOfString:@"," withString:@""];
     NSLog(@"%@",string);
-    [AppWebService uploadresult:replaced type:@"4" success:^(id result) {
+    [AppWebService uploadresult:replaced type:@"5" success:^(id result) {
         NSLog(@"success");
         
         [self.view showProgress:NO];
         self.view.userInteractionEnabled = YES;
         
         NSString *msg = [NSString stringWithFormat:@"%@",[result objectForKey:@"msg"]];
+        
+        if (![msg isEqualToString:@"无效问卷"]) {
+            msg = @"您的结果正常，如有疑问，请联系学校心理咨询中心";
+        }
+        
+        if ([msg isEqualToString:@"<null>"]) {
+            msg = @"您的结果正常，如有疑问，请联系学校心理咨询中心";
+        }
+        
         NSDictionary *temdic = [result objectForKey:@"data"];
         NSDictionary *studic = [temdic objectForKey:@"student"];
         NSDictionary *accountdic = [studic objectForKey:@"account"];
@@ -229,18 +239,15 @@
         userinfo.sex = [NSString stringWithFormat:@"%@",[accountdic objectForKey:@"sex"]];
         userinfo.signature = [NSString stringWithFormat:@"%@",[accountdic objectForKey:@"signature"]];
         userinfo.status = [NSString stringWithFormat:@"%@",[accountdic objectForKey:@"status"]];
-        userinfo.useraccount = [NSString stringWithFormat:@"%@",[accountdic objectForKey:@"useraccount"]];
+        userinfo.useraccount = [NSString stringWithFormat:@"%@",[accountdic objectForKey:@"username"]];
         
         [NSUserDefaults setUserObject:userinfo forKey:USER_STOKRN_KEY];
         
         //设置说明页面题目做完状态
         
-        self.navigationItem.rightBarButtonItem = nil;
-        
-        ResultVC *resultVc = [[ResultVC alloc]init];
-        resultVc.detailStr = msg;
-        resultVc.isToRoot = YES;
-        [self.navigationController pushViewController:resultVc animated:YES];
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"提示" message:msg delegate:self cancelButtonTitle:@"好的" otherButtonTitles:@"心理咨询", nil];
+        alert.tag = 10086;
+        [alert show];
         
     } failed:^(NSError *error) {
         [self.view showProgress:NO];
@@ -324,7 +331,17 @@
 #pragma mark - uialertviewdelegate
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     if (alertView.tag == 10086) {
-        [self popBack];
+        if (buttonIndex == 0) {
+            [self.navigationController popToRootViewControllerAnimated:YES];
+        }
+        else if (buttonIndex == 1)
+        {
+            QueryVC *query = [[QueryVC alloc]init];
+            query.isToRoot = YES;
+            query.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:query animated:YES];
+            
+        }
     }
 }
 

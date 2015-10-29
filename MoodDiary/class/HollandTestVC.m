@@ -229,7 +229,7 @@
         userinfo.sex = [NSString stringWithFormat:@"%@",[accountdic objectForKey:@"sex"]];
         userinfo.signature = [NSString stringWithFormat:@"%@",[accountdic objectForKey:@"signature"]];
         userinfo.status = [NSString stringWithFormat:@"%@",[accountdic objectForKey:@"status"]];
-        userinfo.useraccount = [NSString stringWithFormat:@"%@",[accountdic objectForKey:@"useraccount"]];
+        userinfo.useraccount = [NSString stringWithFormat:@"%@",[accountdic objectForKey:@"username"]];
         
         [NSUserDefaults setUserObject:userinfo forKey:USER_STOKRN_KEY];
         
@@ -327,7 +327,7 @@
 #pragma mark - uialertviewdelegate
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     if (alertView.tag == 10086) {
-        [self popBack];
+        [self.navigationController popToRootViewControllerAnimated:YES];
     }
 }
 

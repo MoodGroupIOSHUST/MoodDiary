@@ -123,6 +123,12 @@ static const CGFloat MJDuration = 1.0;
 
 - (void)publish{
     
+    if (![NSUserDefaults boolForKey:IS_LOGIN]) {
+        //没有登录
+        [self showLoginWindow];
+        return;
+    }
+    
     if (nicknamefield.text.length == 0) {
         [self.view showResult:ResultViewTypeFaild text:@"内容不能为空"];
         return;

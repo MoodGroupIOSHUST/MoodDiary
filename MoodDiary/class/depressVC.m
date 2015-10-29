@@ -310,6 +310,7 @@
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+    
     UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"depresscell" forIndexPath:indexPath];
     
     for (UIView *v in cell.contentView.subviews) {

@@ -100,6 +100,11 @@
     //昵称
     NSString *nickname = [NSString stringWithFormat:@"%@",[accountdic objectForKey:@"anonymity"]];
     
+    if([nickname isEqualToString:@"<null>"])
+    {
+        nickname = @"咸蛋超人";
+    }
+    
     CGSize namesize = [self maxlabeisize:CGSizeMake(999, 25) fontsize:14 text:nickname];
     namelabel.frame = CGRectMake(img.frame.origin.x+5+img.frame.size.width, 5, namesize.width, 25);
     namelabel.font = [UIFont systemFontOfSize:14];

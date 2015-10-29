@@ -10,6 +10,7 @@
 #import "AboutusVC.h"
 #import "NewTestVC.h"
 #import "HollandTestVC.h"
+#import "UpiVC.h"
 
 @interface SpecificVC ()
 
@@ -105,6 +106,10 @@
         else if ([_testtype isEqualToString:@"霍兰德"]){
             HollandTestVC *test = [[HollandTestVC alloc]init];
             [self.navigationController pushViewController:test animated:YES];
+        }
+        else if ([_testtype isEqualToString:@"UPI"]){
+            UpiVC *upi = [[UpiVC alloc]init];
+            [self.navigationController pushViewController:upi animated:YES];
         }
         
     }

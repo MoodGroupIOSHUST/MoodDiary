@@ -12,25 +12,58 @@
 #import "UMSocialSinaHandler.h"
 #import "UMSocialQQHandler.h"
 #import "UMSocialWechatHandler.h"
-
+#import "BBLaunchAdMonitor.h"
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    
+    //首页广告展示
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showAdDetail:) name:BBLaunchAdDetailDisplayNotification object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showMainView) name:showMainViewNotification object:nil];
+//    NSString *path = @"http://mg.soupingguo.com/bizhi/big/10/258/043/10258043.jpg";
+//    [BBLaunchAdMonitor showAdAtPath:path
+//                             onView:self.window.rootViewController.view
+//                       timeInterval:5
+//                   detailParameters:@{@"carId":@(12345), @"name":@"奥迪-品质生活"}];
+    
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    // Override point for customization after application launch.
+//     Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
+    
+    [self delayMethod];
+    
+//    [self performSelector:@selector(delayMethod) withObject:nil afterDelay:5.0f];
+    
+    [self.window makeKeyAndVisible];
+    
+    return YES;
+}
+
+- (void)showMainView{
     
     [self registernotify];
     
     [self setUmengShare];
     
     [self ininloginvc];
+}
+
+- (void)delayMethod{
     
+    //    初始化通知和友盟设置
     
-    [self.window makeKeyAndVisible];
-    return YES;
+    [self registernotify];
+    
+    [self setUmengShare];
+    
+    [self ininloginvc];
+}
+
+- (void)showAdDetail:(NSNotification *)noti
+{
+    NSLog(@"detail parameters:%@", noti.object);
 }
 
 -(void)registernotify
@@ -164,6 +197,7 @@
     NSLog(@"------second------url%@",url);
     return  [UMSocialSnsService handleOpenURL:url];
 }
+
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.

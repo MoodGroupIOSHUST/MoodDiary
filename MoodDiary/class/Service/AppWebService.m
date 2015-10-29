@@ -143,6 +143,7 @@
         }
         else
         {
+            NSString *errormsg = @"发生错误，请稍后再试";
             error = [NSError errorWithMsg:errormsg];
             SAFE_BLOCK_CALL(failed, error);
         }
