@@ -100,7 +100,7 @@
                   moduleName = "MoodDiary"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/sunc/Desktop/MoodDiaryorganization/Mood0716/MoodDiary/MoodDiary/class/NewTestVC.m"
-                  timestampString = "467604719.020881"
+                  timestampString = "468063433.268375"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "198"
@@ -115,7 +115,7 @@
                   moduleName = "MoodDiary"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/sunc/Desktop/MoodDiaryorganization/Mood0716/MoodDiary/MoodDiary/class/NewTestVC.m"
-                  timestampString = "467604719.02116"
+                  timestampString = "468063433.268542"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "198"
@@ -138,6 +138,22 @@
             startingLineNumber = "129"
             endingLineNumber = "129"
             landmarkName = "-pushtoscl"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MoodDiary/class/Service/AppWebService.m"
+            timestampString = "467898615.467935"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "133"
+            endingLineNumber = "133"
+            landmarkName = "+uploadresult:type:success:failed:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

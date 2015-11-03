@@ -354,6 +354,12 @@ static const CGFloat MJDuration = 1.0;
 
 - (void)comfirmbtnpress:(UIButton *)sender{
     
+    if (![NSUserDefaults boolForKey:IS_LOGIN]) {
+        //没有登录
+        [self showLoginWindow];
+        return;
+    }
+    
     //评论某人
     if (nicknamefield.text.length == 0) {
         [self.view showResult:ResultViewTypeFaild text:@"内容不能为空"];
@@ -427,6 +433,13 @@ static const CGFloat MJDuration = 1.0;
 
 - (void)favouritebtnclicked:(UIButton *)sender{
     //发表评论
+    
+    if (![NSUserDefaults boolForKey:IS_LOGIN]) {
+        //没有登录
+        [self showLoginWindow];
+        return;
+    }
+    
     NSInteger index = sender.tag;
     NSDictionary *temdic = [walllist objectAtIndex:index];
     
